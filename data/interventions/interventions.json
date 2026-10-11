@@ -1,0 +1,229 @@
+{
+  "version": "1.0.0",
+  "last_updated": "2026-10-10",
+  "interventions": [
+    {
+      "id": "cool_roof_coating",
+      "name": "High-Albedo Cool Roof Coating",
+      "category": "heat",
+      "description": "Elastomeric solar reflective coating system with high solar reflectance index (SRI > 104) applied over roof terrace.",
+      "unit": "m2",
+      "cost_per_unit_inr": 185.0,
+      "cost_source": "Maha PWD SSR 2023-24 Item 14.12 & Asian Paints SmartCare Quote",
+      "cost_confidence": "high",
+      "exclusive_roof_occupancy": false,
+      "compatible_with_rwh": true,
+      "thermal_effects": {
+        "solar_reflectance_fresh": 0.82,
+        "solar_reflectance_aged": 0.70,
+        "solar_absorptance_aged": 0.30,
+        "thermal_emittance": 0.90
+      },
+      "water_effects": {
+        "runoff_coefficient": 0.88,
+        "runoff_coefficient_delta": 0.03
+      },
+      "structural_requirements": {
+        "max_added_deadload_kg_m2": 2.0,
+        "requires_structural_audit": false
+      },
+      "site_constraints": [
+        "Terrace surface must be cured and free of active ponding water"
+      ]
+    },
+    {
+      "id": "xps_insulation",
+      "name": "Extruded Polystyrene (XPS) Over-Deck Insulation",
+      "category": "heat",
+      "description": "50mm high-density XPS thermal insulation board laid over RCC slab with protective polymer-modified screed layer.",
+      "unit": "m2",
+      "cost_per_unit_inr": 650.0,
+      "cost_source": "Maha PWD SSR 2023-24 Item 22.45",
+      "cost_confidence": "high",
+      "exclusive_roof_occupancy": false,
+      "compatible_with_rwh": true,
+      "thermal_effects": {
+        "thickness_m": 0.05,
+        "thermal_conductivity_w_mk": 0.034,
+        "thermal_resistance_m2k_w": 1.47
+      },
+      "water_effects": {
+        "runoff_coefficient": 0.85
+      },
+      "structural_requirements": {
+        "max_added_deadload_kg_m2": 70.0,
+        "requires_structural_audit": false
+      },
+      "site_constraints": [
+        "Requires protective screed slope towards drainage outlets"
+      ]
+    },
+    {
+      "id": "rwh_filtration_firstflush",
+      "name": "Commercial RWH Leaf Filter & Dual First-Flush Diverter",
+      "category": "water",
+      "description": "Stainless steel dual-chamber first flush diversion manifold and vortex self-cleaning stainless steel mesh filter assembly.",
+      "unit": "system",
+      "cost_per_unit_inr": 45000.0,
+      "cost_source": "RainWater Harvest Solutions Mumbai Quote #RWH-2024-88",
+      "cost_confidence": "high",
+      "exclusive_roof_occupancy": false,
+      "compatible_with_rwh": true,
+      "water_effects": {
+        "first_flush_depth_mm": 1.5,
+        "filter_efficiency": 0.92
+      },
+      "structural_requirements": {
+        "max_added_deadload_kg_m2": 0.0,
+        "requires_structural_audit": false
+      },
+      "site_constraints": [
+        "Downspouts must converge to accessible ground or mezzanine utility shafts"
+      ]
+    },
+    {
+      "id": "storage_tank_20kl",
+      "name": "20,000 L Modular Ground Storage Tank",
+      "category": "water",
+      "description": "Food-grade triple-layer roto-molded polyethylene (HDPE) ground tank with interconnecting manifold, foundation PCC pad, and booster pump.",
+      "unit": "system",
+      "capacity_liters": 20000,
+      "cost_per_unit_inr": 130000.0,
+      "cost_source": "Sintex / Commercial Distributor Rate (₹6.50/L installed)",
+      "cost_confidence": "high",
+      "exclusive_roof_occupancy": false,
+      "requires_ground_area_m2": 10.0,
+      "water_effects": {
+        "storage_capacity_liters": 20000
+      },
+      "structural_requirements": {
+        "max_added_deadload_kg_m2": 0.0,
+        "requires_structural_audit": false
+      },
+      "site_constraints": [
+        "Requires 10 m² level ground yard or utility basement footprint"
+      ]
+    },
+    {
+      "id": "storage_tank_40kl",
+      "name": "40,000 L Modular Ground Storage Tank",
+      "category": "water",
+      "description": "40,000 L HDPE ground storage tank array with base foundation, dual manifold, level indicator, and booster connection.",
+      "unit": "system",
+      "capacity_liters": 40000,
+      "cost_per_unit_inr": 260000.0,
+      "cost_source": "Sintex / Commercial Distributor Rate (₹6.50/L installed)",
+      "cost_confidence": "high",
+      "exclusive_roof_occupancy": false,
+      "requires_ground_area_m2": 18.0,
+      "water_effects": {
+        "storage_capacity_liters": 40000
+      },
+      "structural_requirements": {
+        "max_added_deadload_kg_m2": 0.0,
+        "requires_structural_audit": false
+      },
+      "site_constraints": [
+        "Requires 18 m² level ground yard or utility basement footprint"
+      ]
+    },
+    {
+      "id": "storage_tank_60kl",
+      "name": "60,000 L Modular Ground Storage Tank",
+      "category": "water",
+      "description": "60,000 L modular storage tank array with reinforced concrete ring pad and commercial circulation manifold.",
+      "unit": "system",
+      "capacity_liters": 60000,
+      "cost_per_unit_inr": 390000.0,
+      "cost_source": "Sintex / Commercial Distributor Rate (₹6.50/L installed)",
+      "cost_confidence": "high",
+      "exclusive_roof_occupancy": false,
+      "requires_ground_area_m2": 26.0,
+      "water_effects": {
+        "storage_capacity_liters": 60000
+      },
+      "structural_requirements": {
+        "max_added_deadload_kg_m2": 0.0,
+        "requires_structural_audit": false
+      },
+      "site_constraints": [
+        "Requires 26 m² level ground yard or utility basement footprint"
+      ]
+    },
+    {
+      "id": "storage_tank_80kl",
+      "name": "80,000 L Modular Ground Storage Tank",
+      "category": "water",
+      "description": "80,000 L modular commercial tank farm with heavy-duty PCC foundation and dual suction manifold.",
+      "unit": "system",
+      "capacity_liters": 80000,
+      "cost_per_unit_inr": 520000.0,
+      "cost_source": "Sintex / Commercial Distributor Rate (₹6.50/L installed)",
+      "cost_confidence": "high",
+      "exclusive_roof_occupancy": false,
+      "requires_ground_area_m2": 35.0,
+      "water_effects": {
+        "storage_capacity_liters": 80000
+      },
+      "structural_requirements": {
+        "max_added_deadload_kg_m2": 0.0,
+        "requires_structural_audit": false
+      },
+      "site_constraints": [
+        "Requires 35 m² level ground yard or utility basement footprint"
+      ]
+    },
+    {
+      "id": "rooftop_solar_pv_20kw",
+      "name": "20 kWp Elevated Rooftop Solar PV",
+      "category": "energy_shading",
+      "description": "Grid-connected 20 kWp solar PV array on elevated steel canopy structure (min 2.5m clearance allowing roof walking and water collection).",
+      "unit": "system",
+      "cost_per_unit_inr": 920000.0,
+      "cost_source": "MNRE Rooftop Solar Benchmark / Tata Power Solar Quote 2024",
+      "cost_confidence": "high",
+      "exclusive_roof_occupancy": true,
+      "roof_area_occupied_m2": 120.0,
+      "compatible_with_rwh": true,
+      "water_effects": {
+        "runoff_coefficient": 0.85
+      },
+      "thermal_effects": {
+        "shading_factor": 0.85
+      },
+      "structural_requirements": {
+        "max_added_deadload_kg_m2": 25.0,
+        "requires_structural_audit": false
+      },
+      "site_constraints": [
+        "Requires south-facing unobstructed solar exposure"
+      ]
+    },
+    {
+      "id": "green_roof_modular",
+      "name": "Extensive Modular Green Roof Trays",
+      "category": "hybrid",
+      "description": "100mm substrate depth modular sedum and native succulent planter trays with root barrier and retention drainage cup layer.",
+      "unit": "m2",
+      "cost_per_unit_inr": 2200.0,
+      "cost_source": "Urban Landscape Contractor Estimate Mumbai 2024",
+      "cost_confidence": "medium",
+      "exclusive_roof_occupancy": true,
+      "compatible_with_rwh": false,
+      "thermal_effects": {
+        "surface_cooling_effect": "evapotranspirative",
+        "equivalent_r_value": 0.95
+      },
+      "water_effects": {
+        "runoff_coefficient": 0.40
+      },
+      "structural_requirements": {
+        "max_added_deadload_kg_m2": 260.0,
+        "requires_structural_audit": true
+      },
+      "site_constraints": [
+        "MANDATORY: Requires licensed structural engineer certification verifying allowable live+dead terrace load exceeds 350 kg/m²"
+      ]
+    }
+  ]
+}

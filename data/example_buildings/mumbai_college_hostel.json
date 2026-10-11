@@ -1,0 +1,67 @@
+{
+  "id": "bldg_mumbai_hostel_01",
+  "name": "Vivekananda College Hostel — Block B",
+  "building_type": "college_hostel",
+  "location": {
+    "city": "Mumbai",
+    "neighborhood": "Wadala / Chembur",
+    "coordinates": {
+      "lat": 19.0218,
+      "lon": 72.8711
+    }
+  },
+  "geometry": {
+    "gross_roof_area_m2": 600.0,
+    "clear_access_corridors_m2": 80.0,
+    "usable_roof_area_m2": 520.0,
+    "number_of_floors": 4,
+    "top_floor_exposed_ceiling_area_m2": 420.0,
+    "top_floor_rooms_count": 16
+  },
+  "existing_roof_construction": {
+    "type": "rcc_slab_with_brickbat_coba",
+    "layers": [
+      {
+        "name": "Inside plaster",
+        "thickness_m": 0.012,
+        "conductivity_w_mk": 0.72
+      },
+      {
+        "name": "Reinforced Cement Concrete (RCC) Slab",
+        "thickness_m": 0.150,
+        "conductivity_w_mk": 1.58
+      },
+      {
+        "name": "Brick-Bat Coba Waterproofing & Screed",
+        "thickness_m": 0.050,
+        "conductivity_w_mk": 0.81
+      }
+    ],
+    "surface": {
+      "finish": "Weathered cement screed / brick finish",
+      "solar_absorptance": 0.75,
+      "solar_reflectance": 0.25,
+      "thermal_emittance": 0.90,
+      "runoff_coefficient": 0.85
+    }
+  },
+  "water_demand": {
+    "occupancy_students": 150,
+    "non_potable_demand_liters_per_capita_day": 40.0,
+    "total_non_potable_demand_liters_day": 6000.0,
+    "seasonal_profile": "academic_year_active",
+    "monsoon_demand_reduction_percent": 0.0
+  },
+  "constraints_and_budget": {
+    "budget_cap_inr": 800000.0,
+    "max_allowable_roof_deadload_kg_m2": 80.0,
+    "structural_audit_certified": false,
+    "ground_yard_available_for_tanks_m2": 45.0,
+    "downspout_interconnection_feasible": true
+  },
+  "provenance": {
+    "created_date": "2026-10-10",
+    "verified_by": "Campus Facilities Lead / Civil Engineering Dept",
+    "status": "baseline_fixture"
+  }
+}

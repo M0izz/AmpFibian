@@ -1,0 +1,79 @@
+{
+  "currency": "INR",
+  "base_year": "2024",
+  "location": "Mumbai, Maharashtra",
+  "items": [
+    {
+      "code": "PWD-SSR-14.12",
+      "description": "High-albedo elastomeric polyurethane solar reflective terrace coating (primer + 2 coats, SRI > 104)",
+      "rate": 185.0,
+      "unit": "m2",
+      "rate_type": "schedule_rate",
+      "source": "Maharashtra PWD SSR 2023-24, Item 14.12",
+      "confidence": "high",
+      "labor_included": true,
+      "gst_included": false,
+      "notes": "Verified against Asian Paints SmartCare Commercial quotation"
+    },
+    {
+      "code": "PWD-SSR-22.45",
+      "description": "50mm Extruded Polystyrene (XPS) over-deck thermal insulation boards with geotextile separator and 40mm screed",
+      "rate": 650.0,
+      "unit": "m2",
+      "rate_type": "schedule_rate",
+      "source": "Maharashtra PWD SSR 2023-24, Item 22.45",
+      "confidence": "high",
+      "labor_included": true,
+      "gst_included": false,
+      "notes": "Requires surface preparation and perimeter flashing"
+    },
+    {
+      "code": "RWH-FILTER-COMM",
+      "description": "Commercial dual first-flush manifold, SS mesh filter unit, auto-drain valve, and downspout header bypass",
+      "rate": 45000.0,
+      "unit": "system",
+      "rate_type": "vendor_quote",
+      "source": "RainWater Harvest Solutions Mumbai, Quote #RWH-2024-88 (Valid until Dec 2024)",
+      "confidence": "high",
+      "labor_included": true,
+      "gst_included": true,
+      "notes": "Sized for up to 600 m2 catchment area"
+    },
+    {
+      "code": "RWH-TANK-STORAGE",
+      "description": "Ground level food-grade triple layer roto-molded polyethylene (HDPE) tank arrays with interconnecting manifold, base PCC foundation pad, and booster pump connection",
+      "rate": 6.5,
+      "unit": "liter",
+      "rate_type": "commercial_quote",
+      "source": "Sintex / Commercial Distributor Rate Card 2024",
+      "confidence": "high",
+      "labor_included": true,
+      "gst_included": true,
+      "notes": "Includes foundation civil work and overflow piping to stormwater drain"
+    },
+    {
+      "code": "SOLAR-PV-20KW",
+      "description": "20 kWp Rooftop Grid-Tied Solar PV system with elevated galvanized iron mounting structure and inverter",
+      "rate": 920000.0,
+      "unit": "system",
+      "rate_type": "vendor_quote",
+      "source": "Tata Power Solar Commercial Quote #TPS-2024-512",
+      "confidence": "high",
+      "labor_included": true,
+      "gst_included": true,
+      "notes": "Exceeds standard ₹8L budget cap unless subsidized or capital phased"
+    },
+    {
+      "code": "GREEN-ROOF-MODULAR",
+      "description": "Extensive modular sedum tray green roof with drainage layer and root barrier (wet load 260 kg/m2)",
+      "rate": 2200.0,
+      "unit": "m2",
+      "rate_type": "estimate",
+      "source": "Urban Landscape Contractor Estimate Mumbai 2024",
+      "confidence": "medium",
+      "labor_included": true,
+      "gst_included": false,
+      "notes": "High structural load and ongoing maintenance requirements"
+    }
+  ]
+}

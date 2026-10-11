@@ -1,0 +1,27 @@
+# ClimateFit RoofLab (AmpFibian) — Assumptions Register
+
+Version 1.0 | October 2026 | Location Context: Mumbai, Maharashtra, India
+
+| parameter_id | value / min / max | unit | source_type | source_reference | geography / period | confidence | used_by | validation_status | notes |
+|---|---|---|---|---|---|---|---|---|---|
+| `rwh_runoff_rcc_bare` | 0.85 (0.80 - 0.90) | dimensionless | Official Engineering Standard | CPWD Manual on Artificial Recharge / IS 15797:2008 Table 1 | India / Standard | High | Water model | Checked | Concrete slab with smooth bitumen/screed surface |
+| `rwh_runoff_cool_roof` | 0.88 (0.85 - 0.92) | dimensionless | Technical Literature | Manufacturer Datasheet & CRRC Guidelines | India / 2024 | Medium | Water model | Cross-checked | Elastomeric coating reduces micro-porosity and slightly enhances water runoff |
+| `rwh_runoff_green_roof` | 0.40 (0.30 - 0.50) | dimensionless | Academic Study | FLL Guidelines / CPCB Green Infrastructure Guide | Urban India / 2023 | Medium | Water model | Unverified locally | High retention in media substrate; requires drainage layer |
+| `rwh_first_flush_depth` | 1.5 (1.0 - 2.0) | mm | Official Standard | IS 15797:2008 & WHO Rainwater Harvesting Guidance | Tropical / Coastal | High | Water model | Checked | Initial dirty wash water diverted after prolonged dry spells (>3 days) |
+| `rwh_filter_efficiency` | 0.92 (0.88 - 0.95) | dimensionless | Manufacturer Test | Dual-stage SS wire mesh + gravel filter datasheet | Mumbai / 2024 | High | Water model | Checked | Operational leaf guard & centrifugal vortex filter capture rate |
+| `heat_rcc_thickness` | 0.150 (0.125 - 0.175) | m | Building Specification | Structural drawings for typical RCC hostel slab | Mumbai / 2010s | High | Heat model | Checked | 150mm reinforced cement concrete slab |
+| `heat_rcc_conductivity` | 1.58 (1.40 - 1.75) | W/m·K | Standard Building Code | IS 3792 / Energy Conservation Building Code (ECBC 2017) | India / 2017 | High | Heat model | Checked | Standard density (2400 kg/m³) concrete |
+| `heat_brickbat_thickness` | 0.050 (0.040 - 0.075) | m | Architectural Standard | Typical Mumbai terrace brick-bat coba waterproofing | Mumbai / Standard | High | Heat model | Checked | Traditional slope and weathering layer |
+| `heat_brickbat_conductivity` | 0.81 (0.70 - 0.90) | W/m·K | Standard Reference | SP 41 (Handbook on Functional Requirements of Buildings) | India | High | Heat model | Checked | Lime/cement mortar with broken clay bricks |
+| `heat_xps_thickness` | 0.050 (0.025 - 0.075) | m | Manufacturer Spec | Extruded Polystyrene (XPS) insulation board standard | India / 2024 | High | Heat model | Checked | High compressive strength over-deck insulation |
+| `heat_xps_conductivity` | 0.034 (0.030 - 0.038) | W/m·K | Manufacturer Datasheet | Supreme Petrochem / Owens Corning India | India / 2024 | High | Heat model | Checked | Thermal insulation layer |
+| `heat_coating_reflectance_fresh` | 0.82 (0.78 - 0.85) | dimensionless | Certified Lab Test | Cool Roof Rating Council (CRRC) / BEE Standard | India / 2023 | High | Heat model | Checked | Initial high SRI solar reflectance |
+| `heat_coating_reflectance_aged` | 0.70 (0.65 - 0.75) | dimensionless | Empirical Literature | 3-year weathering in coastal Mumbai climate | Mumbai / 2024 | Medium | Heat model | Checked | Conservative 3-year aged reflectance accounting for dust and monsoon soiling |
+| `heat_baseline_absorptance` | 0.75 (0.70 - 0.80) | dimensionless | Empirical Measurement | Weathered concrete / brick-bat terrace surface | Mumbai / 2024 | High | Heat model | Checked | Baseline solar absorptance (α = 1 - 0.25) |
+| `heat_solar_irradiance_peak` | 850 (750 - 950) | W/m² | Meteorological Data | IMD Santacruz solar insolation April-May peak hours | Mumbai / 2023 | High | Heat model | Checked | Clear sky summer solar flux at 13:00 IST |
+| `heat_outside_convection_ho` | 19.0 (15.0 - 24.0) | W/m²·K | ASHRAE Standard | ASHRAE Fundamentals Chapter 26 (summer wind ~3 m/s) | Coastal / Summer | High | Heat model | Checked | Combined exterior convective + radiative heat transfer coefficient |
+| `cost_cool_roof_per_m2` | 185 (150 - 220) | INR / m² | Schedule Rate + Vendor Quote | Maha PWD SSR 2023-24 Item 14.12 & Asian Paints SmartCare | Mumbai / 2024 | High | Cost model | Checked | Primer + 2 coats elastomeric high-SRI coating with 5-year warranty |
+| `cost_rwh_filter_firstflush` | 45000 (38000 - 55000) | INR / system | Vendor Quotation | RainWater Harvest Solutions Mumbai quote #RWH-2024-88 | Mumbai / 2024 | High | Cost model | Checked | Includes dual first-flush diverter, SS filter, bypass assembly & valves |
+| `cost_storage_tank_per_liter` | 6.5 (5.5 - 7.5) | INR / Liter | Commercial Distributor Quote | Sintex / Vectus 4-layer antimicrobial tank with base slab | Mumbai / 2024 | High | Cost model | Checked | Ground-level installation including foundation PCC pad & booster pump connection |
+| `cost_xps_insulation_per_m2` | 650 (550 - 750) | INR / m² | Maha PWD SSR 2023-24 | Item 22.45 Over-deck insulation + protective screed | Mumbai / 2024 | Medium | Cost model | Checked | 50mm XPS boards with geotextile separation layer & 40mm screed |
+| `nonpotable_demand_per_student` | 40 (35 - 45) | L / person / day | NBC 2016 Part 9 | National Building Code of India 2016 for residential hostels | India / Standard | High | Water model | Checked | Flushing (30 L) + cleaning & floor wash (10 L) |
