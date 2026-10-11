@@ -14,7 +14,8 @@ export const AppShell: React.FC = () => {
         initialTab === 'compare' ||
         initialTab === 'evidence' ||
         initialTab === 'reports' ||
-        initialTab === 'overview'
+        initialTab === 'overview' ||
+        initialTab === 'history'
           ? initialTab
           : undefined
       }

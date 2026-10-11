@@ -185,6 +185,7 @@ export const OverviewView: React.FC<OverviewViewProps> = ({
 
           <div style={{ display: 'flex', gap: '10px' }}>
             <button
+              id="btn-view-assembly-details"
               onClick={() => onSelectPackageForDetail(recommended)}
               className="btn btn-secondary"
             >
@@ -192,6 +193,7 @@ export const OverviewView: React.FC<OverviewViewProps> = ({
             </button>
 
             <button
+              id="btn-goto-compare"
               onClick={onNavigateToCompare}
               className="btn btn-secondary"
             >
@@ -200,6 +202,7 @@ export const OverviewView: React.FC<OverviewViewProps> = ({
             </button>
 
             <button
+              id="btn-goto-reports"
               onClick={onNavigateToReports}
               className="btn btn-primary"
             >

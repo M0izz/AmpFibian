@@ -24,7 +24,7 @@ def test_user_isolation_create_and_list():
         "existing_roof_construction": {
             "type": "rcc",
             "layers": [{"name": "slab", "thickness_m": 0.15, "conductivity_w_mk": 1.58}],
-            "surface": {"solar_absorptance": 0.75, "thermal_emittance": 0.90, "runoff_coefficient": 0.85}
+            "surface": {"finish": "bare_concrete", "solar_absorptance": 0.75, "solar_reflectance": 0.25, "thermal_emittance": 0.90, "runoff_coefficient": 0.85}
         },
         "water_demand": {
             "occupancy_students": 150,

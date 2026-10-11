@@ -1,7 +1,7 @@
 import type { BuildingProfile, SimulationSnapshot } from "../types";
 import { getAuthHeaders } from "./session";
 
-const API_BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:8005";
+const API_BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:8000";
 
 export const DEFAULT_MUMBAI_HOSTEL: BuildingProfile = {
   id: "bldg_mumbai_hostel_01",
@@ -102,3 +102,33 @@ export async function fetchUserRuns(): Promise<SimulationSnapshot[]> {
     return [];
   }
 }
+
+export async function deleteSimulationRun(runId: string): Promise<boolean> {
+  try {
+    const authHeaders = await getAuthHeaders();
+    const res = await fetch(`${API_BASE_URL}/simulations/${runId}`, {
+      method: "DELETE",
+      headers: authHeaders
+    });
+    return res.ok;
+  } catch (err) {
+    console.warn("Could not delete simulation run:", err);
+    return false;
+  }
+}
+
+export async function fetchExportUrl(runId: string): Promise<string | null> {
+  try {
+    const authHeaders = await getAuthHeaders();
+    const res = await fetch(`${API_BASE_URL}/simulations/${runId}/export-url`, {
+      headers: authHeaders
+    });
+    if (!res.ok) return null;
+    const data = await res.json();
+    return data.url;
+  } catch (err) {
+    console.warn("Could not fetch export URL:", err);
+    return null;
+  }
+}
+

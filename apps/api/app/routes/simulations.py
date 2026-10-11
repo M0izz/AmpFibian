@@ -82,9 +82,25 @@ def create_simulation(req: SimulationRequest, user_id: str = Depends(get_current
 
     return snapshot
 
+from ..services.storage import storage_service
+
 @router.get("/{run_id}")
 def get_simulation_run(run_id: str, user_id: str = Depends(get_current_user_id)):
     snapshot = persistence_service.get_run(run_id, user_id=user_id)
     if not snapshot:
         raise HTTPException(status_code=404, detail=f"Simulation run '{run_id}' not found")
     return snapshot
+
+@router.delete("/{run_id}")
+def delete_simulation_run(run_id: str, user_id: str = Depends(get_current_user_id)):
+    success = persistence_service.delete_run(run_id, user_id=user_id)
+    return {"status": "deleted", "run_id": run_id, "success": success}
+
+@router.get("/{run_id}/export-url")
+def get_run_export_url(run_id: str, user_id: str = Depends(get_current_user_id)):
+    snapshot = persistence_service.get_run(run_id, user_id=user_id)
+    if not snapshot:
+        raise HTTPException(status_code=404, detail=f"Simulation run '{run_id}' not found")
+    url = storage_service.upload_run_report(user_id, run_id, snapshot)
+    return {"run_id": run_id, "url": url}
+

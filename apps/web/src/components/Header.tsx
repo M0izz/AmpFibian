@@ -9,6 +9,7 @@ interface HeaderProps {
   onNavigateToAssessment: () => void;
   onNavigateToReports: () => void;
   onNavigateToLanding?: () => void;
+  onNavigateToHistory?: () => void;
 }
 
 export const Header: React.FC<HeaderProps> = ({
@@ -16,7 +17,8 @@ export const Header: React.FC<HeaderProps> = ({
   runId,
   onNavigateToAssessment,
   onNavigateToReports,
-  onNavigateToLanding
+  onNavigateToLanding,
+  onNavigateToHistory
 }) => {
   return (
     <header style={{
@@ -109,7 +111,7 @@ export const Header: React.FC<HeaderProps> = ({
               <span>{runId}</span>
             </div>
           )}
-          <UserMenu />
+          <UserMenu onNavigateToHistory={onNavigateToHistory} />
 
           <button
             id="header-edit-assessment-btn"

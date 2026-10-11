@@ -160,4 +160,30 @@ class PersistenceService:
         runs.sort(key=lambda r: r.get("created_at", ""), reverse=True)
         return runs
 
+    def delete_run(self, run_id: str, user_id: str) -> bool:
+        """
+        Deletes a run belonging to the user from memory, local storage, and DynamoDB.
+        """
+        # Remove from cache
+        if run_id in self._memory_cache and self._memory_cache[run_id].get("user_id") == user_id:
+            del self._memory_cache[run_id]
+
+        # Remove local file
+        user_file = os.path.join(SAVED_RUNS_DIR, user_id, f"{run_id}.json")
+        if os.path.exists(user_file):
+            try:
+                os.remove(user_file)
+            except Exception as e:
+                print(f"[Persistence] Error removing user file: {e}")
+
+        # Remove from DynamoDB
+        if self.mode == "dynamodb" and self._dynamodb_client:
+            try:
+                table = self._dynamodb_client.Table(self.dynamodb_table_name)
+                table.delete_item(Key={"user_id": user_id, "run_id": run_id})
+            except Exception as e:
+                print(f"[Persistence] DynamoDB delete error: {e}")
+
+        return True
+
 persistence_service = PersistenceService()

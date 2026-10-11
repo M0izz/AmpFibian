@@ -142,9 +142,11 @@ export const AssessmentView: React.FC<AssessmentViewProps> = ({
 
               <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '16px', marginBottom: '20px' }}>
                 <div>
-                  <label className="form-label">Building / Campus Name</label>
+                  <label htmlFor="input-building-name" className="form-label">Building / Campus Name</label>
                   <input
+                    id="input-building-name"
                     type="text"
+                    maxLength={80}
                     className="form-input"
                     value={formData.name}
                     onChange={e => setFormData({ ...formData, name: e.target.value })}
@@ -152,8 +154,9 @@ export const AssessmentView: React.FC<AssessmentViewProps> = ({
                 </div>
 
                 <div>
-                  <label className="form-label">Location (City & Neighborhood)</label>
+                  <label htmlFor="input-location" className="form-label">Location (City & Neighborhood)</label>
                   <input
+                    id="input-location"
                     type="text"
                     className="form-input"
                     value={`${formData.location.city} (${formData.location.neighborhood})`}
@@ -162,9 +165,11 @@ export const AssessmentView: React.FC<AssessmentViewProps> = ({
                 </div>
 
                 <div>
-                  <label className="form-label">Gross Roof Slab Footprint (m²)</label>
+                  <label htmlFor="input-gross-area" className="form-label">Gross Roof Slab Footprint (m²)</label>
                   <input
+                    id="input-gross-area"
                     type="number"
+                    min="50"
                     className="form-input"
                     value={formData.geometry.gross_roof_area_m2}
                     onChange={e => handleGrossChange(Number(e.target.value))}
@@ -205,9 +210,11 @@ export const AssessmentView: React.FC<AssessmentViewProps> = ({
 
               <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '16px', marginBottom: '20px' }}>
                 <div>
-                  <label className="form-label">Clear Access & Parapet Corridors (m²)</label>
+                  <label htmlFor="input-access-area" className="form-label">Clear Access & Parapet Corridors (m²)</label>
                   <input
+                    id="input-access-area"
                     type="number"
+                    min="0"
                     className="form-input"
                     value={formData.geometry.clear_access_corridors_m2}
                     onChange={e => handleAccessChange(Number(e.target.value))}
@@ -313,9 +320,12 @@ export const AssessmentView: React.FC<AssessmentViewProps> = ({
 
               <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '16px', marginBottom: '20px' }}>
                 <div>
-                  <label className="form-label">Hostel Student Occupancy</label>
+                  <label htmlFor="input-occupancy" className="form-label">Hostel Student Occupancy</label>
                   <input
+                    id="input-occupancy"
                     type="number"
+                    step="1"
+                    min="1"
                     className="form-input"
                     value={formData.water_demand.occupancy_students}
                     onChange={e => {
@@ -334,9 +344,11 @@ export const AssessmentView: React.FC<AssessmentViewProps> = ({
                 </div>
 
                 <div>
-                  <label className="form-label">Non-Potable Allocation (L / person / day)</label>
+                  <label htmlFor="input-demand-lpd" className="form-label">Non-Potable Allocation (L / person / day)</label>
                   <input
+                    id="input-demand-lpd"
                     type="number"
+                    min="1"
                     className="form-input"
                     value={formData.water_demand.non_potable_demand_liters_per_capita_day}
                     onChange={e => {
@@ -385,10 +397,12 @@ export const AssessmentView: React.FC<AssessmentViewProps> = ({
 
               <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '16px', marginBottom: '20px' }}>
                 <div>
-                  <label className="form-label">Available Capital Budget Cap (₹ INR)</label>
+                  <label htmlFor="input-budget" className="form-label">Available Capital Budget Cap (₹ INR)</label>
                   <input
+                    id="input-budget"
                     type="number"
                     step="50000"
+                    min="100000"
                     className="form-input"
                     value={formData.constraints_and_budget.budget_cap_inr}
                     onChange={e => setFormData({
@@ -526,6 +540,7 @@ export const AssessmentView: React.FC<AssessmentViewProps> = ({
             <div>
               {currentStep > 1 ? (
                 <button
+                  id="btn-back-step"
                   type="button"
                   onClick={() => setCurrentStep(currentStep - 1)}
                   className="btn btn-secondary"
@@ -535,6 +550,7 @@ export const AssessmentView: React.FC<AssessmentViewProps> = ({
                 </button>
               ) : (
                 <button
+                  id="btn-reset"
                   type="button"
                   onClick={handleReset}
                   className="btn btn-secondary"
@@ -549,6 +565,7 @@ export const AssessmentView: React.FC<AssessmentViewProps> = ({
             <div style={{ display: 'flex', gap: '10px' }}>
               {currentStep < 5 ? (
                 <button
+                  id="btn-next-step"
                   type="button"
                   onClick={() => setCurrentStep(currentStep + 1)}
                   className="btn btn-primary"
@@ -558,6 +575,7 @@ export const AssessmentView: React.FC<AssessmentViewProps> = ({
                 </button>
               ) : (
                 <button
+                  id="btn-save-run"
                   type="submit"
                   disabled={isSimulating}
                   className="btn btn-primary"

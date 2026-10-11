@@ -69,6 +69,7 @@ export const BuildingContextBar: React.FC<BuildingContextBarProps> = ({
 
         <div style={{ display: 'flex', gap: '4px' }}>
           <button
+            id="btn-rain-dry"
             onClick={() => onSelectRainfallYear('2015_dry')}
             className={`btn ${rainfallYear === '2015_dry' ? 'btn-primary' : 'btn-secondary'}`}
             style={{
@@ -83,6 +84,7 @@ export const BuildingContextBar: React.FC<BuildingContextBarProps> = ({
           </button>
 
           <button
+            id="btn-rain-median"
             onClick={() => onSelectRainfallYear('2020_median')}
             className={`btn ${rainfallYear === '2020_median' ? 'btn-primary' : 'btn-secondary'}`}
             style={{ padding: '4px 10px', fontSize: '0.75rem' }}
@@ -92,6 +94,7 @@ export const BuildingContextBar: React.FC<BuildingContextBarProps> = ({
           </button>
 
           <button
+            id="btn-rain-wet"
             onClick={() => onSelectRainfallYear('2019_wet')}
             className={`btn ${rainfallYear === '2019_wet' ? 'btn-primary' : 'btn-secondary'}`}
             style={{

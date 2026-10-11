@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import type { BuildingProfile, RetrofitPackage, SimulationSnapshot } from '../types';
+import { useToast } from '../lib/toast';
 
 interface ReportsViewProps {
   building: BuildingProfile;
@@ -15,6 +16,7 @@ export const ReportsView: React.FC<ReportsViewProps> = ({
   rainfallYear,
 }) => {
   const [copySuccess, setCopySuccess] = useState(false);
+  const { showToast } = useToast();
 
   const formatInr = (val: number) => '₹' + val.toLocaleString('en-IN');
   const formatKL = (liters: number) => (liters / 1000).toLocaleString('en-IN', { maximumFractionDigits: 1 }) + ' kL';
@@ -49,6 +51,7 @@ export const ReportsView: React.FC<ReportsViewProps> = ({
     a.download = `Roofwise_Assessment_${building.name.replace(/\s+/g, '_')}_${selectedPackage.package_id}.json`;
     a.click();
     URL.revokeObjectURL(url);
+    showToast('JSON Exported', 'Full engineering assessment snapshot downloaded.', 'success');
   };
 
   const handleCopyMarkdown = () => {
@@ -78,7 +81,10 @@ Results are engineering-model estimates based on the selected building inputs an
 `;
     navigator.clipboard.writeText(text).then(() => {
       setCopySuccess(true);
+      showToast('Copied to Clipboard', 'Summary report copied as Markdown text.', 'success');
       setTimeout(() => setCopySuccess(false), 2500);
+    }).catch(() => {
+      showToast('Clipboard Error', 'Please allow clipboard permissions.', 'error');
     });
   };
 

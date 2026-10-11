@@ -2,7 +2,11 @@ import React, { useState, useEffect } from 'react';
 import { UserCheck, ShieldCheck, RefreshCw, Key } from 'lucide-react';
 import { getAnonymousIdentity, clearSession } from '../lib/session';
 
-export const UserMenu: React.FC = () => {
+interface UserMenuProps {
+  onNavigateToHistory?: () => void;
+}
+
+export const UserMenu: React.FC<UserMenuProps> = ({ onNavigateToHistory }) => {
   const [identityId, setIdentityId] = useState<string>('');
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
@@ -93,6 +97,29 @@ export const UserMenu: React.FC = () => {
                 {identityId || 'anon_session'}
               </div>
             </div>
+
+            {onNavigateToHistory && (
+              <button
+                id="user-menu-my-runs-btn"
+                onClick={() => {
+                  setIsOpen(false);
+                  onNavigateToHistory();
+                }}
+                className="btn btn-secondary"
+                style={{
+                  width: '100%',
+                  fontSize: '0.76rem',
+                  padding: '6px 10px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  gap: '6px',
+                  marginBottom: '8px'
+                }}
+              >
+                <span>View My Saved Runs</span>
+              </button>
+            )}
 
             <button
               id="user-menu-reset-session-btn"

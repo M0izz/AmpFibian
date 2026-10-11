@@ -10,13 +10,16 @@ import { AssessmentView } from './views/AssessmentView';
 import { CompareOptionsView } from './views/CompareOptionsView';
 import { EvidenceModelsView } from './views/EvidenceModelsView';
 import { ReportsView } from './views/ReportsView';
+import { HistoryView } from './views/HistoryView';
+import { ToastProvider } from './lib/toast';
+import { ToastContainer } from './components/Toast';
 
 interface AppProps {
   initialDestination?: Destination;
   onNavigateToLanding?: () => void;
 }
 
-export const App: React.FC<AppProps> = ({ initialDestination, onNavigateToLanding }) => {
+const AppContent: React.FC<AppProps> = ({ initialDestination, onNavigateToLanding }) => {
   const [building, setBuilding] = useState<BuildingProfile>(DEFAULT_MUMBAI_HOSTEL);
   const [rainfallYear, setRainfallYear] = useState<string>('2020_median');
   const [simulation, setSimulation] = useState<SimulationSnapshot | null>(null);
@@ -34,7 +37,7 @@ export const App: React.FC<AppProps> = ({ initialDestination, onNavigateToLandin
         if (!isMounted) return;
         setSimulation(res);
         // Default to recommended balanced package, or first available
-        const recommended = res.profile_recommendations.balanced || res.packages[0];
+        const recommended = res.profile_recommendations?.balanced || res.packages[0];
         setSelectedPackage(recommended);
         setIsSimulating(false);
       })
@@ -48,10 +51,12 @@ export const App: React.FC<AppProps> = ({ initialDestination, onNavigateToLandin
     };
   }, [building, rainfallYear]);
 
-  const activePackage = selectedPackage || (simulation ? (simulation.profile_recommendations.balanced || simulation.packages[0]) : null);
+  const activePackage = selectedPackage || (simulation ? (simulation.profile_recommendations?.balanced || simulation.packages[0]) : null);
 
   return (
     <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column', background: 'var(--bg-app)' }}>
+      <ToastContainer />
+
       {/* 1. Persistent Application Header */}
       <Header
         building={building}
@@ -59,9 +64,10 @@ export const App: React.FC<AppProps> = ({ initialDestination, onNavigateToLandin
         onNavigateToAssessment={() => setCurrentDestination('assessment')}
         onNavigateToReports={() => setCurrentDestination('reports')}
         onNavigateToLanding={onNavigateToLanding}
+        onNavigateToHistory={() => setCurrentDestination('history')}
       />
 
-      {/* 2. Primary Navigation Bar (5 Destinations) */}
+      {/* 2. Primary Navigation Bar */}
       <Navigation
         currentDestination={currentDestination}
         onNavigate={(dest) => setCurrentDestination(dest)}
@@ -70,7 +76,7 @@ export const App: React.FC<AppProps> = ({ initialDestination, onNavigateToLandin
       {/* 3. Main Content Container */}
       <main className="container" style={{ flex: 1, paddingBottom: '56px' }}>
         {/* Context bar visible on relevant views */}
-        {currentDestination !== 'assessment' && currentDestination !== 'reports' && (
+        {currentDestination !== 'assessment' && currentDestination !== 'reports' && currentDestination !== 'history' && (
           <BuildingContextBar
             building={building}
             rainfallYear={rainfallYear}
@@ -78,7 +84,18 @@ export const App: React.FC<AppProps> = ({ initialDestination, onNavigateToLandin
           />
         )}
 
-        {isSimulating && !simulation ? (
+        {currentDestination === 'history' ? (
+          <HistoryView
+            onLoadRun={(snap) => {
+              if (snap.building_input) setBuilding(snap.building_input);
+              setSimulation(snap);
+              const rec = snap.profile_recommendations?.balanced || snap.packages?.[0];
+              setSelectedPackage(rec);
+              setCurrentDestination('overview');
+            }}
+            onNavigateToAssessment={() => setCurrentDestination('assessment')}
+          />
+        ) : isSimulating && !simulation ? (
           <div style={{
             display: 'flex',
             flexDirection: 'column',
@@ -189,11 +206,19 @@ export const App: React.FC<AppProps> = ({ initialDestination, onNavigateToLandin
           <div style={{ display: 'flex', alignItems: 'center', gap: '16px', fontSize: '0.75rem' }}>
             <span>Engine: v1.2.0 (Deterministic)</span>
             <span>Standards: IS 15797 / IS 3792 / NBC 2016</span>
-            <span style={{ color: 'var(--green-primary)', fontWeight: 600 }}>● FastAPI Connected (:8005)</span>
+            <span style={{ color: 'var(--green-primary)', fontWeight: 600 }}>● FastAPI Connected (:8000)</span>
           </div>
         </div>
       </footer>
     </div>
+  );
+};
+
+export const App: React.FC<AppProps> = (props) => {
+  return (
+    <ToastProvider>
+      <AppContent {...props} />
+    </ToastProvider>
   );
 };
 

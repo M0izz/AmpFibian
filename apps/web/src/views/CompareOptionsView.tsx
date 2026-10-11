@@ -171,6 +171,7 @@ export const CompareOptionsView: React.FC<CompareOptionsViewProps> = ({
                     {/* Actions */}
                     <td style={{ padding: '14px 18px', textAlign: 'right' }}>
                       <button
+                        id={`btn-select-pkg-${pkg.package_id}`}
                         onClick={(e) => {
                           e.stopPropagation();
                           onSelectPackage(pkg);
@@ -204,9 +205,11 @@ export const CompareOptionsView: React.FC<CompareOptionsViewProps> = ({
               </h3>
             </div>
             <button
+              id="btn-close-drawer"
               onClick={() => setDetailDrawerPkg(null)}
               className="btn btn-secondary"
               style={{ padding: '4px 8px' }}
+              aria-label="Close details drawer"
             >
               <X size={16} />
             </button>
