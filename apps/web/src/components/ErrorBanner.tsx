@@ -31,7 +31,7 @@ export const ErrorBanner: React.FC<ErrorBannerProps> = ({
         color: '#991B1B'
       }}
     >
-      <AlertCircle size={20} color="#DC2626" style={{ flexShrink: 0, marginTop: '2px' }} />
+      <AlertCircle size={20} color="#F0645F" style={{ flexShrink: 0, marginTop: '2px' }} />
       <div style={{ flex: 1 }}>
         <div style={{ fontWeight: 700, fontSize: '0.88rem', marginBottom: '4px' }}>
           {title}
@@ -49,7 +49,7 @@ export const ErrorBanner: React.FC<ErrorBannerProps> = ({
               alignItems: 'center',
               gap: '6px',
               padding: '6px 12px',
-              background: '#DC2626',
+              background: '#F0645F',
               color: '#FFFFFF',
               border: 'none',
               borderRadius: 'var(--radius-sm, 6px)',
@@ -69,7 +69,7 @@ export const ErrorBanner: React.FC<ErrorBannerProps> = ({
           style={{
             background: 'transparent',
             border: 'none',
-            color: '#EF4444',
+            color: '#F0645F',
             cursor: 'pointer',
             padding: '4px',
             display: 'flex',

@@ -36,7 +36,7 @@ export const Navbar: React.FC<NavbarProps> = ({
             width: '42px',
             height: '42px',
             borderRadius: '10px',
-            background: 'linear-gradient(135deg, #06b6d4 0%, #10b981 100%)',
+            background: 'linear-gradient(135deg, #4FA3D9 0%, #3ECF8E 100%)',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
@@ -60,7 +60,7 @@ export const Navbar: React.FC<NavbarProps> = ({
               <span className="mono-badge badge-cyan" style={{ fontSize: '0.68rem', padding: '1px 6px' }}>
                 RoofLab v1.0
               </span>
-              <span className="mono-badge" style={{ fontSize: '0.68rem', color: '#10b981', borderColor: 'rgba(16, 185, 129, 0.3)' }}>
+              <span className="mono-badge" style={{ fontSize: '0.68rem', color: '#3ECF8E', borderColor: 'rgba(16, 185, 129, 0.3)' }}>
                 <Cloud size={11} style={{ marginRight: '3px' }} /> AWS Powered
               </span>
             </div>

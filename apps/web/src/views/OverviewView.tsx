@@ -33,140 +33,117 @@ export const OverviewView: React.FC<OverviewViewProps> = ({
   const budgetUsedPct = Math.round((recommended.boq.total_cost_inr / budgetCap) * 100);
   const budgetRemaining = Math.max(0, budgetCap - recommended.boq.total_cost_inr);
 
+  // Coated area comes from the bill of quantities, not from a hardcoded figure
+  const coatingItem = recommended.boq.items.find((i) => i.intervention_id === 'cool_roof_coating');
+  const sizingDetail =
+    [
+      recommended.storage_capacity_liters > 0 ? 'Ground tank array' : null,
+      coatingItem ? `${Math.round(coatingItem.quantity)} m² roof coating` : null
+    ]
+      .filter(Boolean)
+      .join(' · ') || 'No tank or coating in this package';
+
   return (
     <div className="animate-fade-in" style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
-      {/* 1. Visually Prominent Recommendation Panel */}
+      {/* 1. Recommendation panel */}
       <div className="card" style={{
         padding: '28px',
-        border: '1.5px solid var(--green-border)',
-        background: 'linear-gradient(180deg, var(--bg-surface) 0%, rgba(15, 23, 42, 0.95) 100%)',
+        border: '1px solid var(--border-strong)',
+        background: 'var(--bg-surface)',
         position: 'relative',
-        boxShadow: 'var(--shadow-md)'
+        boxShadow: 'var(--shadow-md), inset 0 1px 0 var(--green-border)'
       }}>
-        {/* Top Badges */}
-        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '14px', flexWrap: 'wrap', gap: '10px' }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-            <span className="badge badge-green" style={{ fontSize: '0.8rem', padding: '4px 10px', fontWeight: 600 }}>
-              <Sparkles size={14} />
-              Recommended Retrofit Package
+        {/* Top badges */}
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '16px', flexWrap: 'wrap', gap: '10px' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '8px', flexWrap: 'wrap' }}>
+            <span className="badge badge-green" style={{ fontSize: '0.75rem', padding: '2px 10px', fontWeight: 600 }}>
+              <Sparkles size={13} />
+              Recommended package
             </span>
-            <span className="badge badge-neutral" style={{ fontSize: '0.78rem' }}>
-              Pareto Optimal Knee-Point
+            <span className="badge badge-neutral" style={{ fontSize: '0.75rem' }} title="Pareto-optimal knee point">
+              Best balance of cost, heat and water
             </span>
           </div>
 
-          <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-            <span className="badge badge-green" style={{ fontSize: '0.75rem' }}>
-              <CheckCircle2 size={13} />
-              100% Feasible (Passes All Hard Constraints)
-            </span>
-          </div>
+          <span className="badge badge-neutral" style={{ fontSize: '0.75rem' }}>
+            <CheckCircle2 size={13} style={{ color: 'var(--green-primary)' }} />
+            Passes all hard constraints
+          </span>
         </div>
 
-        {/* Headline Title */}
+        {/* Headline */}
         <h1 style={{
-          fontFamily: 'var(--font-display)',
-          fontSize: '1.85rem',
-          fontWeight: 700,
+          fontSize: '1.65rem',
+          fontWeight: 600,
           color: 'var(--text-main)',
           marginBottom: '8px',
-          letterSpacing: '-0.02em'
+          letterSpacing: '-0.03em',
+          lineHeight: 1.2
         }}>
           {recommended.name}
         </h1>
 
         <p style={{
-          fontSize: '0.95rem',
-          color: 'var(--text-secondary)',
-          lineHeight: '1.55',
-          maxWidth: '880px',
-          marginBottom: '24px'
+          fontSize: '0.92rem',
+          color: 'var(--text-muted)',
+          lineHeight: '1.6',
+          maxWidth: '760px',
+          marginBottom: '28px'
         }}>
           {recommended.description}
         </p>
 
-        {/* 4 Core Decision Numbers */}
+        {/* Four decision numbers — identical structure, semantic colour only on the marker */}
         <div style={{
           display: 'grid',
           gridTemplateColumns: 'repeat(auto-fit, minmax(210px, 1fr))',
-          gap: '14px',
+          gap: '12px',
           marginBottom: '24px'
         }}>
-          {/* Cost Card */}
-          <div style={{
-            background: 'var(--bg-surface)',
-            border: '1px solid var(--border-default)',
-            borderRadius: 'var(--radius-md)',
-            padding: '16px',
-            boxShadow: 'var(--shadow-xs)'
-          }}>
-            <div style={{ fontSize: '0.75rem', fontWeight: 500, color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.04em' }}>
-              Total Upfront Capital
+          {[
+            {
+              label: 'Upfront capital',
+              marker: 'var(--amber-primary)',
+              value: `₹${(recommended.boq.total_cost_inr / 100000).toFixed(2)} Lakhs`,
+              sub: `${budgetUsedPct}% of budget used · ₹${(budgetRemaining / 100000).toFixed(2)}L cushion`
+            },
+            {
+              label: 'Non-potable water reliability',
+              marker: 'var(--water-blue)',
+              value: `${recommended.water_summary.demand_coverage_percent}%`,
+              sub: `${(recommended.water_summary.total_served_demand_liters / 1000000).toFixed(2)}M liters supplied per year`
+            },
+            {
+              label: 'Top-floor peak heat cut',
+              marker: 'var(--green-primary)',
+              value: `-${recommended.heat_summary.modelled_reduction_percent}%`,
+              sub: `-${recommended.heat_summary.top_floor_peak_conductive_heat_reduction_kw} kW peak envelope load`
+            },
+            {
+              label: 'Physical sizing',
+              marker: 'var(--text-dim)',
+              value: `${recommended.storage_capacity_liters / 1000} kL`,
+              sub: sizingDetail
+            }
+          ].map((k) => (
+            <div key={k.label} style={{
+              background: 'var(--bg-app)',
+              border: '1px solid var(--border-default)',
+              borderRadius: 'var(--radius-md)',
+              padding: '16px 18px'
+            }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '0.78rem', fontWeight: 500, color: 'var(--text-muted)' }}>
+                <span style={{ width: '6px', height: '6px', borderRadius: '50%', background: k.marker, flexShrink: 0 }} />
+                {k.label}
+              </div>
+              <div style={{ fontSize: '1.75rem', fontWeight: 600, letterSpacing: '-0.03em', color: 'var(--text-main)', marginTop: '10px', lineHeight: 1.1 }}>
+                {k.value}
+              </div>
+              <div style={{ fontSize: '0.78rem', color: 'var(--text-muted)', marginTop: '8px', lineHeight: 1.45 }}>
+                {k.sub}
+              </div>
             </div>
-            <div style={{ fontFamily: 'var(--font-mono)', fontSize: '1.65rem', fontWeight: 700, color: 'var(--text-main)', marginTop: '4px' }}>
-              ₹{(recommended.boq.total_cost_inr / 100000).toFixed(2)} Lakhs
-            </div>
-            <div style={{ fontSize: '0.78rem', color: 'var(--green-primary)', fontWeight: 500, marginTop: '2px' }}>
-              {budgetUsedPct}% of budget used (₹{(budgetRemaining / 100000).toFixed(2)}L cushion)
-            </div>
-          </div>
-
-          {/* Water Outcome Card */}
-          <div style={{
-            background: 'var(--water-light)',
-            border: '1px solid var(--water-border)',
-            borderRadius: 'var(--radius-md)',
-            padding: '16px',
-            boxShadow: 'var(--shadow-xs)'
-          }}>
-            <div style={{ fontSize: '0.75rem', fontWeight: 500, color: 'var(--water-blue)', textTransform: 'uppercase', letterSpacing: '0.04em' }}>
-              Non-Potable Water Reliability
-            </div>
-            <div style={{ fontFamily: 'var(--font-mono)', fontSize: '1.65rem', fontWeight: 700, color: 'var(--water-blue)', marginTop: '4px' }}>
-              {recommended.water_summary.demand_coverage_percent}%
-            </div>
-            <div style={{ fontSize: '0.78rem', color: 'var(--text-secondary)', marginTop: '2px' }}>
-              {(recommended.water_summary.total_served_demand_liters / 1000000).toFixed(2)}M Liters supplied / year
-            </div>
-          </div>
-
-          {/* Heat Outcome Card */}
-          <div style={{
-            background: 'var(--green-light)',
-            border: '1px solid var(--green-border)',
-            borderRadius: 'var(--radius-md)',
-            padding: '16px',
-            boxShadow: 'var(--shadow-xs)'
-          }}>
-            <div style={{ fontSize: '0.75rem', fontWeight: 500, color: 'var(--green-primary)', textTransform: 'uppercase', letterSpacing: '0.04em' }}>
-              Top-Floor Peak Heat Cut
-            </div>
-            <div style={{ fontFamily: 'var(--font-mono)', fontSize: '1.65rem', fontWeight: 700, color: 'var(--green-primary)', marginTop: '4px' }}>
-              -{recommended.heat_summary.modelled_reduction_percent}%
-            </div>
-            <div style={{ fontSize: '0.78rem', color: 'var(--text-secondary)', marginTop: '2px' }}>
-              -{recommended.heat_summary.top_floor_peak_conductive_heat_reduction_kw} kW peak envelope load
-            </div>
-          </div>
-
-          {/* Storage & Area Card */}
-          <div style={{
-            background: 'var(--bg-surface)',
-            border: '1px solid var(--border-default)',
-            borderRadius: 'var(--radius-md)',
-            padding: '16px',
-            boxShadow: 'var(--shadow-xs)'
-          }}>
-            <div style={{ fontSize: '0.75rem', fontWeight: 500, color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.04em' }}>
-              Physical Sizing
-            </div>
-            <div style={{ fontFamily: 'var(--font-mono)', fontSize: '1.65rem', fontWeight: 700, color: 'var(--text-main)', marginTop: '4px' }}>
-              {recommended.storage_capacity_liters / 1000} kL
-            </div>
-            <div style={{ fontSize: '0.78rem', color: 'var(--text-secondary)', marginTop: '2px' }}>
-              Ground yard tank array • 520 m² roof coating
-            </div>
-          </div>
+          ))}
         </div>
 
         {/* Actions Row */}

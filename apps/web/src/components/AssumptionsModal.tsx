@@ -104,7 +104,7 @@ export const AssumptionsModal: React.FC<AssumptionsModalProps> = ({ isOpen, onCl
                   <td style={{ padding: '10px 12px', fontFamily: 'var(--font-mono)', color: 'var(--text-main)', fontWeight: 600 }}>
                     {item.id}
                   </td>
-                  <td style={{ padding: '10px 12px', fontFamily: 'var(--font-mono)', color: '#38bdf8' }}>
+                  <td style={{ padding: '10px 12px', fontFamily: 'var(--font-mono)', color: '#4FA3D9' }}>
                     {item.val}
                   </td>
                   <td style={{ padding: '10px 12px', color: 'var(--text-muted)' }}>
