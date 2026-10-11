@@ -258,10 +258,10 @@ export const HistoryView: React.FC<HistoryViewProps> = ({
 
                   <div>
                     <div style={{ fontSize: '0.72rem', color: 'var(--text-muted)', display: 'flex', alignItems: 'center', gap: '4px' }}>
-                      <Flame size={12} color="#D97706" />
+                      <Flame size={12} color="#C98A28" />
                       <span>Sol-Air ΔT</span>
                     </div>
-                    <div style={{ fontSize: '1.05rem', fontWeight: 700, color: '#D97706', marginTop: '2px' }}>
+                    <div style={{ fontSize: '1.05rem', fontWeight: 700, color: '#C98A28', marginTop: '2px' }}>
                       {recommended?.heat_summary ? `−${recommended.heat_summary.sol_air_temperature_delta_celsius.toFixed(1)}°C` : '—'}
                     </div>
                   </div>
@@ -308,7 +308,7 @@ export const HistoryView: React.FC<HistoryViewProps> = ({
                         borderRadius: 'var(--radius-sm)',
                         padding: '6px 8px',
                         cursor: 'pointer',
-                        color: '#DC2626'
+                        color: '#F0645F'
                       }}
                       title="Delete Run"
                     >

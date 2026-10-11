@@ -84,15 +84,15 @@ export const ParetoChart: React.FC<ParetoChartProps> = ({
         {/* Legend */}
         <div style={{ display: 'flex', gap: '14px', fontSize: '0.75rem', color: 'var(--text-muted)' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
-            <span style={{ width: '10px', height: '10px', borderRadius: '50%', background: '#06b6d4' }}></span>
+            <span style={{ width: '10px', height: '10px', borderRadius: '50%', background: '#4FA3D9' }}></span>
             <span>Balanced Knee</span>
           </div>
           <div style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
-            <span style={{ width: '10px', height: '10px', borderRadius: '50%', background: '#10b981' }}></span>
+            <span style={{ width: '10px', height: '10px', borderRadius: '50%', background: '#3ECF8E' }}></span>
             <span>Non-Dominated</span>
           </div>
           <div style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
-            <span style={{ width: '10px', height: '10px', borderRadius: '50%', background: '#f43f5e', border: '1px solid #fff' }}></span>
+            <span style={{ width: '10px', height: '10px', borderRadius: '50%', background: '#F0645F', border: '1px solid #fff' }}></span>
             <span>Infeasible (Hard-Filtered)</span>
           </div>
         </div>
@@ -162,7 +162,7 @@ export const ParetoChart: React.FC<ParetoChartProps> = ({
             y1={padTop}
             x2={budgetX}
             y2={padTop + chartH}
-            stroke="#f59e0b"
+            stroke="#E5A23A"
             strokeWidth="1.5"
             strokeDasharray="5 3"
           />
@@ -171,7 +171,7 @@ export const ParetoChart: React.FC<ParetoChartProps> = ({
             y={padTop + 16}
             fontSize="10"
             fontFamily="var(--font-mono)"
-            fill="#f59e0b"
+            fill="#E5A23A"
             fontWeight="bold"
           >
             Budget Cap (₹8 Lakhs)
@@ -182,7 +182,7 @@ export const ParetoChart: React.FC<ParetoChartProps> = ({
             <path
               d={frontierPath}
               fill="none"
-              stroke="#06b6d4"
+              stroke="#4FA3D9"
               strokeWidth="2.5"
               strokeOpacity="0.75"
               strokeDasharray="4 2"
@@ -201,20 +201,20 @@ export const ParetoChart: React.FC<ParetoChartProps> = ({
             let r = 7;
 
             if (!p.is_feasible) {
-              fillColor = '#f43f5e';
+              fillColor = '#F0645F';
               strokeColor = '#ffffff';
               r = 6;
             } else if (isKnee) {
-              fillColor = '#06b6d4';
-              strokeColor = '#38bdf8';
+              fillColor = '#4FA3D9';
+              strokeColor = '#4FA3D9';
               r = 10;
             } else if (p.profile_type === 'heat_first') {
-              fillColor = '#f59e0b';
-              strokeColor = '#fbbf24';
+              fillColor = '#E5A23A';
+              strokeColor = '#E5A23A';
               r = 8;
             } else if (p.profile_type === 'water_first') {
-              fillColor = '#10b981';
-              strokeColor = '#34d399';
+              fillColor = '#3ECF8E';
+              strokeColor = '#3ECF8E';
               r = 8;
             } else if (p.is_pareto_optimal) {
               fillColor = '#3b82f6';
@@ -304,18 +304,18 @@ export const ParetoChart: React.FC<ParetoChartProps> = ({
             </div>
             <div style={{ display: 'flex', justifyContent: 'space-between', gap: '12px', color: 'var(--text-muted)' }}>
               <span>Water Reliability:</span>
-              <strong style={{ fontFamily: 'var(--font-mono)', color: '#34d399' }}>
+              <strong style={{ fontFamily: 'var(--font-mono)', color: '#3ECF8E' }}>
                 {hoveredPkg.water_summary.demand_coverage_percent}%
               </strong>
             </div>
             <div style={{ display: 'flex', justifyContent: 'space-between', gap: '12px', color: 'var(--text-muted)' }}>
               <span>Heat Reduction:</span>
-              <strong style={{ fontFamily: 'var(--font-mono)', color: '#38bdf8' }}>
+              <strong style={{ fontFamily: 'var(--font-mono)', color: '#4FA3D9' }}>
                 {hoveredPkg.heat_summary.top_floor_peak_conductive_heat_reduction_kw} kW
               </strong>
             </div>
             {!hoveredPkg.is_feasible && (
-              <div style={{ color: '#fb7185', marginTop: '6px', fontSize: '0.75rem' }}>
+              <div style={{ color: '#F0645F', marginTop: '6px', fontSize: '0.75rem' }}>
                 ✗ {hoveredPkg.feasibility_reasons[0]}
               </div>
             )}
@@ -350,7 +350,7 @@ export const ParetoChart: React.FC<ParetoChartProps> = ({
                   {p.is_feasible ? 'Dominated' : 'Hard Rejected'}
                 </span>
               </div>
-              <div style={{ color: p.is_feasible ? 'var(--text-muted)' : '#fb7185', lineHeight: '1.4' }}>
+              <div style={{ color: p.is_feasible ? 'var(--text-muted)' : '#F0645F', lineHeight: '1.4' }}>
                 {p.feasibility_reasons.length > 0
                   ? p.feasibility_reasons.join(' ')
                   : p.tradeoff_notes || 'Sub-optimal trade-off compared to non-dominated frontier alternatives.'}

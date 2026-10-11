@@ -5,11 +5,11 @@ import { CheckCircle2, AlertTriangle, AlertCircle, Info, X } from 'lucide-react'
 const ToastIcon: React.FC<{ type: ToastType }> = ({ type }) => {
   switch (type) {
     case 'success':
-      return <CheckCircle2 size={18} color="var(--green-primary, #176B4D)" />;
+      return <CheckCircle2 size={18} color="var(--green-primary, #3ECF8E)" />;
     case 'warning':
-      return <AlertTriangle size={18} color="#D97706" />;
+      return <AlertTriangle size={18} color="#C98A28" />;
     case 'error':
-      return <AlertCircle size={18} color="#DC2626" />;
+      return <AlertCircle size={18} color="#F0645F" />;
     case 'info':
     default:
       return <Info size={18} color="#2563EB" />;
@@ -51,11 +51,11 @@ export const ToastContainer: React.FC = () => {
             border: '1px solid var(--border-default, #E2E8F0)',
             borderLeft: `4px solid ${
               toast.type === 'success'
-                ? 'var(--green-primary, #176B4D)'
+                ? 'var(--green-primary, #3ECF8E)'
                 : toast.type === 'warning'
-                ? '#D97706'
+                ? '#C98A28'
                 : toast.type === 'error'
-                ? '#DC2626'
+                ? '#F0645F'
                 : '#2563EB'
             }`,
             borderRadius: 'var(--radius-md, 8px)',

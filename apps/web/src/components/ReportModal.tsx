@@ -78,7 +78,7 @@ PRE/POST MEASUREMENT PROTOCOL:
 
           <div style={{ display: 'flex', gap: '8px' }}>
             <button onClick={handleCopy} className="btn btn-outline" style={{ fontSize: '0.78rem', padding: '6px 10px' }}>
-              {copied ? <Check size={14} color="#34d399" /> : <Copy size={14} />}
+              {copied ? <Check size={14} color="#3ECF8E" /> : <Copy size={14} />}
               <span>{copied ? 'Copied' : 'Copy Text'}</span>
             </button>
             <button onClick={handlePrint} className="btn btn-primary" style={{ fontSize: '0.78rem', padding: '6px 12px' }}>
@@ -113,7 +113,7 @@ PRE/POST MEASUREMENT PROTOCOL:
               <div>Gross Roof: <strong>{building.geometry.gross_roof_area_m2} m²</strong> (Usable: <strong>{building.geometry.usable_roof_area_m2} m²</strong>)</div>
               <div>Top-Floor Ceiling Area: <strong>{building.geometry.top_floor_exposed_ceiling_area_m2} m² ({building.geometry.top_floor_rooms_count} rooms)</strong></div>
               <div>Daily Non-Potable Demand: <strong>{building.water_demand.total_non_potable_demand_liters_day.toLocaleString()} L/day</strong></div>
-              <div>Available Budget: <strong style={{ color: '#fbbf24' }}>₹{building.constraints_and_budget.budget_cap_inr.toLocaleString()}</strong></div>
+              <div>Available Budget: <strong style={{ color: '#E5A23A' }}>₹{building.constraints_and_budget.budget_cap_inr.toLocaleString()}</strong></div>
             </div>
           </div>
 
@@ -126,7 +126,7 @@ PRE/POST MEASUREMENT PROTOCOL:
             marginBottom: '18px'
           }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
-              <div style={{ fontWeight: 600, color: '#38bdf8' }}>
+              <div style={{ fontWeight: 600, color: '#4FA3D9' }}>
                 2. Selected Retrofit Package: {selectedPackage.name}
               </div>
               <span className="mono-badge badge-cyan">{selectedPackage.profile_type.toUpperCase()} PROFILE</span>
@@ -162,10 +162,10 @@ PRE/POST MEASUREMENT PROTOCOL:
                   <tr style={{ background: 'rgba(30, 41, 59, 0.6)', fontWeight: 700 }}>
                     <td style={{ padding: '8px 10px' }}>Total Upfront Capital</td>
                     <td colSpan={2}></td>
-                    <td style={{ padding: '8px 10px', textAlign: 'right', fontFamily: 'var(--font-mono)', color: '#38bdf8' }}>
+                    <td style={{ padding: '8px 10px', textAlign: 'right', fontFamily: 'var(--font-mono)', color: '#4FA3D9' }}>
                       ₹{selectedPackage.boq.total_cost_inr.toLocaleString()}
                     </td>
-                    <td style={{ padding: '8px 10px', color: '#10b981', fontSize: '0.72rem' }}>
+                    <td style={{ padding: '8px 10px', color: '#3ECF8E', fontSize: '0.72rem' }}>
                       Within ₹{selectedPackage.boq.budget_cap_inr.toLocaleString()} budget
                     </td>
                   </tr>
@@ -182,7 +182,7 @@ PRE/POST MEASUREMENT PROTOCOL:
             border: '1px solid var(--border-subtle)',
             marginBottom: '18px'
           }}>
-            <div style={{ fontWeight: 600, color: '#34d399', marginBottom: '8px' }}>
+            <div style={{ fontWeight: 600, color: '#3ECF8E', marginBottom: '8px' }}>
               3. Modelled Resilience Outputs
             </div>
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '10px', fontSize: '0.8rem' }}>
@@ -200,7 +200,7 @@ PRE/POST MEASUREMENT PROTOCOL:
             padding: '16px',
             borderRadius: 'var(--radius-md)'
           }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', color: '#34d399', fontWeight: 600, marginBottom: '6px' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', color: '#3ECF8E', fontWeight: 600, marginBottom: '6px' }}>
               <ShieldCheck size={16} />
               <span>4. On-Site Measurement & Verification Protocol</span>
             </div>

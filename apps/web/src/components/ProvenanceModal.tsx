@@ -50,7 +50,7 @@ export const ProvenanceModal: React.FC<ProvenanceModalProps> = ({ isOpen, onClos
             border: '1px solid var(--border-subtle)',
             marginBottom: '18px'
           }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', color: '#34d399', fontWeight: 600, marginBottom: '8px' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', color: '#3ECF8E', fontWeight: 600, marginBottom: '8px' }}>
               <Cloud size={16} />
               <span>Real AWS Cloud Integration</span>
             </div>
@@ -82,7 +82,7 @@ export const ProvenanceModal: React.FC<ProvenanceModalProps> = ({ isOpen, onClos
             border: '1px solid var(--border-subtle)',
             marginBottom: '18px'
           }}>
-            <div style={{ fontWeight: 600, color: '#38bdf8', marginBottom: '8px' }}>
+            <div style={{ fontWeight: 600, color: '#4FA3D9', marginBottom: '8px' }}>
               Primary Verified Datasets & Standards
             </div>
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '10px' }}>

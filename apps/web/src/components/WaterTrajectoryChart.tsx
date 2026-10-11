@@ -49,7 +49,7 @@ export const WaterTrajectoryChart: React.FC<WaterTrajectoryChartProps> = ({
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            color: '#60a5fa'
+            color: '#4FA3D9'
           }}>
             <BarChart3 size={18} />
           </div>
@@ -82,7 +82,7 @@ export const WaterTrajectoryChart: React.FC<WaterTrajectoryChartProps> = ({
       }}>
         <div style={{ background: 'rgba(30, 41, 59, 0.4)', padding: '12px', borderRadius: 'var(--radius-md)', border: '1px solid var(--border-subtle)' }}>
           <div style={{ fontSize: '0.72rem', color: 'var(--text-dim)', textTransform: 'uppercase' }}>Annual Rain Captured</div>
-          <div style={{ fontFamily: 'var(--font-mono)', fontSize: '1.2rem', fontWeight: 700, color: '#38bdf8' }}>
+          <div style={{ fontFamily: 'var(--font-mono)', fontSize: '1.2rem', fontWeight: 700, color: '#4FA3D9' }}>
             {(waterSummary.total_captured_inflow_liters / 1000000).toFixed(2)}M L
           </div>
           <div style={{ fontSize: '0.72rem', color: 'var(--text-muted)' }}>from {waterSummary.annual_rainfall_mm} mm rain</div>
@@ -90,7 +90,7 @@ export const WaterTrajectoryChart: React.FC<WaterTrajectoryChartProps> = ({
 
         <div style={{ background: 'rgba(30, 41, 59, 0.4)', padding: '12px', borderRadius: 'var(--radius-md)', border: '1px solid var(--border-subtle)' }}>
           <div style={{ fontSize: '0.72rem', color: 'var(--text-dim)', textTransform: 'uppercase' }}>Non-Potable Supplied</div>
-          <div style={{ fontFamily: 'var(--font-mono)', fontSize: '1.2rem', fontWeight: 700, color: '#34d399' }}>
+          <div style={{ fontFamily: 'var(--font-mono)', fontSize: '1.2rem', fontWeight: 700, color: '#3ECF8E' }}>
             {(waterSummary.total_served_demand_liters / 1000000).toFixed(2)}M L
           </div>
           <div style={{ fontSize: '0.72rem', color: 'var(--text-muted)' }}>{waterSummary.demand_coverage_percent}% reliability</div>
@@ -98,7 +98,7 @@ export const WaterTrajectoryChart: React.FC<WaterTrajectoryChartProps> = ({
 
         <div style={{ background: 'rgba(30, 41, 59, 0.4)', padding: '12px', borderRadius: 'var(--radius-md)', border: '1px solid var(--border-subtle)' }}>
           <div style={{ fontSize: '0.72rem', color: 'var(--text-dim)', textTransform: 'uppercase' }}>Monsoon Coverage</div>
-          <div style={{ fontFamily: 'var(--font-mono)', fontSize: '1.2rem', fontWeight: 700, color: '#60a5fa' }}>
+          <div style={{ fontFamily: 'var(--font-mono)', fontSize: '1.2rem', fontWeight: 700, color: '#4FA3D9' }}>
             {waterSummary.monsoon_coverage_percent}%
           </div>
           <div style={{ fontSize: '0.72rem', color: 'var(--text-muted)' }}>June – October peak</div>
@@ -106,7 +106,7 @@ export const WaterTrajectoryChart: React.FC<WaterTrajectoryChartProps> = ({
 
         <div style={{ background: 'rgba(30, 41, 59, 0.4)', padding: '12px', borderRadius: 'var(--radius-md)', border: '1px solid var(--border-subtle)' }}>
           <div style={{ fontSize: '0.72rem', color: 'var(--text-dim)', textTransform: 'uppercase' }}>Dry Season Carryover</div>
-          <div style={{ fontFamily: 'var(--font-mono)', fontSize: '1.2rem', fontWeight: 700, color: '#fbbf24' }}>
+          <div style={{ fontFamily: 'var(--font-mono)', fontSize: '1.2rem', fontWeight: 700, color: '#E5A23A' }}>
             {waterSummary.dry_season_coverage_percent}%
           </div>
           <div style={{ fontSize: '0.72rem', color: 'var(--text-muted)' }}>Tank empty: {waterSummary.empty_tank_days_count} days</div>
@@ -144,7 +144,7 @@ export const WaterTrajectoryChart: React.FC<WaterTrajectoryChartProps> = ({
               right: '6px',
               top: '-16px',
               fontSize: '0.68rem',
-              color: '#fbbf24',
+              color: '#E5A23A',
               fontFamily: 'var(--font-mono)'
             }}>
               Demand: 180 kL/mo
@@ -174,9 +174,9 @@ export const WaterTrajectoryChart: React.FC<WaterTrajectoryChartProps> = ({
                     maxWidth: '32px',
                     height: `${Math.max(4, heightPct)}%`,
                     background: m.rainPct > 0.15
-                      ? 'linear-gradient(180deg, #38bdf8 0%, #0284c7 100%)'
+                      ? 'linear-gradient(180deg, #4FA3D9 0%, #3A8CC0 100%)'
                       : m.rainPct > 0.05
-                      ? 'linear-gradient(180deg, #34d399 0%, #059669 100%)'
+                      ? 'linear-gradient(180deg, #3ECF8E 0%, #34B87D 100%)'
                       : 'rgba(100, 116, 139, 0.3)',
                     borderRadius: '4px 4px 0 0',
                     transition: 'height 0.4s ease'

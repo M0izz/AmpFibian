@@ -43,7 +43,7 @@ export const EmptyState: React.FC<EmptyStateProps> = ({
           alignItems: 'center',
           justifyContent: 'center',
           marginBottom: '16px',
-          color: 'var(--green-primary, #176B4D)',
+          color: 'var(--green-primary, #3ECF8E)',
           boxShadow: '0 2px 8px rgba(0,0,0,0.04)'
         }}
       >

@@ -206,7 +206,6 @@ const AppContent: React.FC<AppProps> = ({ initialDestination, onNavigateToLandin
           <div style={{ display: 'flex', alignItems: 'center', gap: '16px', fontSize: '0.75rem' }}>
             <span>Engine: v1.2.0 (Deterministic)</span>
             <span>Standards: IS 15797 / IS 3792 / NBC 2016</span>
-            <span style={{ color: 'var(--green-primary)', fontWeight: 600 }}>● FastAPI Connected (:8000)</span>
           </div>
         </div>
       </footer>

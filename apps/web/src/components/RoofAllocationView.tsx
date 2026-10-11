@@ -69,7 +69,7 @@ export const RoofAllocationView: React.FC<RoofAllocationViewProps> = ({
           <span className="mono-badge badge-emerald">
             Usable: {usableArea} m² ({usablePercent}%)
           </span>
-          <span className="mono-badge" style={{ color: '#f59e0b' }}>
+          <span className="mono-badge" style={{ color: '#E5A23A' }}>
             Parapets/HVAC: {accessArea} m² ({accessPercent}%)
           </span>
         </div>
@@ -90,7 +90,7 @@ export const RoofAllocationView: React.FC<RoofAllocationViewProps> = ({
           <div style={{
             width: `${usablePercent}%`,
             background: hasCoolRoof
-              ? 'linear-gradient(90deg, #0284c7 0%, #06b6d4 100%)'
+              ? 'linear-gradient(90deg, #3A8CC0 0%, #4FA3D9 100%)'
               : '#334155',
             color: '#ffffff',
             display: 'flex',
@@ -134,7 +134,7 @@ export const RoofAllocationView: React.FC<RoofAllocationViewProps> = ({
           borderRadius: 'var(--radius-md)',
           border: '1px solid var(--border-subtle)'
         }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '8px', color: '#38bdf8', fontWeight: 600, marginBottom: '6px' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '8px', color: '#4FA3D9', fontWeight: 600, marginBottom: '6px' }}>
             <CheckCircle2 size={15} />
             <span>Compatible Overlay (Zero Area Penalty)</span>
           </div>
@@ -150,7 +150,7 @@ export const RoofAllocationView: React.FC<RoofAllocationViewProps> = ({
           borderRadius: 'var(--radius-md)',
           border: '1px solid var(--border-subtle)'
         }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '8px', color: '#34d399', fontWeight: 600, marginBottom: '6px' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '8px', color: '#3ECF8E', fontWeight: 600, marginBottom: '6px' }}>
             <Box size={15} />
             <span>Ground Yard Storage Footprint</span>
           </div>
@@ -158,7 +158,7 @@ export const RoofAllocationView: React.FC<RoofAllocationViewProps> = ({
             Storage tank arrays are mounted in the utility ground yard (
             <span style={{ fontFamily: 'var(--font-mono)', color: 'var(--text-main)' }}>{tankFootprintM2} m² required</span> of{' '}
             <span style={{ fontFamily: 'var(--font-mono)', color: 'var(--text-main)' }}>{constraints.ground_yard_available_for_tanks_m2} m² available</span>).
-            <div style={{ marginTop: '4px', fontSize: '0.78rem', color: '#10b981' }}>
+            <div style={{ marginTop: '4px', fontSize: '0.78rem', color: '#3ECF8E' }}>
               ✓ Zero dead-load penalty on roof slab.
             </div>
           </div>
@@ -171,7 +171,7 @@ export const RoofAllocationView: React.FC<RoofAllocationViewProps> = ({
           borderRadius: 'var(--radius-md)',
           border: '1px solid var(--border-subtle)'
         }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '8px', color: '#fbbf24', fontWeight: 600, marginBottom: '6px' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '8px', color: '#E5A23A', fontWeight: 600, marginBottom: '6px' }}>
             <AlertTriangle size={15} />
             <span>Structural Dead-Load Safeguard</span>
           </div>

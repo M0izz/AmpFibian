@@ -19,9 +19,9 @@ export const PackageComparison: React.FC<PackageComparisonProps> = ({
   const baseline = packages.find(p => p.package_id === 'pkg_baseline');
 
   const cards = [
-    { pkg: balanced, badge: 'Recommended Balanced', icon: <Sparkles size={16} />, color: '#06b6d4', glow: 'var(--accent-cyan-glow)' },
-    { pkg: heatFirst, badge: 'Heat-First Benchmark', icon: <Flame size={16} />, color: '#f59e0b', glow: 'var(--accent-amber-glow)' },
-    { pkg: waterFirst, badge: 'Water-First Benchmark', icon: <Droplets size={16} />, color: '#10b981', glow: 'var(--accent-emerald-glow)' },
+    { pkg: balanced, badge: 'Recommended Balanced', icon: <Sparkles size={16} />, color: '#4FA3D9', glow: 'var(--accent-cyan-glow)' },
+    { pkg: heatFirst, badge: 'Heat-First Benchmark', icon: <Flame size={16} />, color: '#E5A23A', glow: 'var(--accent-amber-glow)' },
+    { pkg: waterFirst, badge: 'Water-First Benchmark', icon: <Droplets size={16} />, color: '#3ECF8E', glow: 'var(--accent-emerald-glow)' },
     { pkg: baseline, badge: 'Current Baseline', icon: null, color: '#64748b', glow: 'none' }
   ].filter(item => item.pkg != null);
 
@@ -152,7 +152,7 @@ export const PackageComparison: React.FC<PackageComparisonProps> = ({
                     fontFamily: 'var(--font-mono)',
                     fontSize: '1.05rem',
                     fontWeight: 700,
-                    color: pkg.water_summary.demand_coverage_percent > 0 ? '#34d399' : 'var(--text-dim)',
+                    color: pkg.water_summary.demand_coverage_percent > 0 ? '#3ECF8E' : 'var(--text-dim)',
                     marginTop: '2px'
                   }}>
                     {pkg.water_summary.demand_coverage_percent}%
@@ -171,7 +171,7 @@ export const PackageComparison: React.FC<PackageComparisonProps> = ({
                     fontFamily: 'var(--font-mono)',
                     fontSize: '1.05rem',
                     fontWeight: 700,
-                    color: pkg.heat_summary.modelled_reduction_percent > 0 ? '#38bdf8' : 'var(--text-dim)',
+                    color: pkg.heat_summary.modelled_reduction_percent > 0 ? '#4FA3D9' : 'var(--text-dim)',
                     marginTop: '2px'
                   }}>
                     -{pkg.heat_summary.modelled_reduction_percent}%
@@ -190,7 +190,7 @@ export const PackageComparison: React.FC<PackageComparisonProps> = ({
                     fontFamily: 'var(--font-mono)',
                     fontSize: '1.05rem',
                     fontWeight: 700,
-                    color: pkg.heat_summary.sol_air_temperature_delta_celsius > 0 ? '#fbbf24' : 'var(--text-dim)',
+                    color: pkg.heat_summary.sol_air_temperature_delta_celsius > 0 ? '#E5A23A' : 'var(--text-dim)',
                     marginTop: '2px'
                   }}>
                     -{pkg.heat_summary.sol_air_temperature_delta_celsius}°C
