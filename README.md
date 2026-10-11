@@ -3,6 +3,8 @@
 > **A constrained roof-retrofit decision engine for balanced heat and water resilience.**
 >
 > Helps building facilities teams choose a feasible combination of roof and water interventions under real area, budget, site, and uncertainty constraints — then explains why that package was selected.
+>
+> 🌐 **Live Web Application**: [https://roofwise-brown.vercel.app/](https://roofwise-brown.vercel.app/)
 
 ---
 

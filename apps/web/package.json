@@ -2,6 +2,7 @@
   "name": "web",
   "private": true,
   "version": "0.0.0",
+  "homepage": "https://roofwise-brown.vercel.app/",
   "type": "module",
   "scripts": {
     "dev": "vite",

@@ -5,7 +5,7 @@ Target Duration: 2 minutes 45 seconds | Target Audience: Hackathon Judges & Camp
 ---
 
 ### [0:00 – 0:25] The Problem & The Building Context
-* **Visual**: Open Roofwise dashboard showing the Mumbai 4-Storey College Hostel profile (Wadala/Powai campus, 600 m² roof, 150 students, ₹8,00,000 budget limit).
+* **Visual**: Open Roofwise dashboard ([https://roofwise-brown.vercel.app/](https://roofwise-brown.vercel.app/)) showing the Mumbai 4-Storey College Hostel profile (Wadala/Powai campus, 600 m² roof, 150 students, ₹8,00,000 budget limit).
 * **Narration**:
   > *"Every urban campus in Mumbai faces dual climate shocks: punishing top-floor solar heat gain and crippling pre-monsoon water shortages. Facilities teams receive fragmented vendor pitches—cool roof painters claiming 10°C drops, or tank fabricators pitching massive tanks without checking rainfall timing or structural capacity. ClimateFit RoofLab replaces sales hype with a constrained, physically honest decision engine."*
 
