@@ -1,4 +1,4 @@
-# ClimateFit RoofLab (AmpFibian) — Assumptions Register
+# ClimateFit RoofLab (Roofwise) — Assumptions Register
 
 Version 1.0 | October 2026 | Location Context: Mumbai, Maharashtra, India
 

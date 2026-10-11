@@ -55,7 +55,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                 WebkitBackgroundClip: 'text',
                 WebkitTextFillColor: 'transparent'
               }}>
-                AmpFibian
+                Roofwise
               </span>
               <span className="mono-badge badge-cyan" style={{ fontSize: '0.68rem', padding: '1px 6px' }}>
                 RoofLab v1.0

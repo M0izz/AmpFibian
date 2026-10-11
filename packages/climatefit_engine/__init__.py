@@ -1,5 +1,5 @@
 """
-ClimateFit RoofLab (AmpFibian) Deterministic Calculation Package.
+ClimateFit RoofLab (Roofwise) Deterministic Calculation Package.
 """
 from .models import (
     MaterialLayer,

@@ -1,4 +1,4 @@
-# ClimateFit RoofLab (AmpFibian) — Data Sources & Provenance
+# ClimateFit RoofLab (Roofwise) — Data Sources & Provenance
 
 Version 1.0 | October 2026
 

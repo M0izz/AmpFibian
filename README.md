@@ -1,4 +1,4 @@
-# AmpFibian (ClimateFit RoofLab)
+# Roofwise (ClimateFit RoofLab)
 
 > **A constrained roof-retrofit decision engine for balanced heat and water resilience.**
 >
@@ -19,7 +19,7 @@
 ## 📁 Repository Structure
 
 ```
-AmpFibian/
+Roofwise/
 ├── apps/
 │   ├── api/                    # FastAPI backend (validation, simulation runner, persistence)
 │   │   └── app/

@@ -1,4 +1,4 @@
-# ClimateFit RoofLab (AmpFibian) — Model Limitations & Measurement Protocol
+# ClimateFit RoofLab (Roofwise) — Model Limitations & Measurement Protocol
 
 Version 1.0 | October 2026
 

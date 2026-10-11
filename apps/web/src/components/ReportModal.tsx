@@ -26,7 +26,7 @@ export const ReportModal: React.FC<ReportModalProps> = ({
   };
 
   const handleCopy = () => {
-    const reportText = `CLIMATEFIT ROOFLAB (AMPFIBIAN) — RETROFIT ASSESSMENT REPORT
+    const reportText = `ROOFWISE (CLIMATEFIT ROOFLAB) — RETROFIT ASSESSMENT REPORT
 Run ID: ${runId} | Engine Version: 1.0.0
 Date: ${new Date().toLocaleDateString()}
 

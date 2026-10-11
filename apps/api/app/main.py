@@ -14,7 +14,7 @@ from .routes.assessment import router as assessment_router
 from .routes.simulations import router as simulations_router
 
 app = FastAPI(
-    title="AmpFibian (ClimateFit RoofLab) API",
+    title="Roofwise (ClimateFit RoofLab) API",
     description="Constrained roof-retrofit decision engine for balanced heat and water resilience.",
     version=ENGINE_VERSION
 )
@@ -41,7 +41,7 @@ app.add_middleware(
 def health_check():
     return {
         "status": "healthy",
-        "service": "AmpFibian Engine API",
+        "service": "Roofwise Engine API",
         "engine_version": ENGINE_VERSION,
         "timestamp": datetime.now(timezone.utc).isoformat()
     }

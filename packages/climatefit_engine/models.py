@@ -1,5 +1,5 @@
 """
-Core domain models and schemas for ClimateFit RoofLab (AmpFibian).
+Core domain models and schemas for ClimateFit RoofLab (Roofwise).
 All physical units are documented and strictly typed.
 """
 from typing import List, Dict, Optional, Any, Literal
