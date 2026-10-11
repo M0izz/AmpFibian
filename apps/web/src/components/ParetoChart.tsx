@@ -18,22 +18,22 @@ export const ParetoChart: React.FC<ParetoChartProps> = ({
   const [hoveredPkg, setHoveredPkg] = useState<RetrofitPackage | null>(null);
 
   // SVG dimensions
-  const width = 640;
-  const height = 300;
-  const padLeft = 60;
-  const padRight = 30;
-  const padTop = 30;
-  const padBottom = 45;
+  const width = 840;
+  const height = 340;
+  const padLeft = 70;
+  const padRight = 40;
+  const padTop = 36;
+  const padBottom = 50;
 
   const chartW = width - padLeft - padRight;
   const chartH = height - padTop - padBottom;
 
   // Scales
-  const maxCost = 1400000; // 14 Lakhs
+  const maxCost = 1500000; // 15 Lakhs
   const maxWater = 100;
 
-  const getX = (cost: number) => padLeft + (cost / maxCost) * chartW;
-  const getY = (water: number) => padTop + chartH - (water / maxWater) * chartH;
+  const getX = (cost: number) => padLeft + Math.min(chartW, (cost / maxCost) * chartW);
+  const getY = (water: number) => padTop + chartH - (Math.min(100, water) / maxWater) * chartH;
 
   const budgetX = getX(budgetCapInr);
 
@@ -49,51 +49,53 @@ export const ParetoChart: React.FC<ParetoChartProps> = ({
   }, '');
 
   return (
-    <div className="glass-panel" style={{ padding: '24px', marginBottom: '28px' }}>
+    <div className="card" style={{ padding: '24px', background: 'var(--bg-surface)' }}>
+      {/* Header */}
       <div style={{
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'space-between',
-        marginBottom: '16px',
+        marginBottom: '20px',
         flexWrap: 'wrap',
         gap: '12px'
       }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
           <div style={{
-            width: '32px',
-            height: '32px',
-            borderRadius: '8px',
-            background: 'rgba(139, 92, 246, 0.15)',
+            width: '36px',
+            height: '36px',
+            borderRadius: '9px',
+            background: 'var(--green-light)',
+            border: '1px solid var(--green-border)',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            color: '#a78bfa'
+            color: 'var(--green-primary)'
           }}>
             <Target size={18} />
           </div>
           <div>
-            <h3 style={{ fontSize: '1.05rem', fontWeight: 600, color: 'var(--text-main)' }}>
-              Pareto Non-Dominated Frontier & Feasibility Screening
+            <h3 style={{ fontSize: '1.05rem', fontWeight: 600, color: 'var(--text-main)', letterSpacing: '-0.02em' }}>
+              Multi-Objective Pareto Frontier & Feasibility Screening
             </h3>
-            <p style={{ fontSize: '0.8rem', color: 'var(--text-dim)' }}>
-              Multi-objective optimization removes dominated alternatives and enforces hard feasibility constraints
+            <p style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>
+              Deterministic trade-off: Capital Expenditure (₹ INR) vs Non-Potable Water Reliability (% Coverage)
             </p>
           </div>
         </div>
 
         {/* Legend */}
-        <div style={{ display: 'flex', gap: '14px', fontSize: '0.75rem', color: 'var(--text-muted)' }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
-            <span style={{ width: '10px', height: '10px', borderRadius: '50%', background: '#06b6d4' }}></span>
-            <span>Balanced Knee</span>
+        <div style={{ display: 'flex', gap: '16px', fontSize: '0.78rem', color: 'var(--text-secondary)' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+            <span style={{ width: '10px', height: '10px', borderRadius: '50%', background: 'var(--water-blue)', boxShadow: '0 0 6px var(--water-blue)' }}></span>
+            <span>Recommended (Balanced)</span>
           </div>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
-            <span style={{ width: '10px', height: '10px', borderRadius: '50%', background: '#10b981' }}></span>
-            <span>Non-Dominated</span>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+            <span style={{ width: '10px', height: '10px', borderRadius: '50%', background: 'var(--green-primary)' }}></span>
+            <span>Pareto Non-Dominated</span>
           </div>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
-            <span style={{ width: '10px', height: '10px', borderRadius: '50%', background: '#f43f5e', border: '1px solid #fff' }}></span>
-            <span>Infeasible (Hard-Filtered)</span>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+            <span style={{ width: '10px', height: '10px', borderRadius: '50%', background: 'var(--error-primary)' }}></span>
+            <span>Infeasible (Budget Exceeded)</span>
           </div>
         </div>
       </div>
@@ -102,15 +104,25 @@ export const ParetoChart: React.FC<ParetoChartProps> = ({
       <div style={{
         position: 'relative',
         width: '100%',
-        overflowX: 'auto',
-        background: 'rgba(15, 23, 42, 0.5)',
+        background: 'rgba(9, 9, 11, 0.7)',
         borderRadius: 'var(--radius-md)',
-        border: '1px solid var(--border-subtle)',
-        padding: '10px'
+        border: '1px solid var(--border-default)',
+        padding: '12px',
+        overflow: 'hidden'
       }}>
-        <svg viewBox={`0 0 ${width} ${height}`} style={{ width: '100%', height: 'auto', display: 'block' }}>
-          {/* Grid lines */}
-          {[0, 25, 50, 75, 100].map(val => (
+        <svg 
+          viewBox={`0 0 ${width} ${height}`} 
+          style={{ width: '100%', height: 'auto', display: 'block' }}
+        >
+          <defs>
+            <linearGradient id="frontierGlow" x1="0" y1="0" x2="1" y2="0">
+              <stop offset="0%" stopColor="var(--green-primary)" stopOpacity="0.8" />
+              <stop offset="100%" stopColor="var(--water-blue)" stopOpacity="0.8" />
+            </linearGradient>
+          </defs>
+
+          {/* Grid lines - Water Reliability Y axis */}
+          {[0, 20, 40, 60, 80, 100].map(val => (
             <g key={`y-${val}`}>
               <line
                 x1={padLeft}
@@ -121,11 +133,10 @@ export const ParetoChart: React.FC<ParetoChartProps> = ({
                 strokeDasharray="4 4"
               />
               <text
-                x={padLeft - 8}
+                x={padLeft - 10}
                 y={getY(val) + 4}
                 textAnchor="end"
-                fontSize="10"
-                fontFamily="var(--font-mono)"
+                fontSize="11"
                 fill="var(--text-dim)"
               >
                 {val}%
@@ -133,7 +144,8 @@ export const ParetoChart: React.FC<ParetoChartProps> = ({
             </g>
           ))}
 
-          {[0, 400000, 800000, 1200000].map(val => (
+          {/* Grid lines - Cost X axis */}
+          {[0, 300000, 600000, 900000, 1200000, 1500000].map(val => (
             <g key={`x-${val}`}>
               <line
                 x1={getX(val)}
@@ -145,10 +157,9 @@ export const ParetoChart: React.FC<ParetoChartProps> = ({
               />
               <text
                 x={getX(val)}
-                y={padTop + chartH + 18}
+                y={padTop + chartH + 20}
                 textAnchor="middle"
-                fontSize="10"
-                fontFamily="var(--font-mono)"
+                fontSize="11"
                 fill="var(--text-dim)"
               >
                 ₹{val / 100000}L
@@ -156,25 +167,24 @@ export const ParetoChart: React.FC<ParetoChartProps> = ({
             </g>
           ))}
 
-          {/* Budget Cap Hard-Filter Threshold Line */}
+          {/* Budget Cap Hard-Filter Line */}
           <line
             x1={budgetX}
             y1={padTop}
             x2={budgetX}
             y2={padTop + chartH}
-            stroke="#f59e0b"
+            stroke="var(--amber-primary)"
             strokeWidth="1.5"
-            strokeDasharray="5 3"
+            strokeDasharray="6 4"
           />
           <text
-            x={budgetX + 6}
+            x={budgetX + 8}
             y={padTop + 16}
-            fontSize="10"
-            fontFamily="var(--font-mono)"
-            fill="#f59e0b"
-            fontWeight="bold"
+            fontSize="11"
+            fill="var(--amber-primary)"
+            fontWeight="600"
           >
-            Budget Cap (₹8 Lakhs)
+            Budget Limit: ₹{(budgetCapInr / 100000).toFixed(1)}L
           </text>
 
           {/* Pareto Frontier Curve */}
@@ -182,42 +192,41 @@ export const ParetoChart: React.FC<ParetoChartProps> = ({
             <path
               d={frontierPath}
               fill="none"
-              stroke="#06b6d4"
+              stroke="url(#frontierGlow)"
               strokeWidth="2.5"
-              strokeOpacity="0.75"
-              strokeDasharray="4 2"
+              strokeDasharray="5 3"
             />
           )}
 
-          {/* Packages Points */}
+          {/* Package Points */}
           {packages.map(p => {
             const cx = getX(p.boq.total_cost_inr);
             const cy = getY(p.water_summary.demand_coverage_percent);
             const isSelected = selectedPackageId === p.package_id;
             const isKnee = p.profile_type === 'balanced';
 
-            let fillColor = '#64748b';
+            let fillColor = 'var(--text-muted)';
             let strokeColor = 'rgba(255, 255, 255, 0.4)';
             let r = 7;
 
             if (!p.is_feasible) {
-              fillColor = '#f43f5e';
+              fillColor = 'var(--error-primary)';
               strokeColor = '#ffffff';
               r = 6;
             } else if (isKnee) {
-              fillColor = '#06b6d4';
-              strokeColor = '#38bdf8';
+              fillColor = 'var(--water-blue)';
+              strokeColor = '#ffffff';
               r = 10;
             } else if (p.profile_type === 'heat_first') {
-              fillColor = '#f59e0b';
-              strokeColor = '#fbbf24';
+              fillColor = 'var(--amber-primary)';
+              strokeColor = 'rgba(255, 255, 255, 0.8)';
               r = 8;
             } else if (p.profile_type === 'water_first') {
-              fillColor = '#10b981';
-              strokeColor = '#34d399';
+              fillColor = 'var(--green-primary)';
+              strokeColor = 'rgba(255, 255, 255, 0.8)';
               r = 8;
             } else if (p.is_pareto_optimal) {
-              fillColor = '#3b82f6';
+              fillColor = 'var(--green-primary)';
               r = 7;
             }
 
@@ -237,8 +246,7 @@ export const ParetoChart: React.FC<ParetoChartProps> = ({
                     fill="none"
                     stroke={fillColor}
                     strokeWidth="2"
-                    strokeOpacity="0.6"
-                    className="animate-pulse"
+                    strokeOpacity="0.7"
                   />
                 )}
                 <circle
@@ -247,7 +255,7 @@ export const ParetoChart: React.FC<ParetoChartProps> = ({
                   r={r}
                   fill={fillColor}
                   stroke={strokeColor}
-                  strokeWidth="1.5"
+                  strokeWidth="1.8"
                 />
               </g>
             );
@@ -256,108 +264,62 @@ export const ParetoChart: React.FC<ParetoChartProps> = ({
           {/* Axis Labels */}
           <text
             x={padLeft + chartW / 2}
-            y={height - 6}
+            y={height - 10}
             textAnchor="middle"
-            fontSize="11"
+            fontSize="12"
             fontWeight="500"
             fill="var(--text-muted)"
           >
-            Upfront Capital Cost (₹ INR)
+            Upfront Capital Expenditure (₹ INR)
           </text>
           <text
-            x={16}
+            x={18}
             y={padTop + chartH / 2}
             textAnchor="middle"
-            transform={`rotate(-90 16 ${padTop + chartH / 2})`}
-            fontSize="11"
+            transform={`rotate(-90 18 ${padTop + chartH / 2})`}
+            fontSize="12"
             fontWeight="500"
             fill="var(--text-muted)"
           >
-            Water Reliability (% Coverage)
+            Non-Potable Water Reliability (% Coverage)
           </text>
         </svg>
 
-        {/* Hover Tooltip Overlay */}
+        {/* Hover detail tooltip */}
         {hoveredPkg && (
           <div style={{
             position: 'absolute',
             bottom: '16px',
             right: '16px',
-            background: 'rgba(15, 23, 42, 0.95)',
-            border: '1px solid var(--border-medium)',
+            background: 'rgba(15, 15, 18, 0.95)',
+            border: '1px solid var(--border-strong)',
+            borderRadius: '8px',
             padding: '12px 16px',
-            borderRadius: 'var(--radius-md)',
-            boxShadow: 'var(--shadow-lg)',
+            boxShadow: 'var(--shadow-md)',
+            backdropFilter: 'blur(10px)',
             pointerEvents: 'none',
-            maxWidth: '320px',
-            fontSize: '0.8rem',
-            backdropFilter: 'blur(8px)'
+            maxWidth: '280px',
+            zIndex: 10
           }}>
-            <div style={{ fontWeight: 600, color: 'var(--text-main)', marginBottom: '4px' }}>
+            <div style={{ fontWeight: 600, fontSize: '0.88rem', color: 'var(--text-main)', marginBottom: '4px' }}>
               {hoveredPkg.name}
             </div>
-            <div style={{ display: 'flex', justifyContent: 'space-between', gap: '12px', color: 'var(--text-muted)' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.78rem', color: 'var(--text-secondary)', marginBottom: '2px' }}>
               <span>Cost:</span>
-              <strong style={{ fontFamily: 'var(--font-mono)', color: 'var(--text-main)' }}>
-                ₹{hoveredPkg.boq.total_cost_inr.toLocaleString()}
+              <strong style={{ color: 'var(--text-main)' }}>₹{hoveredPkg.boq.total_cost_inr.toLocaleString()}</strong>
+            </div>
+            <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.78rem', color: 'var(--text-secondary)', marginBottom: '2px' }}>
+              <span>Water Coverage:</span>
+              <strong style={{ color: 'var(--water-blue)' }}>{hoveredPkg.water_summary.demand_coverage_percent}%</strong>
+            </div>
+            <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.78rem', color: 'var(--text-secondary)' }}>
+              <span>Feasibility:</span>
+              <strong style={{ color: hoveredPkg.is_feasible ? 'var(--green-primary)' : 'var(--error-primary)' }}>
+                {hoveredPkg.is_feasible ? 'Passes Constraints' : 'Infeasible'}
               </strong>
             </div>
-            <div style={{ display: 'flex', justifyContent: 'space-between', gap: '12px', color: 'var(--text-muted)' }}>
-              <span>Water Reliability:</span>
-              <strong style={{ fontFamily: 'var(--font-mono)', color: '#34d399' }}>
-                {hoveredPkg.water_summary.demand_coverage_percent}%
-              </strong>
-            </div>
-            <div style={{ display: 'flex', justifyContent: 'space-between', gap: '12px', color: 'var(--text-muted)' }}>
-              <span>Heat Reduction:</span>
-              <strong style={{ fontFamily: 'var(--font-mono)', color: '#38bdf8' }}>
-                {hoveredPkg.heat_summary.top_floor_peak_conductive_heat_reduction_kw} kW
-              </strong>
-            </div>
-            {!hoveredPkg.is_feasible && (
-              <div style={{ color: '#fb7185', marginTop: '6px', fontSize: '0.75rem' }}>
-                ✗ {hoveredPkg.feasibility_reasons[0]}
-              </div>
-            )}
           </div>
         )}
-      </div>
-
-      {/* "Why Not?" Feasibility & Rejection Audit Table */}
-      <div style={{ marginTop: '20px' }}>
-        <h4 style={{ fontSize: '0.88rem', fontWeight: 600, color: 'var(--text-main)', marginBottom: '10px' }}>
-          Feasibility Screening & Rejection Audit ("Why Not?")
-        </h4>
-        <div style={{
-          display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fit, minmax(310px, 1fr))',
-          gap: '12px'
-        }}>
-          {packages.filter(p => !p.is_feasible || !p.is_pareto_optimal).map(p => (
-            <div
-              key={p.package_id}
-              style={{
-                background: 'rgba(30, 41, 59, 0.35)',
-                border: '1px solid var(--border-subtle)',
-                borderRadius: 'var(--radius-md)',
-                padding: '12px',
-                fontSize: '0.8rem'
-              }}
-            >
-              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '6px' }}>
-                <span style={{ fontWeight: 600, color: 'var(--text-main)' }}>{p.name}</span>
-                <span className={`mono-badge ${p.is_feasible ? 'badge-amber' : 'badge-rose'}`}>
-                  {p.is_feasible ? 'Dominated' : 'Hard Rejected'}
-                </span>
-              </div>
-              <div style={{ color: p.is_feasible ? 'var(--text-muted)' : '#fb7185', lineHeight: '1.4' }}>
-                {p.feasibility_reasons.length > 0
-                  ? p.feasibility_reasons.join(' ')
-                  : p.tradeoff_notes || 'Sub-optimal trade-off compared to non-dominated frontier alternatives.'}
-              </div>
-            </div>
-          ))}
-        </div>
       </div>
     </div>
   );

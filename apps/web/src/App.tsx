@@ -36,7 +36,6 @@ const AppContent: React.FC<AppProps> = ({ initialDestination, onNavigateToLandin
       .then(res => {
         if (!isMounted) return;
         setSimulation(res);
-        // Default to recommended balanced package, or first available
         const recommended = res.profile_recommendations?.balanced || res.packages[0];
         setSelectedPackage(recommended);
         setIsSimulating(false);
@@ -57,7 +56,7 @@ const AppContent: React.FC<AppProps> = ({ initialDestination, onNavigateToLandin
     <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column', background: 'var(--bg-app)' }}>
       <ToastContainer />
 
-      {/* 1. Persistent Application Header */}
+      {/* 1. Top Header */}
       <Header
         building={building}
         runId={simulation ? simulation.run_id : ''}
@@ -67,131 +66,144 @@ const AppContent: React.FC<AppProps> = ({ initialDestination, onNavigateToLandin
         onNavigateToHistory={() => setCurrentDestination('history')}
       />
 
-      {/* 2. Primary Navigation Bar */}
-      <Navigation
-        currentDestination={currentDestination}
-        onNavigate={(dest) => setCurrentDestination(dest)}
-      />
+      {/* 2. Main Workbench: Left Sidebar Navigation + Right Content Area */}
+      <div style={{ display: 'flex', flex: 1, minHeight: 'calc(100vh - 56px)' }}>
+        {/* Vertical Sidebar */}
+        <Navigation
+          currentDestination={currentDestination}
+          onNavigate={(dest) => setCurrentDestination(dest)}
+          onNavigateToLanding={onNavigateToLanding}
+        />
 
-      {/* 3. Main Content Container */}
-      <main className="container" style={{ flex: 1, paddingBottom: '56px' }}>
-        {/* Context bar visible on relevant views */}
-        {currentDestination !== 'assessment' && currentDestination !== 'reports' && currentDestination !== 'history' && (
-          <BuildingContextBar
-            building={building}
-            rainfallYear={rainfallYear}
-            onSelectRainfallYear={(year) => setRainfallYear(year)}
-          />
-        )}
-
-        {currentDestination === 'history' ? (
-          <HistoryView
-            onLoadRun={(snap) => {
-              if (snap.building_input) setBuilding(snap.building_input);
-              setSimulation(snap);
-              const rec = snap.profile_recommendations?.balanced || snap.packages?.[0];
-              setSelectedPackage(rec);
-              setCurrentDestination('overview');
-            }}
-            onNavigateToAssessment={() => setCurrentDestination('assessment')}
-          />
-        ) : isSimulating && !simulation ? (
-          <div style={{
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            justifyContent: 'center',
-            height: '420px',
-            gap: '16px',
-            color: 'var(--text-muted)'
-          }}>
-            <div style={{
-              width: '40px',
-              height: '40px',
-              border: '3px solid var(--border-default)',
-              borderTopColor: 'var(--green-primary)',
-              borderRadius: '50%',
-              animation: 'spin 1s linear infinite'
-            }} />
-            <div style={{ fontSize: '0.95rem', fontWeight: 500 }}>
-              Running deterministic engineering simulation...
-            </div>
-            <div style={{ fontSize: '0.8rem', color: 'var(--text-dim)' }}>
-              Executing 365-day water balance & 1D envelope conduction models
-            </div>
-          </div>
-        ) : simulation && activePackage ? (
-          <>
-            {currentDestination === 'overview' && (
-              <OverviewView
-                simulation={simulation}
+        {/* Content Area — Expansive full-width layout, eliminates excessive side whitespace */}
+        <main style={{
+          flex: 1,
+          minWidth: 0,
+          padding: '24px 36px 64px',
+          background: 'var(--bg-app)',
+          overflowY: 'auto'
+        }}>
+          <div style={{ maxWidth: '1600px', margin: '0 auto', width: '100%' }}>
+            {/* Context bar visible on relevant views */}
+            {currentDestination !== 'assessment' && currentDestination !== 'reports' && currentDestination !== 'history' && (
+              <BuildingContextBar
                 building={building}
-                onNavigateToCompare={() => setCurrentDestination('compare')}
-                onNavigateToReports={() => setCurrentDestination('reports')}
-                onSelectPackageForDetail={(pkg) => {
-                  setSelectedPackage(pkg);
-                  setCurrentDestination('compare');
-                }}
+                rainfallYear={rainfallYear}
+                onSelectRainfallYear={(year) => setRainfallYear(year)}
               />
             )}
 
-            {currentDestination === 'assessment' && (
-              <AssessmentView
-                building={building}
-                onSaveAndRun={(updated) => {
-                  setBuilding(updated);
+            {currentDestination === 'history' ? (
+              <HistoryView
+                onLoadRun={(snap) => {
+                  if (snap.building_input) setBuilding(snap.building_input);
+                  setSimulation(snap);
+                  const rec = snap.profile_recommendations?.balanced || snap.packages?.[0];
+                  setSelectedPackage(rec);
                   setCurrentDestination('overview');
                 }}
-                isSimulating={isSimulating}
+                onNavigateToAssessment={() => setCurrentDestination('assessment')}
               />
-            )}
+            ) : isSimulating && !simulation ? (
+              <div style={{
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                justifyContent: 'center',
+                height: '460px',
+                gap: '16px',
+                color: 'var(--text-muted)'
+              }}>
+                <div style={{
+                  width: '42px',
+                  height: '42px',
+                  border: '3px solid var(--border-default)',
+                  borderTopColor: 'var(--green-primary)',
+                  borderRadius: '50%',
+                  animation: 'spin 1s linear infinite'
+                }} />
+                <div style={{ fontSize: '1rem', fontWeight: 600, color: 'var(--text-main)' }}>
+                  Running deterministic engineering simulation...
+                </div>
+                <div style={{ fontSize: '0.82rem', color: 'var(--text-dim)' }}>
+                  Executing 365-day water balance & 1D envelope conduction models
+                </div>
+              </div>
+            ) : simulation && activePackage ? (
+              <>
+                {currentDestination === 'overview' && (
+                  <OverviewView
+                    simulation={simulation}
+                    building={building}
+                    onNavigateToCompare={() => setCurrentDestination('compare')}
+                    onNavigateToReports={() => setCurrentDestination('reports')}
+                    onSelectPackageForDetail={(pkg) => {
+                      setSelectedPackage(pkg);
+                      setCurrentDestination('compare');
+                    }}
+                  />
+                )}
 
-            {currentDestination === 'compare' && (
-              <CompareOptionsView
-                simulation={simulation}
-                building={building}
-                selectedPackage={activePackage}
-                onSelectPackage={(pkg) => setSelectedPackage(pkg)}
-              />
-            )}
+                {currentDestination === 'assessment' && (
+                  <AssessmentView
+                    building={building}
+                    onSaveAndRun={(updated) => {
+                      setBuilding(updated);
+                      setCurrentDestination('overview');
+                    }}
+                    isSimulating={isSimulating}
+                  />
+                )}
 
-            {currentDestination === 'evidence' && (
-              <EvidenceModelsView
-                simulation={simulation}
-                building={building}
-                selectedPackage={activePackage}
-              />
-            )}
+                {currentDestination === 'compare' && (
+                  <CompareOptionsView
+                    simulation={simulation}
+                    building={building}
+                    selectedPackage={activePackage}
+                    onSelectPackage={(pkg) => setSelectedPackage(pkg)}
+                  />
+                )}
 
-            {currentDestination === 'reports' && (
-              <ReportsView
-                building={building}
-                simulation={simulation}
-                selectedPackage={activePackage}
-                rainfallYear={rainfallYear}
-              />
+                {currentDestination === 'evidence' && (
+                  <EvidenceModelsView
+                    simulation={simulation}
+                    building={building}
+                    selectedPackage={activePackage}
+                  />
+                )}
+
+                {currentDestination === 'reports' && (
+                  <ReportsView
+                    building={building}
+                    simulation={simulation}
+                    selectedPackage={activePackage}
+                    rainfallYear={rainfallYear}
+                  />
+                )}
+              </>
+            ) : (
+              <div style={{
+                padding: '48px',
+                textAlign: 'center',
+                color: 'var(--text-muted)'
+              }}>
+                No assessment data available. Check local calculation engine status.
+              </div>
             )}
-          </>
-        ) : (
-          <div style={{
-            padding: '48px',
-            textAlign: 'center',
-            color: 'var(--text-muted)'
-          }}>
-            No assessment data available. Check local calculation engine status.
           </div>
-        )}
-      </main>
+        </main>
+      </div>
 
-      {/* 4. Professional Engineering Footer */}
+      {/* 3. Footer */}
       <footer className="no-print" style={{
         borderTop: '1px solid var(--border-default)',
         background: 'var(--bg-surface)',
-        padding: '20px 0',
+        padding: '16px 28px',
         fontSize: '0.8rem',
-        color: 'var(--text-muted)'
+        color: 'var(--text-muted)',
+        zIndex: 20
       }}>
-        <div className="container" style={{
+        <div style={{
           display: 'flex',
           justifyContent: 'space-between',
           alignItems: 'center',
@@ -199,14 +211,13 @@ const AppContent: React.FC<AppProps> = ({ initialDestination, onNavigateToLandin
           gap: '14px'
         }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-            <strong style={{ color: 'var(--text-main)', fontWeight: 700 }}>Roofwise</strong>
+            <strong style={{ color: 'var(--text-main)', fontWeight: 600 }}>Roofwise</strong>
             <span style={{ color: 'var(--text-dim)' }}>—</span>
-            <span>Make every rooftop work smarter. Evidence-backed roof retrofit planning.</span>
+            <span>Evidence-backed roof retrofit planning for campus infrastructure.</span>
           </div>
           <div style={{ display: 'flex', alignItems: 'center', gap: '16px', fontSize: '0.75rem' }}>
             <span>Engine: v1.2.0 (Deterministic)</span>
-            <span>Standards: IS 15797 / IS 3792 / NBC 2016</span>
-            <span style={{ color: 'var(--green-primary)', fontWeight: 600 }}>● FastAPI Connected (:8000)</span>
+            <span>Standards: IS 15797 / IS 3792 / NBC 2016 Part 8</span>
           </div>
         </div>
       </footer>

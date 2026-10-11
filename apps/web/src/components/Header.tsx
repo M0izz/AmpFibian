@@ -22,18 +22,21 @@ export const Header: React.FC<HeaderProps> = ({
 }) => {
   return (
     <header style={{
-      background: 'var(--bg-surface)',
+      background: 'rgba(9, 9, 11, 0.85)',
+      backdropFilter: 'blur(14px) saturate(1.4)',
       borderBottom: '1px solid var(--border-default)',
       position: 'sticky',
       top: 0,
-      zIndex: 40
+      zIndex: 40,
+      width: '100%'
     }}>
-      <div className="container" style={{
+      <div style={{
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'space-between',
-        height: '68px',
-        gap: '16px'
+        height: '56px',
+        padding: '0 24px',
+        gap: '20px'
       }}>
         {/* Brand */}
         <div
@@ -45,71 +48,91 @@ export const Header: React.FC<HeaderProps> = ({
           style={{
             display: 'flex',
             alignItems: 'center',
-            gap: '12px',
+            gap: '10px',
             cursor: onNavigateToLanding ? 'pointer' : 'default',
-            userSelect: 'none'
+            userSelect: 'none',
+            flexShrink: 0
           }}
-          title={onNavigateToLanding ? "Back to Roofwise Landing Page" : "Roofwise"}
+          title={onNavigateToLanding ? 'Back to Roofwise home' : 'Roofwise'}
         >
           <div style={{
-            width: '38px',
-            height: '38px',
-            borderRadius: '10px',
-            background: 'linear-gradient(135deg, #0EA5E9 0%, #10B981 100%)',
+            width: '28px',
+            height: '28px',
+            borderRadius: '8px',
+            background: 'var(--green-primary)',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            color: '#FFFFFF',
-            boxShadow: '0 2px 10px rgba(16, 185, 129, 0.3)'
+            color: 'var(--on-accent)'
           }}>
-            <ShieldCheck size={22} strokeWidth={2.4} />
+            <ShieldCheck size={17} strokeWidth={2.4} />
           </div>
-          <div>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-              <span style={{
-                fontFamily: 'var(--font-display)',
-                fontSize: '1.25rem',
-                fontWeight: 800,
-                color: 'var(--text-main)',
-                letterSpacing: '-0.02em'
-              }}>
-                Roofwise
-              </span>
-              <span className="badge badge-green badge-mono" style={{ padding: '1px 6px', fontSize: '0.68rem', fontWeight: 700 }}>
-                v1.2 PRO
-              </span>
-            </div>
-            <div style={{ fontSize: '0.78rem', color: 'var(--text-muted)', lineHeight: '1.2' }}>
-              Evidence-backed roof retrofit planning
-            </div>
-          </div>
+          <span style={{
+            fontSize: '1.02rem',
+            fontWeight: 700,
+            color: 'var(--text-main)',
+            letterSpacing: '-0.02em'
+          }}>
+            Roofwise
+          </span>
         </div>
 
-        {/* Center: Active Building Context Tag */}
+        {/* Center: building context (breadcrumb style) */}
         <div style={{
           display: 'flex',
           alignItems: 'center',
           gap: '8px',
-          background: 'var(--bg-subtle)',
-          padding: '6px 12px',
-          borderRadius: 'var(--radius-full)',
-          border: '1px solid var(--border-default)',
-          fontSize: '0.8rem'
+          minWidth: 0,
+          flex: '1 1 auto',
+          justifyContent: 'center',
+          fontSize: '0.84rem',
+          color: 'var(--text-muted)'
         }}>
-          <Building2 size={14} color="var(--green-primary)" />
-          <span style={{ color: 'var(--text-muted)' }}>Assessing:</span>
-          <strong style={{ color: 'var(--text-main)' }}>{building.name}</strong>
-          <span style={{ color: 'var(--text-dim)' }}>•</span>
-          <span style={{ color: 'var(--text-muted)' }}>{building.location.city}</span>
+          <Building2 size={14} style={{ flexShrink: 0, color: 'var(--text-dim)' }} />
+          <span style={{ whiteSpace: 'nowrap' }}>{building.location.city}</span>
+          <span style={{ color: 'var(--text-dim)' }}>/</span>
+          <span style={{
+            color: 'var(--text-main)',
+            fontWeight: 500,
+            whiteSpace: 'nowrap',
+            overflow: 'hidden',
+            textOverflow: 'ellipsis',
+            minWidth: 0
+          }} title={building.name}>
+            {building.name}
+          </span>
+          <span style={{
+            marginLeft: '8px',
+            fontSize: '0.72rem',
+            padding: '2px 8px',
+            borderRadius: '12px',
+            background: 'rgba(62, 207, 142, 0.1)',
+            color: 'var(--green-primary)',
+            fontWeight: 600,
+            border: '1px solid var(--green-border)'
+          }}>
+            {building.geometry.gross_roof_area_m2} m² Active
+          </span>
         </div>
 
-        {/* Right Actions */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+        {/* Right actions */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: '8px', flexShrink: 0 }}>
           {runId && (
-            <div className="badge badge-green badge-mono" title="Immutable run snapshot ID">
-              <CheckCircle2 size={12} />
-              <span>{runId}</span>
-            </div>
+            <span
+              title={`Immutable run snapshot ID: ${runId}`}
+              style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '5px',
+                fontFamily: 'var(--font-code)',
+                fontSize: '0.7rem',
+                color: 'var(--text-dim)',
+                marginRight: '6px'
+              }}
+            >
+              <CheckCircle2 size={12} style={{ color: 'var(--green-primary)' }} />
+              <span>{runId.length > 14 ? runId.slice(0, 14) + '…' : runId}</span>
+            </span>
           )}
           <UserMenu onNavigateToHistory={onNavigateToHistory} />
 
@@ -117,20 +140,20 @@ export const Header: React.FC<HeaderProps> = ({
             id="header-edit-assessment-btn"
             onClick={onNavigateToAssessment}
             className="btn btn-secondary"
-            style={{ fontSize: '0.81rem', padding: '6px 12px' }}
+            style={{ fontSize: '0.8rem', padding: '6px 12px' }}
           >
             <Sliders size={14} />
-            <span>Edit Assessment</span>
+            <span>Edit assessment</span>
           </button>
 
           <button
             id="header-export-report-btn"
             onClick={onNavigateToReports}
             className="btn btn-primary"
-            style={{ fontSize: '0.81rem', padding: '6px 14px' }}
+            style={{ fontSize: '0.8rem', padding: '6px 14px' }}
           >
             <FileText size={14} />
-            <span>Export Report</span>
+            <span>Export report</span>
           </button>
         </div>
       </div>

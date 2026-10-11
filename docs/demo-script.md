@@ -24,14 +24,14 @@ Target Duration: 2 minutes 45 seconds | Target Audience: Hackathon Judges & Camp
   2. **Heat-First Package** (Cool roof coating + 50mm XPS over-deck insulation + smaller 20 kL tank).
   3. **Water-First Package** (60 kL ground storage tank + maximum catchment filter + standard reflective paint).
 * **Narration**:
-  > *"Instead of hiding trade-offs behind a single arbitrary 'eco-score', the engine reports physical metrics: reduction in peak absorbed solar flux and sol-air temperature, alongside chronological daily water reliability. Notice our three profiles: The Balanced package captures 1.48 million liters of non-potable water, eliminates 68% of top-floor conductive heat gain, and stays within the ₹8 Lakh budget."*
+  > *"Instead of hiding trade-offs behind a single arbitrary 'eco-score', the engine reports physical metrics: reduction in peak absorbed solar flux and sol-air temperature, alongside chronological daily water reliability. Notice our three profiles: The Balanced package captures 6.13 Lakh liters of non-potable water (74.1% monsoon self-sufficiency / 28.0% annual coverage), cuts 48.3% of top-floor conductive heat gain (eliminating 13.7 kW of envelope heat flow via a 66.7% cut in absorbed solar radiation), and stays well within the ₹8 Lakh budget at ₹4.01 Lakhs."*
 
 ---
 
 ### [1:25 – 1:55] Sensitivity & Historical Rainfall Switching
 * **Visual**: Switch the rainfall scenario dropdown from **Median Year (2020: 2,640 mm)** to **Deficient Dry Year (2015: 1,714 mm)**.
 * **Narration**:
-  > *"Water security isn't determined by annual totals; it depends on daily rainfall timing and storage buffer. When we stress-test against the 2015 drought year, notice how water reliability shifts from 68% down to 48%, and empty tank days increase. The engine shows whether your retrofit package remains robust when the monsoon falters."*
+  > *"Water security isn't determined by annual totals; it depends on daily rainfall timing and storage buffer. When we stress-test against the 2015 drought year, notice how monsoon water reliability shifts from 74.1% down to 54.2%, annual coverage shifts from 28.0% to 21.5%, and empty tank days increase from 203 to 241 days. The engine shows whether your retrofit package remains robust when the monsoon falters."*
 
 ---
 
