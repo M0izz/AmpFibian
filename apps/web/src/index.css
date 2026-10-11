@@ -1,57 +1,65 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Outfit:wght@500;600;700&display=swap');
 
 :root {
-  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-sans: 'Plus Jakarta Sans', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   --font-display: 'Outfit', var(--font-sans);
-  --font-mono: 'JetBrains Mono', monospace;
+  --font-mono: 'JetBrains Mono', 'Space Mono', monospace;
 
-  /* Roofwise Color System (Warm, Restrained Climate-Tech Palette) */
-  --bg-app: #F6F7F4;
-  --bg-surface: #FFFFFF;
-  --bg-subtle: #F0F2EE;
-  --bg-muted: #E6EAE4;
+  /* Roofwise Ecosystem Color System (Harmonious Dual Emerald & Azure on Dark Slate) */
+  --bg-app: #0A0E17;
+  --bg-surface: #111827;
+  --bg-subtle: #172133;
+  --bg-muted: #1E293B;
 
-  --border-default: #E0E6E0;
-  --border-subtle: #ECEFEA;
-  --border-active: #176B4D;
+  --border-default: rgba(255, 255, 255, 0.09);
+  --border-subtle: rgba(255, 255, 255, 0.05);
+  --border-active: #10B981;
+  --border-blue-active: #0EA5E9;
 
-  --text-main: #18211D;
-  --text-secondary: #48534E;
-  --text-muted: #64716A;
-  --text-dim: #8B9891;
+  --text-main: #F8FAFC;
+  --text-secondary: #CBD5E1;
+  --text-muted: #94A3B8;
+  --text-dim: #64748B;
 
-  /* Primary Accent: Forest Green */
-  --green-primary: #176B4D;
-  --green-hover: #12553D;
-  --green-light: #E8F4EC;
-  --green-border: #BFE2CB;
+  /* Thermal & Cooling Accent: Emerald / Mint */
+  --green-primary: #10B981;
+  --green-hover: #059669;
+  --green-light: rgba(16, 185, 129, 0.12);
+  --green-border: rgba(16, 185, 129, 0.35);
+  --green-glow: rgba(16, 185, 129, 0.25);
 
-  /* Secondary Accent: Water Blue */
-  --water-blue: #247BA0;
-  --water-hover: #1D6382;
-  --water-light: #EAF4F8;
-  --water-border: #BCD9E6;
+  /* Hydro & Rainwater Accent: Azure / Cyan */
+  --water-blue: #0EA5E9;
+  --water-hover: #0284C7;
+  --water-light: rgba(14, 165, 233, 0.12);
+  --water-border: rgba(14, 165, 233, 0.35);
+  --water-glow: rgba(14, 165, 233, 0.25);
 
-  /* Amber: Warnings & Budget */
-  --amber-primary: #A9650B;
-  --amber-light: #FFF4DF;
-  --amber-border: #F3DBAF;
+  /* Dual Complementary Gradient */
+  --gradient-accent: linear-gradient(135deg, #0EA5E9 0%, #10B981 100%);
+  --gradient-accent-hover: linear-gradient(135deg, #0284C7 0%, #059669 100%);
+  --gradient-card: linear-gradient(135deg, rgba(14, 165, 233, 0.03) 0%, rgba(16, 185, 129, 0.03) 100%);
 
-  /* Error / Infeasible */
-  --error-primary: #B93838;
-  --error-light: #FDF2F2;
-  --error-border: #F5C6C6;
+  /* Warnings & Financials */
+  --amber-primary: #F59E0B;
+  --amber-light: rgba(245, 158, 11, 0.12);
+  --amber-border: rgba(245, 158, 11, 0.3);
 
-  /* Shadows */
-  --shadow-xs: 0 1px 2px rgba(24, 33, 29, 0.04);
-  --shadow-sm: 0 1px 3px rgba(24, 33, 29, 0.06), 0 1px 2px rgba(24, 33, 29, 0.04);
-  --shadow-md: 0 4px 14px rgba(24, 33, 29, 0.06), 0 2px 4px rgba(24, 33, 29, 0.03);
-  --shadow-lg: 0 10px 25px rgba(24, 33, 29, 0.08), 0 4px 10px rgba(24, 33, 29, 0.04);
+  /* Errors / Infeasible */
+  --error-primary: #EF4444;
+  --error-light: rgba(239, 68, 68, 0.12);
+  --error-border: rgba(239, 68, 68, 0.3);
+
+  /* Shadows with Slate Ambient Tints */
+  --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.3);
+  --shadow-sm: 0 2px 6px rgba(0, 0, 0, 0.4);
+  --shadow-md: 0 6px 18px rgba(0, 0, 0, 0.45), 0 0 15px rgba(14, 165, 233, 0.05);
+  --shadow-lg: 0 12px 32px rgba(0, 0, 0, 0.6), 0 0 24px rgba(16, 185, 129, 0.08);
 
   --radius-xs: 4px;
-  --radius-sm: 6px;
-  --radius-md: 10px;
-  --radius-lg: 14px;
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
   --radius-full: 9999px;
 }
 
@@ -84,11 +92,11 @@ button, input, select, textarea {
   background: var(--bg-app);
 }
 ::-webkit-scrollbar-thumb {
-  background: #CBD5CD;
+  background: #253347;
   border-radius: 4px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #A6B4A9;
+  background: #384A63;
 }
 
 /* Base Layout Containers */
@@ -175,32 +183,36 @@ button, input, select, textarea {
 }
 
 .btn-primary {
-  background: var(--green-primary);
+  background: var(--gradient-accent);
   color: #FFFFFF;
-  border-color: var(--green-primary);
-  box-shadow: var(--shadow-xs);
+  border-color: transparent;
+  box-shadow: 0 2px 12px rgba(16, 185, 129, 0.25);
+  font-weight: 600;
 }
 .btn-primary:hover {
-  background: var(--green-hover);
-  border-color: var(--green-hover);
+  background: var(--gradient-accent-hover);
+  box-shadow: 0 4px 18px rgba(16, 185, 129, 0.35);
 }
 
 .btn-secondary {
-  background: var(--bg-surface);
+  background: var(--bg-subtle);
   color: var(--text-main);
   border-color: var(--border-default);
 }
 .btn-secondary:hover {
-  background: var(--bg-subtle);
-  border-color: #CBD5CD;
+  background: var(--bg-muted);
+  border-color: rgba(255, 255, 255, 0.2);
 }
 
 .btn-blue {
   background: var(--water-blue);
   color: #FFFFFF;
+  box-shadow: 0 2px 12px rgba(14, 165, 233, 0.25);
+  font-weight: 600;
 }
 .btn-blue:hover {
   background: var(--water-hover);
+  box-shadow: 0 4px 18px rgba(14, 165, 233, 0.35);
 }
 
 /* Navigation Tabs */
@@ -223,7 +235,7 @@ button, input, select, textarea {
 
 .nav-tab:hover {
   color: var(--text-main);
-  background: rgba(0, 0, 0, 0.02);
+  background: rgba(255, 255, 255, 0.04);
 }
 
 .nav-tab.active {
@@ -440,22 +452,25 @@ html {
 }
 
 /* ══════════════════════════════════════════════════════════════════
-   BYOTONE DESIGN SYSTEM (Dark luxury editorial & scientific telemetry)
+   ROOFWISE CLIMATE PRODUCT DESIGN SYSTEM (Harmonious Azure & Emerald)
    ══════════════════════════════════════════════════════════════════ */
 :root {
-  --byotone-bg: #111215;
-  --byotone-surface: #18191e;
-  --byotone-surface-hover: #22232a;
-  --byotone-mint: #a7f3d0;
-  --byotone-mint-bright: #6ee7b7;
-  --byotone-mint-glow: rgba(110, 231, 183, 0.18);
-  --byotone-cyan: #7dd3fc;
-  --byotone-amber: #fde047;
-  --byotone-text-primary: #ffffff;
-  --byotone-text-muted: rgba(255, 255, 255, 0.65);
-  --byotone-text-dim: rgba(255, 255, 255, 0.35);
-  --byotone-border-dashed: rgba(255, 255, 255, 0.16);
-  --byotone-border-mint: rgba(110, 231, 183, 0.4);
+  --byotone-bg: #0A0E17;
+  --byotone-surface: #111827;
+  --byotone-surface-hover: #172133;
+  --byotone-mint: #34D399;
+  --byotone-mint-bright: #10B981;
+  --byotone-mint-glow: rgba(16, 185, 129, 0.2);
+  --byotone-cyan: #38BDF8;
+  --byotone-blue-bright: #0EA5E9;
+  --byotone-blue-glow: rgba(14, 165, 233, 0.2);
+  --byotone-amber: #F59E0B;
+  --byotone-text-primary: #F8FAFC;
+  --byotone-text-muted: rgba(248, 250, 252, 0.72);
+  --byotone-text-dim: rgba(248, 250, 252, 0.42);
+  --byotone-border-dashed: rgba(255, 255, 255, 0.12);
+  --byotone-border-mint: rgba(16, 185, 129, 0.35);
+  --byotone-border-blue: rgba(14, 165, 233, 0.35);
 }
 
 .byotone-page {
@@ -467,43 +482,57 @@ html {
   min-height: 100vh;
 }
 
-/* Editorial Serif Titles */
+/* Modern Geometric Product Titles */
 .byotone-title-huge {
-  font-family: 'Cormorant Garamond', Georgia, serif;
-  font-size: clamp(2.8rem, 7vw, 6.2rem);
-  font-weight: 400;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  line-height: 1.04;
-  color: #ffffff;
+  font-family: 'Outfit', sans-serif;
+  font-size: clamp(2.4rem, 6.2vw, 5.2rem);
+  font-weight: 800;
+  letter-spacing: -0.035em;
+  line-height: 1.08;
+  color: #FFFFFF;
 }
 
 .byotone-title-big {
-  font-family: 'Cormorant Garamond', Georgia, serif;
-  font-size: clamp(2rem, 4vw, 3.8rem);
-  font-weight: 400;
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
-  line-height: 1.1;
-  color: #ffffff;
+  font-family: 'Outfit', sans-serif;
+  font-size: clamp(1.8rem, 3.8vw, 3.2rem);
+  font-weight: 700;
+  letter-spacing: -0.025em;
+  line-height: 1.15;
+  color: #FFFFFF;
 }
 
 .byotone-title-medium {
-  font-family: 'Cormorant Garamond', Georgia, serif;
-  font-size: clamp(1.5rem, 2.8vw, 2.4rem);
-  font-weight: 400;
-  text-transform: uppercase;
-  letter-spacing: 0.03em;
-  line-height: 1.2;
+  font-family: 'Outfit', sans-serif;
+  font-size: clamp(1.3rem, 2.4vw, 2rem);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.25;
+}
+
+.byotone-gradient-text {
+  background: linear-gradient(135deg, #38BDF8 0%, #10B981 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.byotone-gradient-blue {
+  background: linear-gradient(135deg, #38BDF8 0%, #0EA5E9 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.byotone-gradient-green {
+  background: linear-gradient(135deg, #34D399 0%, #10B981 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
 .byotone-mono {
-  font-family: 'Space Mono', monospace;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
+  font-family: 'JetBrains Mono', 'Space Mono', monospace;
+  letter-spacing: 0.05em;
 }
 
-/* Orbit Pill Button (Byotone signature) */
+/* Orbit Pill Button (Byotone signature with blue & green synergy) */
 .byotone-btn-orbit {
   position: relative;
   display: inline-flex;
@@ -661,31 +690,10 @@ html {
 }
 
 .byotone-chapter-node.active {
-  background: var(--byotone-mint-bright);
-  color: #111215;
-  border-color: var(--byotone-mint-bright);
-  box-shadow: 0 0 16px rgba(110, 231, 183, 0.5);
-}
-
-.byotone-chapter-label {
-  position: absolute;
-  top: calc(100% + 8px);
-  left: 50%;
-  transform: translateX(-50%);
-  font-family: 'Space Mono', monospace;
-  font-size: 0.65rem;
-  text-transform: uppercase;
-  color: var(--byotone-mint-bright);
-  white-space: nowrap;
-  letter-spacing: 0.08em;
-  opacity: 0;
-  transition: opacity 0.2s ease;
-  pointer-events: none;
-}
-
-.byotone-chapter-node:hover .byotone-chapter-label,
-.byotone-chapter-node.active .byotone-chapter-label {
-  opacity: 1;
+  background: var(--gradient-accent);
+  color: #FFFFFF;
+  border-color: #10B981;
+  box-shadow: 0 0 16px rgba(16, 185, 129, 0.4);
 }
 
 /* Dashed card containers */

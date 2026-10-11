@@ -54,29 +54,29 @@ export const Header: React.FC<HeaderProps> = ({
           <div style={{
             width: '38px',
             height: '38px',
-            borderRadius: 'var(--radius-md)',
-            background: 'var(--green-light)',
-            border: '1px solid var(--green-border)',
+            borderRadius: '10px',
+            background: 'linear-gradient(135deg, #0EA5E9 0%, #10B981 100%)',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            color: 'var(--green-primary)'
+            color: '#FFFFFF',
+            boxShadow: '0 2px 10px rgba(16, 185, 129, 0.3)'
           }}>
-            <ShieldCheck size={22} strokeWidth={2.2} />
+            <ShieldCheck size={22} strokeWidth={2.4} />
           </div>
           <div>
             <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
               <span style={{
                 fontFamily: 'var(--font-display)',
                 fontSize: '1.25rem',
-                fontWeight: 700,
+                fontWeight: 800,
                 color: 'var(--text-main)',
                 letterSpacing: '-0.02em'
               }}>
                 Roofwise
               </span>
-              <span className="badge badge-green badge-mono" style={{ padding: '1px 6px', fontSize: '0.68rem' }}>
-                v1.2
+              <span className="badge badge-green badge-mono" style={{ padding: '1px 6px', fontSize: '0.68rem', fontWeight: 700 }}>
+                v1.2 PRO
               </span>
             </div>
             <div style={{ fontSize: '0.78rem', color: 'var(--text-muted)', lineHeight: '1.2' }}>

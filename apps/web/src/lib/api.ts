@@ -1,7 +1,24 @@
 import type { BuildingProfile, SimulationSnapshot } from "../types";
 import { getAuthHeaders } from "./session";
 
-const API_BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:8000";
+// In production on Vercel, browser requests use relative path "/api" routed via vercel.json rewrites.
+// In runtime functions / SSR, process.env.API_URL is read from Vercel service bindings.
+// In local development, falls back to Vite proxy or VITE_API_URL.
+const getBaseApiUrl = (): string => {
+  if (import.meta.env.VITE_API_URL) {
+    return import.meta.env.VITE_API_URL;
+  }
+  const proc = (globalThis as unknown as { process?: { env?: Record<string, string | undefined> } }).process;
+  if (proc?.env?.API_URL) {
+    return proc.env.API_URL;
+  }
+  if (typeof window !== "undefined") {
+    return "/api";
+  }
+  return "http://localhost:8000";
+};
+
+const API_BASE_URL = getBaseApiUrl();
 
 export const DEFAULT_MUMBAI_HOSTEL: BuildingProfile = {
   id: "bldg_mumbai_hostel_01",

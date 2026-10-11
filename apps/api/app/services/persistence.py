@@ -4,7 +4,24 @@ import uuid
 from datetime import datetime, timezone
 from typing import Dict, Any, Optional, List
 
-SAVED_RUNS_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), "../../../../data/saved_runs"))
+def _resolve_saved_runs_dir():
+    candidate = os.path.abspath(os.path.join(os.path.dirname(__file__), "../../../../data/saved_runs"))
+    try:
+        os.makedirs(candidate, exist_ok=True)
+        test_file = os.path.join(candidate, ".write_test")
+        with open(test_file, "w") as f:
+            f.write("ok")
+        os.remove(test_file)
+        return candidate
+    except Exception:
+        tmp_dir = os.path.join("/tmp", "saved_runs")
+        try:
+            os.makedirs(tmp_dir, exist_ok=True)
+            return tmp_dir
+        except Exception:
+            return candidate
+
+SAVED_RUNS_DIR = _resolve_saved_runs_dir()
 
 def json_default(obj):
     if hasattr(obj, "model_dump"):
@@ -15,7 +32,10 @@ def json_default(obj):
 
 class PersistenceService:
     def __init__(self):
-        os.makedirs(SAVED_RUNS_DIR, exist_ok=True)
+        try:
+            os.makedirs(SAVED_RUNS_DIR, exist_ok=True)
+        except Exception:
+            pass
         self.mode = os.getenv("PERSISTENCE_MODE", "local_file")
         self.dynamodb_table_name = os.getenv("DYNAMODB_TABLE_NAME", "roofwise_simulation_runs")
         self._memory_cache: Dict[str, Dict[str, Any]] = {}

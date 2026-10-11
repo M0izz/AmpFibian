@@ -39,7 +39,7 @@ export const OverviewView: React.FC<OverviewViewProps> = ({
       <div className="card" style={{
         padding: '28px',
         border: '1.5px solid var(--green-border)',
-        background: 'linear-gradient(180deg, #FFFFFF 0%, #F9FBF9 100%)',
+        background: 'linear-gradient(180deg, var(--bg-surface) 0%, rgba(15, 23, 42, 0.95) 100%)',
         position: 'relative',
         boxShadow: 'var(--shadow-md)'
       }}>

@@ -37,6 +37,7 @@ app.add_middleware(
 )
 
 @app.get("/health")
+@app.get("/api/health")
 def health_check():
     return {
         "status": "healthy",
@@ -45,9 +46,11 @@ def health_check():
         "timestamp": datetime.now(timezone.utc).isoformat()
     }
 
-# Register sub-routers
+# Register sub-routers with and without /api prefix
 app.include_router(assessment_router, prefix="/assessments", tags=["Assessment"])
 app.include_router(simulations_router, prefix="/simulations", tags=["Simulations"])
+app.include_router(assessment_router, prefix="/api/assessments", tags=["Assessment"])
+app.include_router(simulations_router, prefix="/api/simulations", tags=["Simulations"])
 
 if __name__ == "__main__":
     import uvicorn

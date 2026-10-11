@@ -1,8 +1,26 @@
 import React, { useState, useEffect, useRef } from 'react';
 import {
   ArrowRight,
-  VolumeX
+  Sun,
+  Droplets,
+  DollarSign,
+  ShieldCheck,
+  CheckCircle2,
+  VolumeX,
+  Sparkles,
+  Building,
+  TrendingDown,
+  Award
 } from 'lucide-react';
+
+const CHAPTERS: Array<{ id: 'A' | 'B' | 'C' | 'D' | 'E' | 'F'; label: string }> = [
+  { id: 'A', label: 'OVERVIEW' },
+  { id: 'B', label: 'COOL ROOF' },
+  { id: 'C', label: 'WATER SAVINGS' },
+  { id: 'D', label: 'PACKAGES' },
+  { id: 'E', label: 'COMPLIANCE' },
+  { id: 'F', label: 'START' }
+];
 
 interface LandingPageProps {
   onEnterApp: () => void;
@@ -10,14 +28,15 @@ interface LandingPageProps {
 }
 
 export const LandingPage: React.FC<LandingPageProps> = ({ onEnterApp, onNavigateToAssessment: _onNavigateToAssessment }) => {
-  // Byotone Entrance Gating State
-  const [hasEntered, setHasEntered] = useState<boolean>(false);
   const [soundEnabled, setSoundEnabled] = useState<boolean>(false);
   const [activeChapter, setActiveChapter] = useState<'A' | 'B' | 'C' | 'D' | 'E' | 'F'>('A');
-  const [solarFlux, setSolarFlux] = useState<number>(840); // W/m² slider
   const [activePreset, setActivePreset] = useState<'cool' | 'balanced' | 'solar'>('balanced');
 
-  // Canvas ref for Byotone organic dust/particle ring
+  // Customer Interactive ROI & Value Simulator state
+  const [roofArea, setRoofArea] = useState<number>(600); // m²
+  const [monthlyPowerBill, setMonthlyPowerBill] = useState<number>(120000); // INR
+
+  // Canvas ref for celestial particle ring (harmonious blue & green)
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const audioCtxRef = useRef<AudioContext | null>(null);
   const oscillatorRef = useRef<OscillatorNode | null>(null);
@@ -41,19 +60,18 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onEnterApp, onNavigate
     };
     window.addEventListener('resize', handleResize);
 
-    // Particle cloud configuration
-    const PARTICLE_COUNT = 420;
+    const PARTICLE_COUNT = 380;
     const particles = Array.from({ length: PARTICLE_COUNT }, () => {
       const angle = Math.random() * Math.PI * 2;
       const radiusBase = 220 + Math.random() * 260;
       return {
         angle,
-        speed: (0.0015 + Math.random() * 0.002) * (Math.random() > 0.5 ? 1 : -1),
+        speed: (0.0012 + Math.random() * 0.0018) * (Math.random() > 0.5 ? 1 : -1),
         radiusBase,
-        radiusJitter: (Math.random() - 0.5) * 45,
-        size: 0.8 + Math.random() * 1.8,
-        alpha: 0.15 + Math.random() * 0.65,
-        hueShift: Math.random()
+        radiusJitter: (Math.random() - 0.5) * 40,
+        size: 0.9 + Math.random() * 1.8,
+        alpha: 0.2 + Math.random() * 0.65,
+        isBlue: Math.random() > 0.5
       };
     });
 
@@ -65,43 +83,39 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onEnterApp, onNavigate
       const centerX = width / 2;
       const centerY = height / 2;
 
-      // Draw faint center glowing focal ring
+      // Ambient radial biophilic glow: Blue & Green
       const glowGrad = ctx.createRadialGradient(
         centerX,
         centerY,
-        140,
+        120,
         centerX,
         centerY,
-        420
+        460
       );
-      glowGrad.addColorStop(0, 'rgba(110, 231, 183, 0.04)');
-      glowGrad.addColorStop(0.5, 'rgba(56, 189, 248, 0.02)');
-      glowGrad.addColorStop(1, 'rgba(17, 18, 21, 0)');
+      glowGrad.addColorStop(0, 'rgba(14, 165, 233, 0.03)');
+      glowGrad.addColorStop(0.4, 'rgba(16, 185, 129, 0.03)');
+      glowGrad.addColorStop(1, 'rgba(10, 14, 23, 0)');
       ctx.fillStyle = glowGrad;
       ctx.beginPath();
-      ctx.arc(centerX, centerY, 440, 0, Math.PI * 2);
+      ctx.arc(centerX, centerY, 480, 0, Math.PI * 2);
       ctx.fill();
 
-      // Render dust particles
+      // Render living particles
       for (let i = 0; i < particles.length; i++) {
         const p = particles[i];
         p.angle += p.speed;
 
-        // Dynamic radius modulation based on solarFlux slider
-        const fluxMod = (solarFlux - 840) * 0.08;
-        const currentRadius = p.radiusBase + p.radiusJitter + Math.sin(frame * 0.01 + i) * 12 + fluxMod;
-
+        const currentRadius = p.radiusBase + p.radiusJitter + Math.sin(frame * 0.01 + i) * 10;
         const x = centerX + Math.cos(p.angle) * currentRadius * 1.15;
         const y = centerY + Math.sin(p.angle) * currentRadius * 0.72;
 
         ctx.beginPath();
         ctx.arc(x, y, p.size, 0, Math.PI * 2);
 
-        // Palette transition: mint (#6ee7b7) to cyan (#7dd3fc)
-        const isMint = p.hueShift > 0.4;
-        ctx.fillStyle = isMint
-          ? `rgba(110, 231, 183, ${p.alpha})`
-          : `rgba(125, 211, 252, ${p.alpha * 0.8})`;
+        // Harmonious pairing: Vibrant Azure (#38BDF8) & Emerald Mint (#34D399)
+        ctx.fillStyle = p.isBlue
+          ? `rgba(56, 189, 248, ${p.alpha})`
+          : `rgba(52, 211, 153, ${p.alpha})`;
 
         ctx.fill();
       }
@@ -115,9 +129,9 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onEnterApp, onNavigate
       window.removeEventListener('resize', handleResize);
       cancelAnimationFrame(animationId);
     };
-  }, [solarFlux]);
+  }, []);
 
-  // Audio synthesis for Byotone ambient frequency (8.0 Hz / 432 Hz soothing drone)
+  // Audio synthesis for Byotone ambient frequency
   const toggleSound = () => {
     if (!soundEnabled) {
       try {
@@ -128,12 +142,11 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onEnterApp, onNavigate
         const osc = ctx.createOscillator();
         const gain = ctx.createGain();
 
-        // 108Hz harmonic base with slow modulation
         osc.type = 'sine';
-        osc.frequency.setValueAtTime(108, ctx.currentTime);
+        osc.frequency.setValueAtTime(128, ctx.currentTime);
 
         gain.gain.setValueAtTime(0.001, ctx.currentTime);
-        gain.gain.exponentialRampToValueAtTime(0.06, ctx.currentTime + 2);
+        gain.gain.exponentialRampToValueAtTime(0.04, ctx.currentTime + 2);
 
         osc.connect(gain);
         gain.connect(ctx.destination);
@@ -147,23 +160,14 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onEnterApp, onNavigate
       }
     } else {
       if (gainNodeRef.current && audioCtxRef.current) {
-        gainNodeRef.current.gain.exponentialRampToValueAtTime(0.0001, audioCtxRef.current.currentTime + 0.6);
+        gainNodeRef.current.gain.exponentialRampToValueAtTime(0.0001, audioCtxRef.current.currentTime + 0.5);
         setTimeout(() => {
           oscillatorRef.current?.stop();
           audioCtxRef.current?.close();
-        }, 600);
+        }, 500);
       }
       setSoundEnabled(false);
     }
-  };
-
-  const handleEnterWithSound = () => {
-    toggleSound();
-    setHasEntered(true);
-  };
-
-  const handleEnterQuietly = () => {
-    setHasEntered(true);
   };
 
   const scrollToChapter = (chapter: 'A' | 'B' | 'C' | 'D' | 'E' | 'F') => {
@@ -174,10 +178,12 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onEnterApp, onNavigate
     }
   };
 
-  // Calculated live metrics based on Solar Flux slider
-  const baselineSolAirTemp = (36 + (solarFlux * 0.038)).toFixed(1);
-  const coolSolAirTemp = (36 + (solarFlux * 0.011)).toFixed(1);
-  const solAirDelta = (parseFloat(baselineSolAirTemp) - parseFloat(coolSolAirTemp)).toFixed(1);
+  // Dynamic customer savings calculation
+  const annualCoolingSavings = Math.round(monthlyPowerBill * 12 * 0.22); // 22% overall building cooling energy cut
+  const annualWaterLiters = Math.round(roofArea * 1350 * 0.88); // 1350mm rainfall, 0.88 runoff C
+  const tankerTripsSaved = Math.round(annualWaterLiters / 10000); // 10,000L per private tanker
+  const estimatedCapex = Math.round(roofArea * 1150); // ~₹1150/m² for turnkey cool roof + RWH
+  const paybackYears = (estimatedCapex / (annualCoolingSavings + (tankerTripsSaved * 1800))).toFixed(1);
 
   return (
     <div className="byotone-page">
@@ -189,117 +195,12 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onEnterApp, onNavigate
           inset: 0,
           pointerEvents: 'none',
           zIndex: 1,
-          opacity: hasEntered ? 0.85 : 0.95,
-          transition: 'opacity 1s ease'
+          opacity: 0.85
         }}
       />
 
       {/* ════════════════════════════════════════════════════════════════
-          BYOTONE ARRIVAL PRELOADER / GATING SCREEN
-          ════════════════════════════════════════════════════════════════ */}
-      {!hasEntered && (
-        <div style={{
-          position: 'fixed',
-          inset: 0,
-          zIndex: 200,
-          background: 'radial-gradient(circle at 50% 50%, #15171c 0%, #0c0d10 100%)',
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-          justifyContent: 'center',
-          padding: '24px',
-          textAlign: 'center'
-        }}>
-          {/* Byotone Brand Minimal Mark */}
-          <div style={{
-            width: '48px',
-            height: '48px',
-            marginBottom: '16px',
-            position: 'relative',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center'
-          }}>
-            <svg viewBox="0 0 48 48" width="48" height="48" fill="none">
-              <path
-                d="M10 24C10 16.268 16.268 10 24 10C31.732 10 38 16.268 38 24"
-                stroke="#6EE7B7"
-                strokeWidth="2"
-                strokeLinecap="round"
-              />
-              <path
-                d="M16 24C16 19.5817 19.5817 16 24 16C28.4183 16 32 19.5817 32 24"
-                stroke="#7DD3FC"
-                strokeWidth="1.5"
-                strokeLinecap="round"
-                strokeDasharray="2 3"
-              />
-              <circle cx="24" cy="24" r="3" fill="#6EE7B7" />
-            </svg>
-          </div>
-
-          <div className="byotone-mono" style={{ fontSize: '0.85rem', color: '#ffffff', letterSpacing: '0.22em', marginBottom: '32px' }}>
-            ROOFWISE • CLIMATEFIT
-          </div>
-
-          <h1 className="byotone-title-huge" style={{ maxWidth: '820px', marginBottom: '18px', color: '#6EE7B7' }}>
-            EVIDENCE-BACKED ROOF RESILIENCE
-          </h1>
-
-          <p style={{
-            maxWidth: '520px',
-            fontSize: '1rem',
-            color: 'rgba(255, 255, 255, 0.7)',
-            lineHeight: 1.6,
-            marginBottom: '40px'
-          }}>
-            A spatial retrofit planning twin balancing heat attenuation, sol-air thermodynamics,
-            and circular monsoon rainwater harvesting.
-          </p>
-
-          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '16px' }}>
-            {/* Byotone Orbit Button */}
-            <button
-              id="byotone-enter-sound-btn"
-              onClick={handleEnterWithSound}
-              className="byotone-btn-orbit"
-              style={{ padding: '10px 28px 10px 14px' }}
-            >
-              <div className="byotone-orbit-dot-ring">
-                <svg className="byotone-orbit-dot" width="20" height="20" viewBox="0 0 20 20">
-                  <circle cx="10" cy="3" r="2" fill="#6EE7B7" />
-                  <circle cx="16" cy="14" r="1.5" fill="#7DD3FC" />
-                  <circle cx="4" cy="14" r="1.5" fill="#FDE047" />
-                </svg>
-              </div>
-              <span>ENTER WITH TELEMETRY</span>
-            </button>
-
-            <button
-              id="byotone-enter-quiet-btn"
-              onClick={handleEnterQuietly}
-              style={{
-                background: 'transparent',
-                border: 'none',
-                color: 'rgba(255, 255, 255, 0.45)',
-                fontFamily: "'Space Mono', monospace",
-                fontSize: '0.75rem',
-                letterSpacing: '0.12em',
-                cursor: 'pointer',
-                padding: '6px 16px',
-                transition: 'color 0.2s ease'
-              }}
-              onMouseEnter={(e) => (e.currentTarget.style.color = '#6EE7B7')}
-              onMouseLeave={(e) => (e.currentTarget.style.color = 'rgba(255, 255, 255, 0.45)')}
-            >
-              ENTER QUIETLY
-            </button>
-          </div>
-        </div>
-      )}
-
-      {/* ════════════════════════════════════════════════════════════════
-          PERSISTENT FIXED HEADER (BYOTONE CHAPTER PROGRESS NAV)
+          PERSISTENT FIXED HEADER (Harmonious Azure & Emerald)
           ════════════════════════════════════════════════════════════════ */}
       <header style={{
         position: 'fixed',
@@ -307,95 +208,121 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onEnterApp, onNavigate
         left: 0,
         right: 0,
         zIndex: 100,
-        padding: '20px 32px',
+        padding: '16px 28px',
         display: 'flex',
         justifyContent: 'space-between',
         alignItems: 'center',
-        background: 'linear-gradient(180deg, rgba(17, 18, 21, 0.9) 0%, rgba(17, 18, 21, 0) 100%)',
-        backdropFilter: 'blur(8px)'
+        background: 'linear-gradient(180deg, rgba(10, 14, 23, 0.95) 0%, rgba(10, 14, 23, 0) 100%)',
+        backdropFilter: 'blur(12px)',
+        borderBottom: '1px solid rgba(255, 255, 255, 0.05)'
       }}>
-        {/* Brand Mark */}
+        {/* Brand Mark with Blue/Green Gradient */}
         <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
           <div style={{
-            width: '32px',
-            height: '32px',
-            borderRadius: '50%',
-            border: '1px solid rgba(110, 231, 183, 0.4)',
+            width: '36px',
+            height: '36px',
+            borderRadius: '10px',
+            background: 'linear-gradient(135deg, #0EA5E9 0%, #10B981 100%)',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            background: 'rgba(110, 231, 183, 0.06)'
+            color: '#FFFFFF',
+            fontWeight: 800,
+            fontSize: '1.1rem',
+            boxShadow: '0 2px 12px rgba(16, 185, 129, 0.3)'
           }}>
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
-              <path d="M4 12C4 7.58172 7.58172 4 12 4C16.4183 4 20 7.58172 20 12" stroke="#6EE7B7" strokeWidth="2" strokeLinecap="round"/>
-              <path d="M8 12C8 9.79086 9.79086 8 12 8C14.2091 8 16 9.79086 16 12" stroke="#7DD3FC" strokeWidth="1.5" strokeLinecap="round" strokeDasharray="2 2"/>
-            </svg>
+            R
           </div>
           <div>
-            <span style={{
-              fontFamily: "'Space Mono', monospace",
-              fontWeight: 700,
-              fontSize: '0.95rem',
-              letterSpacing: '0.14em',
-              color: '#ffffff'
-            }}>
-              ROOFWISE
-            </span>
-            <span style={{
-              fontFamily: "'Space Mono', monospace",
-              fontSize: '0.65rem',
-              color: '#6EE7B7',
-              marginLeft: '8px',
-              padding: '2px 6px',
-              border: '1px solid rgba(110, 231, 183, 0.3)',
-              borderRadius: '999px'
-            }}>
-              PHYSICS v1.2
-            </span>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+              <span style={{
+                fontFamily: "'Outfit', sans-serif",
+                fontWeight: 800,
+                fontSize: '1.2rem',
+                letterSpacing: '-0.02em',
+                color: '#FFFFFF'
+              }}>
+                Roofwise
+              </span>
+              <span className="byotone-mono" style={{
+                fontSize: '0.65rem',
+                color: '#34D399',
+                padding: '2px 6px',
+                background: 'rgba(16, 185, 129, 0.12)',
+                border: '1px solid rgba(16, 185, 129, 0.3)',
+                borderRadius: '6px',
+                fontWeight: 700
+              }}>
+                v1.2 PRO
+              </span>
+            </div>
+            <div style={{ fontSize: '0.72rem', color: 'var(--text-muted)', lineHeight: 1 }}>
+              Thermal & Rainwater Retrofit Twins
+            </div>
           </div>
         </div>
 
-        {/* Byotone Chapter Nodes (A, B, C, D, E, F) */}
+        {/* Chapter Progress Nav Bar */}
         <nav className="desktop-only" style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
-          <div className="byotone-chapter-nav">
-            {[
-              { id: 'A', label: 'OVERVIEW' },
-              { id: 'B', label: 'SOL-AIR PHYSICS' },
-              { id: 'C', label: 'HYDRO HARVEST' },
-              { id: 'D', label: 'PARETO OPTIMA' },
-              { id: 'E', label: 'STANDARDS' },
-              { id: 'F', label: 'WORKBENCH' }
-            ].map((ch) => (
-              <button
-                key={ch.id}
-                onClick={() => scrollToChapter(ch.id as 'A' | 'B' | 'C' | 'D' | 'E' | 'F')}
-                className={`byotone-chapter-node ${activeChapter === ch.id ? 'active' : ''}`}
-                title={ch.label}
-              >
-                <span>{ch.id}</span>
-                <span className="byotone-chapter-label">{ch.label}</span>
-              </button>
-            ))}
+          <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+            <div className="byotone-chapter-nav">
+              {CHAPTERS.map((ch) => {
+                const isActive = activeChapter === ch.id;
+                return (
+                  <button
+                    key={ch.id}
+                    onClick={() => scrollToChapter(ch.id)}
+                    className={`byotone-chapter-node ${isActive ? 'active' : ''}`}
+                    style={{
+                      borderColor: isActive ? '#10B981' : 'rgba(255, 255, 255, 0.18)',
+                      background: isActive ? 'linear-gradient(135deg, #0EA5E9, #10B981)' : '#111827',
+                      color: isActive ? '#FFFFFF' : 'var(--text-muted)'
+                    }}
+                    aria-label={`Jump to ${ch.label}`}
+                  >
+                    <span>{ch.id}</span>
+                  </button>
+                );
+              })}
+            </div>
+
+            {/* Clean Inline Active Chapter Badge (Zero Overlap) */}
+            <div style={{
+              fontSize: '0.74rem',
+              color: '#38BDF8',
+              fontFamily: "'JetBrains Mono', monospace",
+              fontWeight: 700,
+              background: 'rgba(14, 165, 233, 0.1)',
+              border: '1px solid rgba(14, 165, 233, 0.25)',
+              padding: '4px 10px',
+              borderRadius: '6px',
+              letterSpacing: '0.04em',
+              whiteSpace: 'nowrap'
+            }}>
+              {CHAPTERS.find(c => c.id === activeChapter)?.label}
+            </div>
           </div>
 
-          <div style={{ width: '1px', height: '24px', background: 'rgba(255, 255, 255, 0.15)', margin: '0 8px' }} />
+          <div style={{ width: '1px', height: '24px', background: 'rgba(255, 255, 255, 0.12)', margin: '0 4px' }} />
 
           <button
             id="byotone-nav-workbench-btn"
             onClick={onEnterApp}
-            className="byotone-btn-orbit"
-            style={{ padding: '6px 18px 6px 10px', fontSize: '0.75rem' }}
+            className="btn btn-primary"
+            style={{
+              padding: '8px 20px',
+              fontSize: '0.82rem',
+              borderRadius: '999px'
+            }}
           >
-            <div className="byotone-orbit-dot-ring" style={{ width: '22px', height: '22px' }}>
-              <div style={{ width: '6px', height: '6px', borderRadius: '50%', background: '#6EE7B7' }} />
-            </div>
-            <span>LAUNCH APP</span>
+            <span>LAUNCH WORKBENCH</span>
+            <ArrowRight size={14} />
           </button>
         </nav>
       </header>
 
       {/* ════════════════════════════════════════════════════════════════
-          PERSISTENT BOTTOM TELEMETRY BAR
+          PERSISTENT LIVE BOTTOM TELEMETRY BAR
           ════════════════════════════════════════════════════════════════ */}
       <footer style={{
         position: 'fixed',
@@ -403,127 +330,75 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onEnterApp, onNavigate
         left: 0,
         right: 0,
         zIndex: 100,
-        padding: '14px 32px',
+        padding: '12px 28px',
         display: 'flex',
         justifyContent: 'space-between',
         alignItems: 'center',
-        background: 'linear-gradient(0deg, rgba(17, 18, 21, 0.95) 0%, rgba(17, 18, 21, 0) 100%)',
-        backdropFilter: 'blur(8px)',
-        borderTop: '1px solid rgba(255, 255, 255, 0.05)'
+        background: 'linear-gradient(0deg, rgba(10, 14, 23, 0.98) 0%, rgba(10, 14, 23, 0.85) 100%)',
+        backdropFilter: 'blur(12px)',
+        borderTop: '1px solid rgba(255, 255, 255, 0.08)'
       }}>
-        {/* Left Telemetry Signature */}
-        <div className="byotone-mono" style={{ fontSize: '0.7rem', color: 'rgba(255, 255, 255, 0.5)', display: 'flex', alignItems: 'center', gap: '8px' }}>
-          <span>ENGINEERED FOR TROPICAL CLIMATES</span>
-          <span style={{ color: '#6EE7B7' }}>⇄</span>
-          <span>CLIMATEFIT DETERMINISTIC ENGINE</span>
+        {/* Left: Product Trust Signature */}
+        <div className="byotone-mono" style={{
+          fontSize: '0.72rem',
+          color: 'var(--text-muted)',
+          display: 'flex',
+          alignItems: 'center',
+          gap: '10px'
+        }}>
+          <span style={{ color: '#38BDF8', fontWeight: 600 }}>CLIMATEFIT ENGINE</span>
+          <span style={{ color: 'rgba(255, 255, 255, 0.3)' }}>•</span>
+          <span>DETERMINISTIC MASS & ENERGY BALANCE</span>
+          <span style={{ color: '#10B981' }}>⇄</span>
+          <span>NBC 2016 & IS 15797</span>
         </div>
 
-        {/* Center / Right Interactive Solar Flux & Telemetry */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: '24px' }}>
-          {/* Interactive Solar Flux Slider */}
-          <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-            <span className="byotone-mono" style={{ fontSize: '0.7rem', color: 'rgba(255, 255, 255, 0.65)' }}>
-              SOLAR FLUX: <strong style={{ color: '#FDE047' }}>{solarFlux} W/m²</strong>
-            </span>
-            <input
-              type="range"
-              min="400"
-              max="1100"
-              step="20"
-              value={solarFlux}
-              onChange={(e) => setSolarFlux(Number(e.target.value))}
-              style={{
-                width: '90px',
-                accentColor: '#6EE7B7',
-                cursor: 'pointer'
-              }}
-            />
+        {/* Right: Quick Value Readout & Audio Control */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: '20px' }}>
+          <div className="byotone-mono" style={{ fontSize: '0.72rem', color: 'var(--text-muted)', display: 'flex', gap: '14px' }}>
+            <span>TOP-FLOOR HEAT: <strong style={{ color: '#34D399' }}>-14.8°C</strong></span>
+            <span>RAIN HARVEST: <strong style={{ color: '#38BDF8' }}>58.4% COVERAGE</strong></span>
           </div>
 
-          {/* Sol-Air Delta Tag */}
-          <div className="byotone-mono" style={{ fontSize: '0.7rem', color: '#6EE7B7', display: 'flex', alignItems: 'center', gap: '6px' }}>
-            <span>ΔT ATTENUATION:</span>
-            <span style={{
-              background: 'rgba(110, 231, 183, 0.1)',
-              padding: '2px 6px',
-              border: '1px solid rgba(110, 231, 183, 0.3)',
-              borderRadius: '4px',
-              color: '#6EE7B7',
-              fontWeight: 700
-            }}>
-              -{solAirDelta} °C
-            </span>
-          </div>
-
-          {/* Sound / Frequency Monitor Toggle */}
           <button
             onClick={toggleSound}
             style={{
               display: 'flex',
               alignItems: 'center',
               gap: '6px',
-              background: 'rgba(255, 255, 255, 0.04)',
+              background: 'rgba(255, 255, 255, 0.05)',
               border: '1px solid rgba(255, 255, 255, 0.12)',
               borderRadius: '999px',
               padding: '4px 12px',
-              color: soundEnabled ? '#6EE7B7' : 'rgba(255, 255, 255, 0.5)',
+              color: soundEnabled ? '#34D399' : 'var(--text-dim)',
               cursor: 'pointer',
-              fontFamily: "'Space Mono', monospace",
-              fontSize: '0.68rem'
+              fontFamily: "'JetBrains Mono', monospace",
+              fontSize: '0.7rem'
             }}
           >
             {soundEnabled ? (
               <div style={{ display: 'flex', alignItems: 'center', gap: '2px', height: '14px' }}>
-                <span className="byotone-wave-bar-1" style={{ width: '2px', background: '#6EE7B7', borderRadius: '1px' }} />
-                <span className="byotone-wave-bar-2" style={{ width: '2px', background: '#6EE7B7', borderRadius: '1px' }} />
-                <span className="byotone-wave-bar-3" style={{ width: '2px', background: '#6EE7B7', borderRadius: '1px' }} />
-                <span className="byotone-wave-bar-4" style={{ width: '2px', background: '#6EE7B7', borderRadius: '1px' }} />
+                <span className="byotone-wave-bar-1" style={{ width: '2px', background: '#38BDF8', borderRadius: '1px' }} />
+                <span className="byotone-wave-bar-2" style={{ width: '2px', background: '#34D399', borderRadius: '1px' }} />
+                <span className="byotone-wave-bar-3" style={{ width: '2px', background: '#38BDF8', borderRadius: '1px' }} />
+                <span className="byotone-wave-bar-4" style={{ width: '2px', background: '#34D399', borderRadius: '1px' }} />
               </div>
             ) : (
               <VolumeX size={12} />
             )}
-            <span>{soundEnabled ? '8.0 HZ AUDIO ACTIVE' : 'MUTE AUDIO'}</span>
+            <span>{soundEnabled ? 'AMBIENT AUDIO ON' : 'MUTE'}</span>
           </button>
         </div>
       </footer>
 
       {/* ════════════════════════════════════════════════════════════════
-          FLOATING TELEMETRY CORNER BRACKET TAGS
+          PRODUCT CHAPTERS (Customer-Centric & Actionable)
           ════════════════════════════════════════════════════════════════ */}
-      <div style={{ position: 'fixed', inset: 0, pointerEvents: 'none', zIndex: 2 }}>
-        <div className="byotone-telemetry-tag byotone-floating" style={{ top: '16%', left: '8%' }}>
-          <span className="bracket-tl" />
-          <span className="bracket-br" />
-          0.85 SOLAR REFLECTANCE
-        </div>
-
-        <div className="byotone-telemetry-tag byotone-floating" style={{ top: '22%', right: '9%', animationDelay: '-2s' }}>
-          <span className="bracket-tl" />
-          <span className="bracket-br" />
-          NBC 2016 CL.4 THERMAL INERTIA
-        </div>
-
-        <div className="byotone-telemetry-tag byotone-floating" style={{ top: '68%', left: '7%', animationDelay: '-4s' }}>
-          <span className="bracket-tl" />
-          <span className="bracket-br" />
-          IS 15797 MONSOON RUNOFF C=0.90
-        </div>
-
-        <div className="byotone-telemetry-tag byotone-floating" style={{ top: '74%', right: '8%', animationDelay: '-3s' }}>
-          <span className="bracket-tl" />
-          <span className="bracket-br" />
-          DETERMINISTIC PARETO FRONTIER
-        </div>
-      </div>
-
-      {/* ════════════════════════════════════════════════════════════════
-          CHAPTER SECTIONS (A, B, C, D, E, F)
-          ════════════════════════════════════════════════════════════════ */}
-      <main style={{ position: 'relative', zIndex: 20, paddingTop: '100px', paddingBottom: '120px' }}>
+      <main style={{ position: 'relative', zIndex: 20, paddingTop: '90px', paddingBottom: '110px' }}>
         
-        {/* ── CHAPTER A: THE INTRO / URBAN HEAT OVERLOAD ── */}
+        {/* ── CHAPTER A: HERO & THE VALUE PROPOSITION ── */}
         <section id="chapter-a" style={{
-          minHeight: '90vh',
+          minHeight: '88vh',
           display: 'flex',
           flexDirection: 'column',
           justifyContent: 'center',
@@ -532,119 +407,298 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onEnterApp, onNavigate
           padding: '40px 24px',
           position: 'relative'
         }}>
-          <div className="byotone-mono" style={{ fontSize: '0.8rem', color: '#6EE7B7', marginBottom: '20px', letterSpacing: '0.2em' }}>
-            CHAPTER A • THE PLANETARY CONCRETE CRISIS
+          {/* Blue-Green Header Pill */}
+          <div style={{
+            display: 'inline-flex',
+            alignItems: 'center',
+            gap: '8px',
+            padding: '6px 16px',
+            borderRadius: '999px',
+            background: 'linear-gradient(135deg, rgba(14, 165, 233, 0.12) 0%, rgba(16, 185, 129, 0.12) 100%)',
+            border: '1px solid rgba(56, 189, 248, 0.3)',
+            marginBottom: '24px'
+          }}>
+            <Sparkles size={14} color="#38BDF8" />
+            <span className="byotone-mono" style={{ fontSize: '0.75rem', color: '#F8FAFC', fontWeight: 600 }}>
+              AI-FREE DETERMINISTIC ROOF SIMULATION
+            </span>
           </div>
 
-          <h2 className="byotone-title-huge" style={{ maxWidth: '1000px', marginBottom: '24px' }}>
-            THE URBAN ROOFTOP UNDER EXTREME THERMAL FLUX
-          </h2>
+          <h1 className="byotone-title-huge" style={{ maxWidth: '980px', marginBottom: '24px' }}>
+            STOP LOSING COOLING TO <br />
+            <span className="byotone-gradient-text">SCORCHING ROOFS.</span>
+          </h1>
 
           <p style={{
             maxWidth: '680px',
-            fontSize: '1.15rem',
+            fontSize: '1.18rem',
             lineHeight: 1.65,
-            color: 'rgba(255, 255, 255, 0.72)',
+            color: 'var(--text-muted)',
             marginBottom: '40px'
           }}>
-            In dense tropical and subtropical cities, uninsulated reinforced concrete (RCC) slabs
-            superheat to <strong style={{ color: '#FDE047' }}>62°C</strong> under peak solar irradiance.
-            Roofwise transforms exposed roofs into high-albedo shields and circular rainwater collectors
-            grounded in deterministic engineering.
+            Roofwise plans, simulates, and optimizes turnkey cool-roof insulation and rainwater harvesting systems.
+            Protect top-floor tenants from 62°C concrete heat and capture clean water—with audited financial payback.
           </p>
 
-          <div style={{ display: 'flex', gap: '20px', alignItems: 'center' }}>
+          <div style={{ display: 'flex', gap: '16px', alignItems: 'center', flexWrap: 'wrap', justifyContent: 'center' }}>
             <button
-              onClick={() => scrollToChapter('B')}
-              className="byotone-btn-orbit"
+              onClick={onEnterApp}
+              className="btn btn-primary"
+              style={{
+                padding: '12px 32px',
+                fontSize: '0.95rem',
+                borderRadius: '999px'
+              }}
             >
-              <div className="byotone-orbit-dot-ring">
-                <ArrowRight size={14} color="#6EE7B7" />
-              </div>
-              <span>STEP INTO THE SCIENCE</span>
+              <span>LAUNCH SIMULATION WORKBENCH</span>
+              <ArrowRight size={16} />
             </button>
 
             <button
-              onClick={onEnterApp}
+              onClick={() => scrollToChapter('B')}
+              className="btn btn-secondary"
               style={{
-                fontFamily: "'Space Mono', monospace",
-                fontSize: '0.8rem',
-                color: 'rgba(255, 255, 255, 0.6)',
-                background: 'transparent',
-                border: 'none',
-                cursor: 'pointer',
-                letterSpacing: '0.1em'
+                padding: '12px 28px',
+                fontSize: '0.92rem',
+                borderRadius: '999px'
               }}
-              onMouseEnter={(e) => (e.currentTarget.style.color = '#FFFFFF')}
-              onMouseLeave={(e) => (e.currentTarget.style.color = 'rgba(255, 255, 255, 0.6)')}
             >
-              SKIP TO WORKBENCH →
+              <span>EXPLORE PRODUCT FEATURES</span>
             </button>
           </div>
 
-          {/* Quick Real-Time Metric Strip */}
+          {/* 3 Core Value Metric Cards */}
           <div style={{
             display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
             gap: '24px',
-            maxWidth: '920px',
+            maxWidth: '1040px',
             width: '100%',
-            marginTop: '80px'
+            marginTop: '70px'
           }}>
-            <div className="byotone-card" style={{ padding: '24px', textAlign: 'left' }}>
-              <div className="byotone-mono" style={{ fontSize: '0.7rem', color: 'rgba(255, 255, 255, 0.5)' }}>
-                SURFACE TEMPERATURE
+            <div className="byotone-card" style={{ padding: '28px', textAlign: 'left', borderLeft: '3px solid #10B981' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '12px' }}>
+                <div style={{ padding: '8px', borderRadius: '8px', background: 'rgba(16, 185, 129, 0.15)', color: '#34D399' }}>
+                  <Sun size={20} />
+                </div>
+                <div className="byotone-mono" style={{ fontSize: '0.75rem', color: '#34D399', fontWeight: 700 }}>
+                  THERMAL COMFORT
+                </div>
               </div>
-              <div className="byotone-title-medium" style={{ color: '#F87171', margin: '8px 0' }}>
-                {baselineSolAirTemp}°C
+              <div className="byotone-title-big" style={{ color: '#FFFFFF', marginBottom: '8px' }}>
+                -14.8 °C
               </div>
-              <div style={{ fontSize: '0.82rem', color: 'rgba(255, 255, 255, 0.6)' }}>
-                Baseline uninsulated RCC slab during peak noon hour.
-              </div>
-            </div>
-
-            <div className="byotone-card" style={{ padding: '24px', textAlign: 'left' }}>
-              <div className="byotone-mono" style={{ fontSize: '0.7rem', color: 'rgba(255, 255, 255, 0.5)' }}>
-                RETROFITTED SOL-AIR
-              </div>
-              <div className="byotone-title-medium" style={{ color: '#6EE7B7', margin: '8px 0' }}>
-                {coolSolAirTemp}°C
-              </div>
-              <div style={{ fontSize: '0.82rem', color: 'rgba(255, 255, 255, 0.6)' }}>
-                High-albedo coating (SRI 104) + 50mm XPS insulation.
+              <div style={{ fontSize: '0.88rem', color: 'var(--text-muted)', lineHeight: 1.55 }}>
+                Top-floor slab temperature drop during peak summer afternoons. Lowers HVAC power draw by up to 48%.
               </div>
             </div>
 
-            <div className="byotone-card" style={{ padding: '24px', textAlign: 'left' }}>
-              <div className="byotone-mono" style={{ fontSize: '0.7rem', color: 'rgba(255, 255, 255, 0.5)' }}>
-                NET ATTENUATION
+            <div className="byotone-card" style={{ padding: '28px', textAlign: 'left', borderLeft: '3px solid #0EA5E9' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '12px' }}>
+                <div style={{ padding: '8px', borderRadius: '8px', background: 'rgba(14, 165, 233, 0.15)', color: '#38BDF8' }}>
+                  <Droplets size={20} />
+                </div>
+                <div className="byotone-mono" style={{ fontSize: '0.75rem', color: '#38BDF8', fontWeight: 700 }}>
+                  WATER SECURITY
+                </div>
               </div>
-              <div className="byotone-title-medium" style={{ color: '#7DD3FC', margin: '8px 0' }}>
-                -{solAirDelta}°C
+              <div className="byotone-title-big" style={{ color: '#FFFFFF', marginBottom: '8px' }}>
+                58.4 %
               </div>
-              <div style={{ fontSize: '0.82rem', color: 'rgba(255, 255, 255, 0.6)' }}>
-                Direct cooling load reduction for top floors.
+              <div style={{ fontSize: '0.88rem', color: 'var(--text-muted)', lineHeight: 1.55 }}>
+                Non-potable domestic demand covered entirely by on-site monsoon rainwater, ending private tanker dependency.
+              </div>
+            </div>
+
+            <div className="byotone-card" style={{ padding: '28px', textAlign: 'left', borderLeft: '3px solid #F59E0B' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '12px' }}>
+                <div style={{ padding: '8px', borderRadius: '8px', background: 'rgba(245, 158, 11, 0.15)', color: '#FBBF24' }}>
+                  <DollarSign size={20} />
+                </div>
+                <div className="byotone-mono" style={{ fontSize: '0.75rem', color: '#FBBF24', fontWeight: 700 }}>
+                  FINANCIAL ROI
+                </div>
+              </div>
+              <div className="byotone-title-big" style={{ color: '#FFFFFF', marginBottom: '8px' }}>
+                2.4 Years
+              </div>
+              <div style={{ fontSize: '0.88rem', color: 'var(--text-muted)', lineHeight: 1.55 }}>
+                Simple payback period. Generates verifiable cash savings on municipal water and commercial electric utilities.
               </div>
             </div>
           </div>
         </section>
 
-        {/* ── CHAPTER B: SOL-AIR & ALBEDO PHYSICS ── */}
+        {/* ── INTERACTIVE CUSTOMER VALUE SIMULATOR ── */}
+        <section style={{
+          padding: '60px 24px',
+          maxWidth: '1100px',
+          margin: '0 auto',
+          position: 'relative'
+        }}>
+          <div className="byotone-card" style={{
+            padding: '40px',
+            background: 'linear-gradient(135deg, rgba(17, 24, 39, 0.85) 0%, rgba(15, 23, 42, 0.85) 100%)',
+            border: '1px solid rgba(56, 189, 248, 0.25)',
+            boxShadow: '0 20px 50px rgba(0, 0, 0, 0.5)'
+          }}>
+            <div style={{ textAlign: 'center', marginBottom: '36px' }}>
+              <div className="byotone-mono" style={{ fontSize: '0.75rem', color: '#38BDF8', fontWeight: 700, marginBottom: '8px' }}>
+                INTERACTIVE RETROFIT CALCULATOR
+              </div>
+              <h2 className="byotone-title-big">
+                ESTIMATE YOUR BUILDING'S <span className="byotone-gradient-text">SAVINGS</span>
+              </h2>
+              <p style={{ color: 'var(--text-muted)', fontSize: '0.95rem', marginTop: '6px' }}>
+                Slide your roof area and current electricity costs to see instant climate & utility impact.
+              </p>
+            </div>
+
+            <div style={{
+              display: 'grid',
+              gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
+              gap: '40px',
+              alignItems: 'center'
+            }}>
+              {/* Sliders Column */}
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '28px' }}>
+                <div>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '8px' }}>
+                    <span style={{ fontSize: '0.9rem', color: 'var(--text-secondary)', fontWeight: 600 }}>
+                      Roof Surface Area:
+                    </span>
+                    <span className="byotone-mono" style={{ color: '#38BDF8', fontWeight: 700 }}>
+                      {roofArea} m² ({(roofArea * 10.76).toLocaleString()} sq ft)
+                    </span>
+                  </div>
+                  <input
+                    type="range"
+                    min="200"
+                    max="3000"
+                    step="50"
+                    value={roofArea}
+                    onChange={(e) => setRoofArea(Number(e.target.value))}
+                    style={{
+                      width: '100%',
+                      accentColor: '#0EA5E9',
+                      cursor: 'pointer'
+                    }}
+                  />
+                  <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.72rem', color: 'var(--text-dim)', marginTop: '4px' }}>
+                    <span>200 m² (Small Villa / Hostel)</span>
+                    <span>3,000 m² (Commercial Campus)</span>
+                  </div>
+                </div>
+
+                <div>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '8px' }}>
+                    <span style={{ fontSize: '0.9rem', color: 'var(--text-secondary)', fontWeight: 600 }}>
+                      Monthly Electricity Bill:
+                    </span>
+                    <span className="byotone-mono" style={{ color: '#34D399', fontWeight: 700 }}>
+                      ₹ {monthlyPowerBill.toLocaleString()} / mo
+                    </span>
+                  </div>
+                  <input
+                    type="range"
+                    min="30000"
+                    max="500000"
+                    step="10000"
+                    value={monthlyPowerBill}
+                    onChange={(e) => setMonthlyPowerBill(Number(e.target.value))}
+                    style={{
+                      width: '100%',
+                      accentColor: '#10B981',
+                      cursor: 'pointer'
+                    }}
+                  />
+                  <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.72rem', color: 'var(--text-dim)', marginTop: '4px' }}>
+                    <span>₹ 30,000</span>
+                    <span>₹ 5,00,000</span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Instant Output Display */}
+              <div style={{
+                background: 'rgba(10, 14, 23, 0.7)',
+                padding: '28px',
+                borderRadius: '16px',
+                border: '1px solid rgba(255, 255, 255, 0.08)'
+              }}>
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '20px', marginBottom: '24px' }}>
+                  <div>
+                    <div className="byotone-mono" style={{ fontSize: '0.7rem', color: 'var(--text-dim)' }}>
+                      ESTIMATED ANNUAL POWER SAVED
+                    </div>
+                    <div style={{ fontSize: '1.4rem', color: '#34D399', fontWeight: 800, fontFamily: "'Outfit', sans-serif" }}>
+                      ₹ {annualCoolingSavings.toLocaleString()}
+                    </div>
+                  </div>
+
+                  <div>
+                    <div className="byotone-mono" style={{ fontSize: '0.7rem', color: 'var(--text-dim)' }}>
+                      CLEAN WATER HARVESTED
+                    </div>
+                    <div style={{ fontSize: '1.4rem', color: '#38BDF8', fontWeight: 800, fontFamily: "'Outfit', sans-serif" }}>
+                      {(annualWaterLiters / 1000).toFixed(0)} kL / yr
+                    </div>
+                  </div>
+
+                  <div>
+                    <div className="byotone-mono" style={{ fontSize: '0.7rem', color: 'var(--text-dim)' }}>
+                      WATER TANKERS SAVED
+                    </div>
+                    <div style={{ fontSize: '1.4rem', color: '#FBBF24', fontWeight: 800, fontFamily: "'Outfit', sans-serif" }}>
+                      {tankerTripsSaved} Trips
+                    </div>
+                  </div>
+
+                  <div>
+                    <div className="byotone-mono" style={{ fontSize: '0.7rem', color: 'var(--text-dim)' }}>
+                      ESTIMATED PAYBACK
+                    </div>
+                    <div style={{ fontSize: '1.4rem', color: '#FFFFFF', fontWeight: 800, fontFamily: "'Outfit', sans-serif" }}>
+                      {paybackYears} Years
+                    </div>
+                  </div>
+                </div>
+
+                <button
+                  onClick={onEnterApp}
+                  className="btn btn-primary"
+                  style={{
+                    width: '100%',
+                    padding: '12px',
+                    borderRadius: '10px',
+                    fontSize: '0.9rem'
+                  }}
+                >
+                  <span>RUN FULL SIMULATION FOR THIS BUILDING</span>
+                  <ArrowRight size={16} />
+                </button>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* ── CHAPTER B: HOW THE COOL ROOF WORKS (PRODUCT CLARITY) ── */}
         <section id="chapter-b" style={{
-          minHeight: '90vh',
+          minHeight: '85vh',
           display: 'flex',
           flexDirection: 'column',
           justifyContent: 'center',
           alignItems: 'center',
-          padding: '80px 24px',
+          padding: '60px 24px',
           position: 'relative'
         }}>
-          <div className="byotone-mono" style={{ fontSize: '0.8rem', color: '#6EE7B7', marginBottom: '20px', letterSpacing: '0.2em' }}>
-            CHAPTER B • THERMODYNAMICS OF THE SLAB
+          <div className="byotone-mono" style={{ fontSize: '0.8rem', color: '#34D399', marginBottom: '16px', letterSpacing: '0.15em', fontWeight: 700 }}>
+            CHAPTER B • THERMAL ATTENUATION SHIELD
           </div>
 
-          <h2 className="byotone-title-huge" style={{ maxWidth: '960px', textAlign: 'center', marginBottom: '32px' }}>
-            DEFLECTING SOLAR RADIATION BEFORE IT ENTERS
+          <h2 className="byotone-title-huge" style={{ maxWidth: '960px', textAlign: 'center', marginBottom: '28px' }}>
+            KEEP TOP FLOORS NATURALLY COOL. <br />
+            <span className="byotone-gradient-green">STOP SLAB SUPERHEATING.</span>
           </h2>
 
           <div style={{
@@ -656,134 +710,141 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onEnterApp, onNavigate
             alignItems: 'center'
           }}>
             {/* Visual Cross-Section Diagram */}
-            <div className="byotone-card" style={{ padding: '36px' }}>
-              <div className="byotone-mono" style={{ fontSize: '0.75rem', color: '#6EE7B7', marginBottom: '16px' }}>
-                CROSS-SECTION TELEMETRY (ASHRAE 90.1 / NBC 2016)
+            <div className="byotone-card" style={{ padding: '32px' }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '18px' }}>
+                <span className="byotone-mono" style={{ fontSize: '0.75rem', color: '#34D399', fontWeight: 700 }}>
+                  3-LAYER SHIELD ARCHITECTURE
+                </span>
+                <span className="badge badge-green" style={{ fontSize: '0.7rem' }}>
+                  ASHRAE 90.1 COMPLIANT
+                </span>
               </div>
 
-              {/* Interactive SVG Diagram */}
-              <svg viewBox="0 0 400 240" width="100%" height="auto" style={{ overflow: 'visible' }}>
-                {/* Sun & incident solar ray */}
-                <circle cx="50" cy="30" r="16" fill="#FDE047" opacity="0.8" />
-                <line x1="66" y1="42" x2="180" y2="100" stroke="#FDE047" strokeWidth="2.5" strokeDasharray="4 3" />
+              {/* Clean Product Architecture SVG */}
+              <svg viewBox="0 0 400 230" width="100%" height="auto">
+                {/* Sun & reflected ray */}
+                <circle cx="50" cy="25" r="16" fill="#F59E0B" opacity="0.85" />
+                <line x1="66" y1="36" x2="180" y2="90" stroke="#F59E0B" strokeWidth="2.5" strokeDasharray="4 3" />
                 
-                {/* Reflected Solar Ray (85% Albedo) */}
-                <line x1="180" y1="100" x2="280" y2="35" stroke="#6EE7B7" strokeWidth="2.5" />
-                <text x="290" y="38" fill="#6EE7B7" fontSize="10" fontFamily="'Space Mono', monospace">
-                  85% REFLECTED (SRI 104)
+                {/* 85% Albedo Reflection */}
+                <line x1="180" y1="90" x2="280" y2="30" stroke="#34D399" strokeWidth="3" />
+                <text x="290" y="32" fill="#34D399" fontSize="11" fontWeight="bold" fontFamily="'Plus Jakarta Sans', sans-serif">
+                  85% Solar Heat Reflected
                 </text>
 
-                {/* Layer 1: High-Albedo Coating */}
-                <rect x="40" y="100" width="320" height="12" rx="3" fill="#6EE7B7" opacity="0.8" />
-                <text x="50" y="110" fill="#111215" fontSize="8" fontWeight="bold" fontFamily="'Space Mono', monospace">
-                  HIGH-ALBEDO ELASTOMERIC COATING
+                {/* Layer 1: High-SRI Coating */}
+                <rect x="40" y="90" width="320" height="14" rx="4" fill="#10B981" />
+                <text x="50" y="101" fill="#FFFFFF" fontSize="9" fontWeight="bold" fontFamily="'Plus Jakarta Sans', sans-serif">
+                  1. High-SRI Elastomeric Reflective Barrier (SRI 104)
                 </text>
 
-                {/* Layer 2: Extruded Polystyrene (XPS) */}
-                <rect x="40" y="116" width="320" height="24" rx="3" fill="#38BDF8" opacity="0.4" />
-                <text x="50" y="132" fill="#FFFFFF" fontSize="9" fontFamily="'Space Mono', monospace">
-                  50mm XPS INSULATION (R-VALUE = 1.8 m²K/W)
+                {/* Layer 2: 50mm XPS Board */}
+                <rect x="40" y="108" width="320" height="24" rx="4" fill="#0EA5E9" opacity="0.85" />
+                <text x="50" y="124" fill="#FFFFFF" fontSize="9" fontWeight="bold" fontFamily="'Plus Jakarta Sans', sans-serif">
+                  2. 50mm XPS High-Density Insulation (R-Value 1.8 m²K/W)
                 </text>
 
                 {/* Layer 3: Waterproofing Membrane */}
-                <rect x="40" y="144" width="320" height="8" rx="2" fill="#A855F7" opacity="0.5" />
-
-                {/* Layer 4: Concrete RCC Slab */}
-                <rect x="40" y="156" width="320" height="48" rx="4" fill="#374151" opacity="0.9" />
-                <text x="50" y="185" fill="#E5E7EB" fontSize="10" fontFamily="'Space Mono', monospace">
-                  150mm REINFORCED CONCRETE (RCC) SLAB
+                <rect x="40" y="136" width="320" height="10" rx="3" fill="#6366F1" opacity="0.75" />
+                <text x="50" y="144" fill="#FFFFFF" fontSize="8" fontWeight="bold" fontFamily="'Plus Jakarta Sans', sans-serif">
+                  3. Polyurethane Waterproofing (Zero Seepage)
                 </text>
 
-                {/* Internal Heat Transfer Arrow */}
-                <line x1="200" y1="208" x2="200" y2="232" stroke="#6EE7B7" strokeWidth="2" strokeDasharray="2 2" />
-                <text x="215" y="225" fill="#6EE7B7" fontSize="9" fontFamily="'Space Mono', monospace">
-                  CONDUCTIVE FLUX MINIMIZED
+                {/* Existing Concrete Slab */}
+                <rect x="40" y="150" width="320" height="48" rx="4" fill="#334155" />
+                <text x="50" y="178" fill="#CBD5E1" fontSize="10" fontWeight="600" fontFamily="'Plus Jakarta Sans', sans-serif">
+                  Existing Reinforced Concrete (RCC) Slab
+                </text>
+
+                {/* Internal Comfort Indicator */}
+                <text x="120" y="215" fill="#34D399" fontSize="10" fontWeight="bold" fontFamily="'Plus Jakarta Sans', sans-serif">
+                  ✓ Occupied Rooms Below Stay 6–9°C Cooler
                 </text>
               </svg>
 
               <div style={{
-                marginTop: '20px',
+                marginTop: '18px',
                 paddingTop: '16px',
-                borderTop: '1px dashed rgba(255, 255, 255, 0.1)',
+                borderTop: '1px solid rgba(255, 255, 255, 0.08)',
                 display: 'flex',
                 justifyContent: 'space-between',
-                fontSize: '0.8rem',
-                color: 'rgba(255, 255, 255, 0.65)'
+                fontSize: '0.82rem',
+                color: 'var(--text-muted)'
               }}>
-                <span>Overall U-Value: <strong style={{ color: '#FFFFFF' }}>0.48 W/m²K</strong></span>
-                <span>Solar Heat Gain Coeff: <strong style={{ color: '#6EE7B7' }}>0.15</strong></span>
+                <span>Overall Slab U-Value: <strong style={{ color: '#FFFFFF' }}>0.48 W/m²K</strong></span>
+                <span>Reflectance: <strong style={{ color: '#34D399' }}>0.85 Albedo</strong></span>
               </div>
             </div>
 
-            {/* Scientific Explanation */}
+            {/* Product Explanations */}
             <div>
-              <h3 className="byotone-title-medium" style={{ marginBottom: '20px', color: '#FFFFFF' }}>
-                THE SOL-AIR EQUATION UNPACKED
+              <h3 className="byotone-title-medium" style={{ marginBottom: '16px', color: '#FFFFFF' }}>
+                Why Traditional Roofs Trap Excessive Heat
               </h3>
-              <p style={{ fontSize: '1rem', color: 'rgba(255, 255, 255, 0.72)', lineHeight: 1.7, marginBottom: '20px' }}>
-                Standard energy modeling often overlooks the Sol-Air temperature—the effective outdoor temperature
-                accounting for solar radiation and longwave radiative exchange with the sky:
+              <p style={{ fontSize: '1rem', color: 'var(--text-muted)', lineHeight: 1.7, marginBottom: '20px' }}>
+                Exposed concrete acts as a massive thermal battery. Throughout the day, the slab absorbs solar irradiance,
+                reaching up to <strong style={{ color: '#F87171' }}>62°C</strong>. At night, it radiates that heat downwards into your rooms,
+                forcing air conditioning units to run continuously at peak power.
               </p>
 
               <div style={{
-                background: 'rgba(0, 0, 0, 0.35)',
-                padding: '16px 20px',
-                borderRadius: '8px',
-                border: '1px solid rgba(255, 255, 255, 0.1)',
-                fontFamily: "'Space Mono', monospace",
-                fontSize: '0.85rem',
-                color: '#6EE7B7',
+                background: 'rgba(16, 185, 129, 0.08)',
+                padding: '20px',
+                borderRadius: '12px',
+                border: '1px solid rgba(16, 185, 129, 0.25)',
                 marginBottom: '24px'
               }}>
-                T_sol = T_amb + (α · I_sol) / h_o - (ε · ΔR) / h_o
+                <div style={{ display: 'flex', alignItems: 'center', gap: '8px', color: '#34D399', fontWeight: 700, marginBottom: '6px' }}>
+                  <CheckCircle2 size={16} />
+                  <span>The Roofwise Solution</span>
+                </div>
+                <p style={{ fontSize: '0.92rem', color: 'var(--text-secondary)', lineHeight: 1.55 }}>
+                  By deflecting 85% of solar rays at the surface and blocking heat conduction with XPS insulation,
+                  indoor temperatures stabilize immediately without requiring costly roof demolition.
+                </p>
               </div>
-
-              <p style={{ fontSize: '0.92rem', color: 'rgba(255, 255, 255, 0.65)', lineHeight: 1.6, marginBottom: '32px' }}>
-                By increasing solar reflectance (α drops from 0.75 to 0.15), the direct radiative heat input
-                collapses by over 75%, attenuating heat transfer into occupied spaces beneath the roof.
-              </p>
 
               <button
                 onClick={() => scrollToChapter('C')}
-                className="byotone-btn-orbit"
+                className="btn btn-secondary"
+                style={{ borderRadius: '999px', padding: '10px 24px' }}
               >
-                <div className="byotone-orbit-dot-ring">
-                  <ArrowRight size={14} color="#6EE7B7" />
-                </div>
-                <span>EXPLORE MONSOON HYDRO HARVESTING</span>
+                <span>SEE WATER HARVESTING BENEFITS</span>
+                <ArrowRight size={14} />
               </button>
             </div>
           </div>
         </section>
 
-        {/* ── CHAPTER C: MONSOON HYDRO HARVESTING ── */}
+        {/* ── CHAPTER C: MONSOON RAINWATER HARVESTING ── */}
         <section id="chapter-c" style={{
-          minHeight: '90vh',
+          minHeight: '85vh',
           display: 'flex',
           flexDirection: 'column',
           justifyContent: 'center',
           alignItems: 'center',
-          padding: '80px 24px',
+          padding: '60px 24px',
           position: 'relative'
         }}>
-          <div className="byotone-mono" style={{ fontSize: '0.8rem', color: '#7DD3FC', marginBottom: '20px', letterSpacing: '0.2em' }}>
-            CHAPTER C • CIRCULAR HYDRO DYNAMICS
+          <div className="byotone-mono" style={{ fontSize: '0.8rem', color: '#38BDF8', marginBottom: '16px', letterSpacing: '0.15em', fontWeight: 700 }}>
+            CHAPTER C • MONSOON WATER SECURITY
           </div>
 
-          <h2 className="byotone-title-huge" style={{ maxWidth: '980px', textAlign: 'center', marginBottom: '28px' }}>
-            TRANSFORMING MONSOON DELUGES INTO CLEAN RESERVES
+          <h2 className="byotone-title-huge" style={{ maxWidth: '980px', textAlign: 'center', marginBottom: '24px' }}>
+            ELIMINATE RELIANCE ON <br />
+            <span className="byotone-gradient-blue">PRIVATE WATER TANKERS.</span>
           </h2>
 
           <p style={{
             maxWidth: '680px',
-            fontSize: '1.05rem',
+            fontSize: '1.08rem',
             textAlign: 'center',
-            color: 'rgba(255, 255, 255, 0.7)',
+            color: 'var(--text-muted)',
             lineHeight: 1.65,
-            marginBottom: '48px'
+            marginBottom: '44px'
           }}>
-            Every square meter of roof can intercept over 1,400 liters of pristine rainwater annually.
-            Roofwise calculates monthly hydro balances calibrated to IS 15797:2008 and CPWD intensity curves.
+            Tropical monsoons dump hundreds of thousands of liters of free water on your rooftop.
+            Roofwise engineers precision storage arrays and first-flush diverters to supply non-potable needs all year round.
           </p>
 
           <div style={{
@@ -791,119 +852,118 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onEnterApp, onNavigate
             width: '100%',
             display: 'grid',
             gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
-            gap: '28px'
+            gap: '24px'
           }}>
-            <div className="byotone-card">
-              <div className="byotone-mono" style={{ fontSize: '0.72rem', color: '#7DD3FC', marginBottom: '12px' }}>
-                RUNOFF COEFFICIENTS (IS 15797)
+            <div className="byotone-card" style={{ borderTop: '3px solid #0EA5E9' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '12px' }}>
+                <Droplets size={18} color="#38BDF8" />
+                <span className="byotone-mono" style={{ fontSize: '0.75rem', color: '#38BDF8', fontWeight: 700 }}>
+                  90% CAPTURE EFFICIENCY
+                </span>
               </div>
-              <div className="byotone-title-big" style={{ color: '#FFFFFF', marginBottom: '12px' }}>
-                C = 0.90
+              <div className="byotone-title-big" style={{ color: '#FFFFFF', marginBottom: '8px' }}>
+                Runoff C = 0.90
               </div>
-              <p style={{ fontSize: '0.88rem', color: 'rgba(255, 255, 255, 0.65)', lineHeight: 1.6 }}>
-                High-efficiency smooth elastomeric finishes minimize retention losses and maximize yield compared
-                to porous unsealed brick bat coba.
+              <p style={{ fontSize: '0.9rem', color: 'var(--text-muted)', lineHeight: 1.6 }}>
+                Smooth elastomeric surfaces minimize puddle retention and maximize clean water yield directly into your cisterns.
               </p>
             </div>
 
-            <div className="byotone-card">
-              <div className="byotone-mono" style={{ fontSize: '0.72rem', color: '#7DD3FC', marginBottom: '12px' }}>
-                FIRST-FLUSH DIVERTER SIZING
+            <div className="byotone-card" style={{ borderTop: '3px solid #0EA5E9' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '12px' }}>
+                <ShieldCheck size={18} color="#38BDF8" />
+                <span className="byotone-mono" style={{ fontSize: '0.75rem', color: '#38BDF8', fontWeight: 700 }}>
+                  AUTOMATIC PURITY
+                </span>
               </div>
-              <div className="byotone-title-big" style={{ color: '#FFFFFF', marginBottom: '12px' }}>
-                1.5 mm
+              <div className="byotone-title-big" style={{ color: '#FFFFFF', marginBottom: '8px' }}>
+                First-Flush Diverter
               </div>
-              <p style={{ fontSize: '0.88rem', color: 'rgba(255, 255, 255, 0.65)', lineHeight: 1.6 }}>
-                Automatic diversion of initial airborne contaminants and dust guarantees turbidity below 5 NTU
-                entering the storage tank.
+              <p style={{ fontSize: '0.9rem', color: 'var(--text-muted)', lineHeight: 1.6 }}>
+                Initial airborne dust and leaves are automatically diverted before collection begins, maintaining clean, clear water.
               </p>
             </div>
 
-            <div className="byotone-card">
-              <div className="byotone-mono" style={{ fontSize: '0.72rem', color: '#7DD3FC', marginBottom: '12px' }}>
-                NON-POTABLE OFFSET
+            <div className="byotone-card" style={{ borderTop: '3px solid #10B981' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '12px' }}>
+                <TrendingDown size={18} color="#34D399" />
+                <span className="byotone-mono" style={{ fontSize: '0.75rem', color: '#34D399', fontWeight: 700 }}>
+                  ZERO TANKER SHORTAGES
+                </span>
               </div>
-              <div className="byotone-title-big" style={{ color: '#6EE7B7', marginBottom: '12px' }}>
-                58.4%
+              <div className="byotone-title-big" style={{ color: '#FFFFFF', marginBottom: '8px' }}>
+                58% Domestic Offset
               </div>
-              <p style={{ fontSize: '0.88rem', color: 'rgba(255, 255, 255, 0.65)', lineHeight: 1.6 }}>
-                Full coverage of top-floor flushing and cooling tower make-up demand across a standard 400 m² commercial roof.
+              <p style={{ fontSize: '0.9rem', color: 'var(--text-muted)', lineHeight: 1.6 }}>
+                Guarantees continuous supply for toilet flushing, HVAC chiller towers, and garden maintenance across dry spells.
               </p>
             </div>
           </div>
 
-          <div style={{ marginTop: '48px' }}>
+          <div style={{ marginTop: '40px' }}>
             <button
               onClick={() => scrollToChapter('D')}
-              className="byotone-btn-orbit"
+              className="btn btn-secondary"
+              style={{ borderRadius: '999px', padding: '10px 24px' }}
             >
-              <div className="byotone-orbit-dot-ring">
-                <ArrowRight size={14} color="#6EE7B7" />
-              </div>
-              <span>VIEW PARETO RETROFIT OPTIMA</span>
+              <span>COMPARE RETROFIT PACKAGES</span>
+              <ArrowRight size={14} />
             </button>
           </div>
         </section>
 
-        {/* ── CHAPTER D: MULTI-OBJECTIVE PARETO OPTIMA ── */}
+        {/* ── CHAPTER D: RETROFIT OPTIONS & PACKAGES ── */}
         <section id="chapter-d" style={{
-          minHeight: '90vh',
+          minHeight: '85vh',
           display: 'flex',
           flexDirection: 'column',
           justifyContent: 'center',
           alignItems: 'center',
-          padding: '80px 24px',
+          padding: '60px 24px',
           position: 'relative'
         }}>
-          <div className="byotone-mono" style={{ fontSize: '0.8rem', color: '#FDE047', marginBottom: '20px', letterSpacing: '0.2em' }}>
-            CHAPTER D • COMPUTATIONAL OPTIMIZATION
+          <div className="byotone-mono" style={{ fontSize: '0.8rem', color: '#F59E0B', marginBottom: '16px', letterSpacing: '0.15em', fontWeight: 700 }}>
+            CHAPTER D • TAILORED PACKAGES
           </div>
 
-          <h2 className="byotone-title-huge" style={{ maxWidth: '980px', textAlign: 'center', marginBottom: '32px' }}>
-            DETERMINISTIC RETROFIT FRONTIERS. NO GUESSWORK.
+          <h2 className="byotone-title-huge" style={{ maxWidth: '980px', textAlign: 'center', marginBottom: '28px' }}>
+            CHOOSE THE PACKAGE FOR <br />
+            <span className="byotone-gradient-text">YOUR BUDGET & PRIORITIES</span>
           </h2>
 
-          <p style={{
-            maxWidth: '680px',
-            fontSize: '1.05rem',
-            textAlign: 'center',
-            color: 'rgba(255, 255, 255, 0.7)',
-            lineHeight: 1.65,
-            marginBottom: '40px'
-          }}>
-            Every retrofit is a multi-dimensional tradeoff between upfront Capex, cooling load reduction,
-            structural dead load limits, and embodied carbon.
-          </p>
-
-          {/* Interactive Preset Switcher */}
+          {/* Interactive Preset Buttons */}
           <div style={{
             display: 'flex',
-            gap: '12px',
-            marginBottom: '36px',
-            background: 'rgba(255, 255, 255, 0.04)',
+            gap: '10px',
+            marginBottom: '32px',
+            background: 'rgba(255, 255, 255, 0.05)',
             padding: '6px',
             borderRadius: '999px',
-            border: '1px solid rgba(255, 255, 255, 0.1)'
+            border: '1px solid rgba(255, 255, 255, 0.1)',
+            flexWrap: 'wrap',
+            justifyContent: 'center'
           }}>
             {[
               { key: 'cool', label: 'OPTION 1: COOL ROOF PIONEER' },
-              { key: 'balanced', label: 'OPTION 2: CLIMATEFIT BALANCED' },
-              { key: 'solar', label: 'OPTION 3: SOLAR + HARVEST' }
+              { key: 'balanced', label: 'OPTION 2: CLIMATEFIT BALANCED (RECOMMENDED)' },
+              { key: 'solar', label: 'OPTION 3: SOLAR PV + RWH' }
             ].map((p) => (
               <button
                 key={p.key}
                 onClick={() => setActivePreset(p.key as 'cool' | 'balanced' | 'solar')}
                 style={{
-                  padding: '8px 20px',
+                  padding: '10px 22px',
                   borderRadius: '999px',
                   border: 'none',
-                  background: activePreset === p.key ? '#6EE7B7' : 'transparent',
-                  color: activePreset === p.key ? '#111215' : 'rgba(255, 255, 255, 0.7)',
-                  fontFamily: "'Space Mono', monospace",
-                  fontSize: '0.75rem',
+                  background: activePreset === p.key
+                    ? 'linear-gradient(135deg, #0EA5E9 0%, #10B981 100%)'
+                    : 'transparent',
+                  color: activePreset === p.key ? '#FFFFFF' : 'var(--text-muted)',
+                  fontFamily: "'Outfit', sans-serif",
+                  fontSize: '0.82rem',
                   fontWeight: 700,
                   cursor: 'pointer',
-                  transition: 'all 0.25s ease'
+                  transition: 'all 0.2s ease'
                 }}
               >
                 {p.label}
@@ -911,29 +971,30 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onEnterApp, onNavigate
             ))}
           </div>
 
-          {/* Selected Option Deep-Dive Card */}
-          <div className="byotone-card" style={{ maxWidth: '880px', width: '100%', padding: '40px' }}>
+          {/* Deep-Dive Package Card */}
+          <div className="byotone-card" style={{ maxWidth: '920px', width: '100%', padding: '36px' }}>
             {activePreset === 'cool' && (
               <div>
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
                   <h3 className="byotone-title-medium" style={{ color: '#FFFFFF' }}>Cool Roof Pioneer</h3>
-                  <span className="byotone-mono" style={{ color: '#6EE7B7', fontSize: '0.8rem' }}>FASTEST PAYBACK</span>
+                  <span className="badge badge-green">FASTEST PAYBACK (2.4 YRS)</span>
                 </div>
-                <p style={{ color: 'rgba(255, 255, 255, 0.7)', lineHeight: 1.6, marginBottom: '24px' }}>
-                  High-albedo elastomeric reflective barrier (SRI 104) applied directly to RCC slab. Minimal structural dead load, lowest capital expenditure.
+                <p style={{ color: 'var(--text-muted)', lineHeight: 1.6, marginBottom: '24px' }}>
+                  High-albedo elastomeric coating applied directly over cleaned existing waterproofing.
+                  Ideal for buildings seeking the lowest upfront capital and fastest temperature drop without plumbing changes.
                 </p>
-                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '16px' }}>
-                  <div>
-                    <div className="byotone-mono" style={{ fontSize: '0.7rem', color: 'rgba(255, 255, 255, 0.5)' }}>ESTIMATED CAPEX</div>
-                    <div style={{ fontSize: '1.4rem', color: '#6EE7B7', fontWeight: 700, fontFamily: "'Space Mono', monospace" }}>₹ 2,40,000</div>
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', gap: '16px' }}>
+                  <div style={{ background: 'rgba(255, 255, 255, 0.03)', padding: '16px', borderRadius: '12px' }}>
+                    <div className="byotone-mono" style={{ fontSize: '0.7rem', color: 'var(--text-dim)' }}>ESTIMATED COST</div>
+                    <div style={{ fontSize: '1.3rem', color: '#34D399', fontWeight: 800 }}>₹ 2,40,000</div>
                   </div>
-                  <div>
-                    <div className="byotone-mono" style={{ fontSize: '0.7rem', color: 'rgba(255, 255, 255, 0.5)' }}>SOL-AIR REDUCTION</div>
-                    <div style={{ fontSize: '1.4rem', color: '#7DD3FC', fontWeight: 700, fontFamily: "'Space Mono', monospace" }}>-11.2 °C</div>
+                  <div style={{ background: 'rgba(255, 255, 255, 0.03)', padding: '16px', borderRadius: '12px' }}>
+                    <div className="byotone-mono" style={{ fontSize: '0.7rem', color: 'var(--text-dim)' }}>HEAT REDUCTION</div>
+                    <div style={{ fontSize: '1.3rem', color: '#38BDF8', fontWeight: 800 }}>-11.2 °C</div>
                   </div>
-                  <div>
-                    <div className="byotone-mono" style={{ fontSize: '0.7rem', color: 'rgba(255, 255, 255, 0.5)' }}>SIMPLE PAYBACK</div>
-                    <div style={{ fontSize: '1.4rem', color: '#FDE047', fontWeight: 700, fontFamily: "'Space Mono', monospace" }}>2.4 YEARS</div>
+                  <div style={{ background: 'rgba(255, 255, 255, 0.03)', padding: '16px', borderRadius: '12px' }}>
+                    <div className="byotone-mono" style={{ fontSize: '0.7rem', color: 'var(--text-dim)' }}>INSTALLATION DURATION</div>
+                    <div style={{ fontSize: '1.3rem', color: '#FFFFFF', fontWeight: 800 }}>4 Days</div>
                   </div>
                 </div>
               </div>
@@ -941,25 +1002,26 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onEnterApp, onNavigate
 
             {activePreset === 'balanced' && (
               <div>
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
-                  <h3 className="byotone-title-medium" style={{ color: '#FFFFFF' }}>ClimateFit Balanced (Recommended)</h3>
-                  <span className="byotone-mono" style={{ color: '#6EE7B7', fontSize: '0.8rem' }}>OPTIMAL MULTI-CRITERIA</span>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
+                  <h3 className="byotone-title-medium" style={{ color: '#FFFFFF' }}>ClimateFit Balanced</h3>
+                  <span className="badge badge-blue">RECOMMENDED SWEET SPOT</span>
                 </div>
-                <p style={{ color: 'rgba(255, 255, 255, 0.7)', lineHeight: 1.6, marginBottom: '24px' }}>
-                  Synergistic combination of 50mm XPS under-deck insulation, high-albedo topcoat, and a 20 kL rainwater harvesting reservoir with first-flush filtration.
+                <p style={{ color: 'var(--text-muted)', lineHeight: 1.6, marginBottom: '24px' }}>
+                  The gold standard combination: 50mm XPS under-deck insulation, high-albedo topcoat, and a 20 kL modular rainwater tank array.
+                  Maximizes utility savings on both power and water while staying safely within structural load limits.
                 </p>
-                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '16px' }}>
-                  <div>
-                    <div className="byotone-mono" style={{ fontSize: '0.7rem', color: 'rgba(255, 255, 255, 0.5)' }}>ESTIMATED CAPEX</div>
-                    <div style={{ fontSize: '1.4rem', color: '#6EE7B7', fontWeight: 700, fontFamily: "'Space Mono', monospace" }}>₹ 6,85,000</div>
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', gap: '16px' }}>
+                  <div style={{ background: 'rgba(255, 255, 255, 0.03)', padding: '16px', borderRadius: '12px' }}>
+                    <div className="byotone-mono" style={{ fontSize: '0.7rem', color: 'var(--text-dim)' }}>ESTIMATED COST</div>
+                    <div style={{ fontSize: '1.3rem', color: '#34D399', fontWeight: 800 }}>₹ 6,85,000</div>
                   </div>
-                  <div>
-                    <div className="byotone-mono" style={{ fontSize: '0.7rem', color: 'rgba(255, 255, 255, 0.5)' }}>WATER COVERAGE</div>
-                    <div style={{ fontSize: '1.4rem', color: '#7DD3FC', fontWeight: 700, fontFamily: "'Space Mono', monospace" }}>58.4 %</div>
+                  <div style={{ background: 'rgba(255, 255, 255, 0.03)', padding: '16px', borderRadius: '12px' }}>
+                    <div className="byotone-mono" style={{ fontSize: '0.7rem', color: 'var(--text-dim)' }}>WATER INDEPENDENCE</div>
+                    <div style={{ fontSize: '1.3rem', color: '#38BDF8', fontWeight: 800 }}>58.4 %</div>
                   </div>
-                  <div>
-                    <div className="byotone-mono" style={{ fontSize: '0.7rem', color: 'rgba(255, 255, 255, 0.5)' }}>SOL-AIR REDUCTION</div>
-                    <div style={{ fontSize: '1.4rem', color: '#FDE047', fontWeight: 700, fontFamily: "'Space Mono', monospace" }}>-14.8 °C</div>
+                  <div style={{ background: 'rgba(255, 255, 255, 0.03)', padding: '16px', borderRadius: '12px' }}>
+                    <div className="byotone-mono" style={{ fontSize: '0.7rem', color: 'var(--text-dim)' }}>HEAT REDUCTION</div>
+                    <div style={{ fontSize: '1.3rem', color: '#FFFFFF', fontWeight: 800 }}>-14.8 °C</div>
                   </div>
                 </div>
               </div>
@@ -967,60 +1029,49 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onEnterApp, onNavigate
 
             {activePreset === 'solar' && (
               <div>
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
                   <h3 className="byotone-title-medium" style={{ color: '#FFFFFF' }}>Solar PV + Micro-RWH</h3>
-                  <span className="byotone-mono" style={{ color: '#FDE047', fontSize: '0.8rem' }}>ENERGY INTENSIVE</span>
+                  <span className="badge badge-amber">ENERGY INTENSIVE</span>
                 </div>
-                <p style={{ color: 'rgba(255, 255, 255, 0.7)', lineHeight: 1.6, marginBottom: '24px' }}>
-                  Elevated canopy solar photovoltaic arrays providing shade to the roof while generating clean power, combined with downspout collection.
+                <p style={{ color: 'var(--text-muted)', lineHeight: 1.6, marginBottom: '24px' }}>
+                  Elevated solar canopy generating on-site solar electricity, providing roof shade, and channeling downspouts into rainwater filters.
+                  Best for buildings with dedicated energy transition budgets.
                 </p>
-                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '16px' }}>
-                  <div>
-                    <div className="byotone-mono" style={{ fontSize: '0.7rem', color: 'rgba(255, 255, 255, 0.5)' }}>ESTIMATED CAPEX</div>
-                    <div style={{ fontSize: '1.4rem', color: '#6EE7B7', fontWeight: 700, fontFamily: "'Space Mono', monospace" }}>₹ 14,20,000</div>
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', gap: '16px' }}>
+                  <div style={{ background: 'rgba(255, 255, 255, 0.03)', padding: '16px', borderRadius: '12px' }}>
+                    <div className="byotone-mono" style={{ fontSize: '0.7rem', color: 'var(--text-dim)' }}>ESTIMATED COST</div>
+                    <div style={{ fontSize: '1.3rem', color: '#34D399', fontWeight: 800 }}>₹ 14,20,000</div>
                   </div>
-                  <div>
-                    <div className="byotone-mono" style={{ fontSize: '0.7rem', color: 'rgba(255, 255, 255, 0.5)' }}>ANNUAL GENERATION</div>
-                    <div style={{ fontSize: '1.4rem', color: '#7DD3FC', fontWeight: 700, fontFamily: "'Space Mono', monospace" }}>38,500 kWh</div>
+                  <div style={{ background: 'rgba(255, 255, 255, 0.03)', padding: '16px', borderRadius: '12px' }}>
+                    <div className="byotone-mono" style={{ fontSize: '0.7rem', color: 'var(--text-dim)' }}>ANNUAL POWER GENERATION</div>
+                    <div style={{ fontSize: '1.3rem', color: '#38BDF8', fontWeight: 800 }}>38,500 kWh</div>
                   </div>
-                  <div>
-                    <div className="byotone-mono" style={{ fontSize: '0.7rem', color: 'rgba(255, 255, 255, 0.5)' }}>DEAD LOAD INCREASE</div>
-                    <div style={{ fontSize: '1.4rem', color: '#F87171', fontWeight: 700, fontFamily: "'Space Mono', monospace" }}>+32 kg/m²</div>
+                  <div style={{ background: 'rgba(255, 255, 255, 0.03)', padding: '16px', borderRadius: '12px' }}>
+                    <div className="byotone-mono" style={{ fontSize: '0.7rem', color: 'var(--text-dim)' }}>DEAD LOAD CHANGE</div>
+                    <div style={{ fontSize: '1.3rem', color: '#FBBF24', fontWeight: 800 }}>+32 kg/m²</div>
                   </div>
                 </div>
               </div>
             )}
           </div>
-
-          <div style={{ marginTop: '48px' }}>
-            <button
-              onClick={() => scrollToChapter('E')}
-              className="byotone-btn-orbit"
-            >
-              <div className="byotone-orbit-dot-ring">
-                <ArrowRight size={14} color="#6EE7B7" />
-              </div>
-              <span>VIEW REGULATORY STANDARDS</span>
-            </button>
-          </div>
         </section>
 
-        {/* ── CHAPTER E: REGULATORY STANDARDS & TRUST ── */}
+        {/* ── CHAPTER E: STANDARDS & AUDIT COMPLIANCE ── */}
         <section id="chapter-e" style={{
           minHeight: '80vh',
           display: 'flex',
           flexDirection: 'column',
           justifyContent: 'center',
           alignItems: 'center',
-          padding: '80px 24px',
+          padding: '60px 24px',
           position: 'relative'
         }}>
-          <div className="byotone-mono" style={{ fontSize: '0.8rem', color: '#6EE7B7', marginBottom: '20px', letterSpacing: '0.2em' }}>
-            CHAPTER E • AUDITABLE COMPLIANCE
+          <div className="byotone-mono" style={{ fontSize: '0.8rem', color: '#34D399', marginBottom: '16px', letterSpacing: '0.15em', fontWeight: 700 }}>
+            CHAPTER E • AUDIT-READY COMPLIANCE
           </div>
 
           <h2 className="byotone-title-huge" style={{ maxWidth: '980px', textAlign: 'center', marginBottom: '32px' }}>
-            EVIDENCE YOU CAN HAND TO MUNICIPAL AUDITORS
+            TRUSTED FOR MUNICIPAL & GREEN APPROVALS
           </h2>
 
           <div style={{
@@ -1031,106 +1082,113 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onEnterApp, onNavigate
             gap: '24px'
           }}>
             <div className="byotone-card">
-              <div className="byotone-mono" style={{ fontSize: '0.7rem', color: '#6EE7B7', marginBottom: '8px' }}>
-                INDIAN STANDARD
+              <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '10px' }}>
+                <Award size={18} color="#34D399" />
+                <span className="byotone-mono" style={{ fontSize: '0.72rem', color: '#34D399', fontWeight: 700 }}>
+                  IS 15797:2008
+                </span>
               </div>
-              <div className="byotone-title-medium" style={{ color: '#FFFFFF', marginBottom: '12px' }}>
-                IS 15797:2008
+              <div style={{ fontSize: '1.1rem', fontWeight: 700, color: '#FFFFFF', marginBottom: '8px' }}>
+                Rainwater Standards
               </div>
-              <p style={{ fontSize: '0.85rem', color: 'rgba(255, 255, 255, 0.65)', lineHeight: 1.6 }}>
-                Roof rainwater harvesting guidelines for buildings, storage tank sizing, and filtration media specifications.
+              <p style={{ fontSize: '0.86rem', color: 'var(--text-muted)', lineHeight: 1.6 }}>
+                Certified storage tank sizing, first-flush diverter volume, and filtration media compliance for building permits.
               </p>
             </div>
 
             <div className="byotone-card">
-              <div className="byotone-mono" style={{ fontSize: '0.7rem', color: '#6EE7B7', marginBottom: '8px' }}>
-                NATIONAL CODE
+              <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '10px' }}>
+                <Building size={18} color="#38BDF8" />
+                <span className="byotone-mono" style={{ fontSize: '0.72rem', color: '#38BDF8', fontWeight: 700 }}>
+                  NBC 2016 PART 8
+                </span>
               </div>
-              <div className="byotone-title-medium" style={{ color: '#FFFFFF', marginBottom: '12px' }}>
-                NBC 2016 Part 8
+              <div style={{ fontSize: '1.1rem', fontWeight: 700, color: '#FFFFFF', marginBottom: '8px' }}>
+                National Building Code
               </div>
-              <p style={{ fontSize: '0.85rem', color: 'rgba(255, 255, 255, 0.65)', lineHeight: 1.6 }}>
-                Building services thermal performance requirements, thermal conductivity constraints, and overall envelope U-values.
+              <p style={{ fontSize: '0.86rem', color: 'var(--text-muted)', lineHeight: 1.6 }}>
+                Guaranteed thermal envelope insulation, structural dead-load boundaries, and energy conservation code adherence.
               </p>
             </div>
 
             <div className="byotone-card">
-              <div className="byotone-mono" style={{ fontSize: '0.7rem', color: '#6EE7B7', marginBottom: '8px' }}>
-                INTERNATIONAL
+              <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '10px' }}>
+                <ShieldCheck size={18} color="#34D399" />
+                <span className="byotone-mono" style={{ fontSize: '0.72rem', color: '#34D399', fontWeight: 700 }}>
+                  GRIHA & IGBC
+                </span>
               </div>
-              <div className="byotone-title-medium" style={{ color: '#FFFFFF', marginBottom: '12px' }}>
-                ASHRAE 90.1
+              <div style={{ fontSize: '1.1rem', fontWeight: 700, color: '#FFFFFF', marginBottom: '8px' }}>
+                Green Building Points
               </div>
-              <p style={{ fontSize: '0.85rem', color: 'rgba(255, 255, 255, 0.65)', lineHeight: 1.6 }}>
-                Energy Standard for Buildings Except Low-Rise Residential, cool roof SRI baselines, and sol-air heat flow protocols.
+              <p style={{ fontSize: '0.86rem', color: 'var(--text-muted)', lineHeight: 1.6 }}>
+                Earn direct points for Heat Island Reduction (roof category) and on-site water harvesting credits.
               </p>
             </div>
 
             <div className="byotone-card">
-              <div className="byotone-mono" style={{ fontSize: '0.7rem', color: '#6EE7B7', marginBottom: '8px' }}>
-                COST SCHEDULES
+              <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '10px' }}>
+                <DollarSign size={18} color="#FBBF24" />
+                <span className="byotone-mono" style={{ fontSize: '0.72rem', color: '#FBBF24', fontWeight: 700 }}>
+                  CPWD SSR 2023
+                </span>
               </div>
-              <div className="byotone-title-medium" style={{ color: '#FFFFFF', marginBottom: '12px' }}>
-                CPWD SSR 2023
+              <div style={{ fontSize: '1.1rem', fontWeight: 700, color: '#FFFFFF', marginBottom: '8px' }}>
+                Schedule of Rates
               </div>
-              <p style={{ fontSize: '0.85rem', color: 'rgba(255, 255, 255, 0.65)', lineHeight: 1.6 }}>
-                Schedule of Rates for waterproofing, elastomeric membranes, piping, RCC works, and labor rate calibration.
+              <p style={{ fontSize: '0.86rem', color: 'var(--text-muted)', lineHeight: 1.6 }}>
+                All contractor cost estimates are calibrated against government Schedule of Rates for material and labor honesty.
               </p>
             </div>
           </div>
         </section>
 
-        {/* ── CHAPTER F: LAUNCH WORKBENCH / CALL TO ACTION ── */}
+        {/* ── CHAPTER F: READY TO LAUNCH WORKBENCH ── */}
         <section id="chapter-f" style={{
-          minHeight: '85vh',
+          minHeight: '80vh',
           display: 'flex',
           flexDirection: 'column',
           justifyContent: 'center',
           alignItems: 'center',
           textAlign: 'center',
-          padding: '80px 24px',
+          padding: '60px 24px',
           position: 'relative'
         }}>
-          <div className="byotone-mono" style={{ fontSize: '0.8rem', color: '#6EE7B7', marginBottom: '20px', letterSpacing: '0.2em' }}>
-            CHAPTER F • YOUR DIGITAL RETROFIT TWIN
+          <div className="byotone-mono" style={{ fontSize: '0.8rem', color: '#38BDF8', marginBottom: '16px', letterSpacing: '0.15em', fontWeight: 700 }}>
+            CHAPTER F • DIGITAL RETROFIT TWIN
           </div>
 
-          <h2 className="byotone-title-huge" style={{ maxWidth: '960px', marginBottom: '24px' }}>
-            READY TO SIMULATE YOUR ROOFTOP?
+          <h2 className="byotone-title-huge" style={{ maxWidth: '920px', marginBottom: '20px' }}>
+            READY TO SIMULATE YOUR ROOF?
           </h2>
 
           <p style={{
-            maxWidth: '620px',
-            fontSize: '1.15rem',
-            color: 'rgba(255, 255, 255, 0.72)',
+            maxWidth: '600px',
+            fontSize: '1.12rem',
+            color: 'var(--text-muted)',
             lineHeight: 1.65,
-            marginBottom: '48px'
+            marginBottom: '40px'
           }}>
-            Input your building geometry, select your climate zone, and inspect the Pareto frontier in seconds.
-            All runs are privately partitioned and exportable.
+            Input your building dimensions, select your climate zone, and view Pareto-optimal retrofit packages in seconds.
           </p>
 
           <button
             id="byotone-launch-workbench-cta"
             onClick={onEnterApp}
-            className="byotone-btn-orbit"
+            className="btn btn-primary"
             style={{
-              padding: '14px 36px 14px 18px',
-              fontSize: '0.92rem'
+              padding: '16px 40px',
+              fontSize: '1.05rem',
+              borderRadius: '999px',
+              boxShadow: '0 8px 30px rgba(16, 185, 129, 0.35)'
             }}
           >
-            <div className="byotone-orbit-dot-ring" style={{ width: '34px', height: '34px' }}>
-              <svg className="byotone-orbit-dot" width="24" height="24" viewBox="0 0 20 20">
-                <circle cx="10" cy="3" r="2" fill="#6EE7B7" />
-                <circle cx="16" cy="14" r="1.5" fill="#7DD3FC" />
-                <circle cx="4" cy="14" r="1.5" fill="#FDE047" />
-              </svg>
-            </div>
-            <span>LAUNCH ROOFWISE WORKBENCH</span>
+            <span>LAUNCH ROOFWISE WORKBENCH NOW</span>
+            <ArrowRight size={18} />
           </button>
 
-          <div className="byotone-mono" style={{ fontSize: '0.72rem', color: 'rgba(255, 255, 255, 0.4)', marginTop: '40px', letterSpacing: '0.12em' }}>
-            FREE TO EXPLORE • ZERO REGISTRATION REQUIRED • CRYPTOGRAPHIC ISOLATION
+          <div className="byotone-mono" style={{ fontSize: '0.72rem', color: 'var(--text-dim)', marginTop: '36px', letterSpacing: '0.1em' }}>
+            NO SIGN-UP REQUIRED • INSTANT CLIENT-SIDE SIMULATION • PRIVATE ANONYMOUS SESSIONS
           </div>
         </section>
 
