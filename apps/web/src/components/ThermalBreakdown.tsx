@@ -30,7 +30,7 @@ export const ThermalBreakdown: React.FC<ThermalBreakdownProps> = ({
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            color: '#fbbf24'
+            color: '#E5A23A'
           }}>
             <Sun size={18} />
           </div>
@@ -77,7 +77,7 @@ export const ThermalBreakdown: React.FC<ThermalBreakdownProps> = ({
             </span>
             <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>W/m²·K</span>
           </div>
-          <div style={{ fontSize: '0.73rem', color: heatSummary.u_value_reduction_percent > 0 ? '#34d399' : 'var(--text-dim)', marginTop: '4px' }}>
+          <div style={{ fontSize: '0.73rem', color: heatSummary.u_value_reduction_percent > 0 ? '#3ECF8E' : 'var(--text-dim)', marginTop: '4px' }}>
             {heatSummary.u_value_reduction_percent > 0 ? `-${heatSummary.u_value_reduction_percent}% vs baseline (2.97)` : 'Uninsulated slab (baseline)'}
           </div>
         </div>
@@ -93,12 +93,12 @@ export const ThermalBreakdown: React.FC<ThermalBreakdownProps> = ({
             Solar Absorptance (α)
           </div>
           <div style={{ display: 'flex', alignItems: 'baseline', gap: '8px', marginTop: '4px' }}>
-            <span style={{ fontFamily: 'var(--font-mono)', fontSize: '1.25rem', fontWeight: 700, color: '#38bdf8' }}>
+            <span style={{ fontFamily: 'var(--font-mono)', fontSize: '1.25rem', fontWeight: 700, color: '#4FA3D9' }}>
               {heatSummary.retrofit_solar_absorptance}
             </span>
             <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>SRI &gt; 104</span>
           </div>
-          <div style={{ fontSize: '0.73rem', color: '#34d399', marginTop: '4px' }}>
+          <div style={{ fontSize: '0.73rem', color: '#3ECF8E', marginTop: '4px' }}>
             Reduced from {heatSummary.baseline_solar_absorptance} (Δ = -{heatSummary.delta_solar_absorptance})
           </div>
         </div>
@@ -114,12 +114,12 @@ export const ThermalBreakdown: React.FC<ThermalBreakdownProps> = ({
             Absorbed Solar Flux
           </div>
           <div style={{ display: 'flex', alignItems: 'baseline', gap: '8px', marginTop: '4px' }}>
-            <span style={{ fontFamily: 'var(--font-mono)', fontSize: '1.25rem', fontWeight: 700, color: '#fbbf24' }}>
+            <span style={{ fontFamily: 'var(--font-mono)', fontSize: '1.25rem', fontWeight: 700, color: '#E5A23A' }}>
               {heatSummary.peak_absorbed_flux_retrofit_w_m2}
             </span>
             <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>W/m²</span>
           </div>
-          <div style={{ fontSize: '0.73rem', color: '#34d399', marginTop: '4px' }}>
+          <div style={{ fontSize: '0.73rem', color: '#3ECF8E', marginTop: '4px' }}>
             -{heatSummary.peak_absorbed_flux_reduction_w_m2} W/m² under 850 W/m² peak sun
           </div>
         </div>
@@ -135,12 +135,12 @@ export const ThermalBreakdown: React.FC<ThermalBreakdownProps> = ({
             Top Floor Heat Cut
           </div>
           <div style={{ display: 'flex', alignItems: 'baseline', gap: '8px', marginTop: '4px' }}>
-            <span style={{ fontFamily: 'var(--font-mono)', fontSize: '1.25rem', fontWeight: 700, color: '#34d399' }}>
+            <span style={{ fontFamily: 'var(--font-mono)', fontSize: '1.25rem', fontWeight: 700, color: '#3ECF8E' }}>
               {heatSummary.top_floor_peak_conductive_heat_reduction_kw}
             </span>
             <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>kW peak</span>
           </div>
-          <div style={{ fontSize: '0.73rem', color: '#38bdf8', marginTop: '4px' }}>
+          <div style={{ fontSize: '0.73rem', color: '#4FA3D9', marginTop: '4px' }}>
             -{heatSummary.modelled_reduction_percent}% peak envelope heat flux
           </div>
         </div>
@@ -172,7 +172,7 @@ export const ThermalBreakdown: React.FC<ThermalBreakdownProps> = ({
           </div>
 
           <div style={{ background: 'rgba(6, 182, 212, 0.1)', border: '1px solid rgba(6, 182, 212, 0.3)', padding: '10px', borderRadius: '6px' }}>
-            <span style={{ color: '#38bdf8', fontWeight: 600 }}>Central Engineering Baseline:</span>
+            <span style={{ color: '#4FA3D9', fontWeight: 600 }}>Central Engineering Baseline:</span>
             <div style={{ fontFamily: 'var(--font-mono)', fontSize: '0.85rem', fontWeight: 700, color: '#ffffff', marginTop: '2px' }}>
               {heatSummary.top_floor_peak_conductive_heat_reduction_kw} kW peak cut
             </div>
@@ -199,7 +199,7 @@ export const ThermalBreakdown: React.FC<ThermalBreakdownProps> = ({
         padding: '10px 14px',
         borderRadius: 'var(--radius-sm)',
         fontSize: '0.76rem',
-        color: '#fbbf24',
+        color: '#E5A23A',
         lineHeight: '1.4'
       }}>
         <AlertCircle size={16} style={{ flexShrink: 0, marginTop: '1px' }} />

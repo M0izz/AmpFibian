@@ -182,7 +182,7 @@ export const AssessmentSetup: React.FC<AssessmentSetupProps> = ({
                     border: '1px solid var(--border-subtle)',
                     padding: '8px 12px',
                     borderRadius: 'var(--radius-sm)',
-                    color: '#38bdf8',
+                    color: '#4FA3D9',
                     fontSize: '0.85rem',
                     fontFamily: 'var(--font-mono)',
                     fontWeight: 600
@@ -242,7 +242,7 @@ export const AssessmentSetup: React.FC<AssessmentSetupProps> = ({
                     border: '1px solid var(--border-subtle)',
                     padding: '8px 12px',
                     borderRadius: 'var(--radius-sm)',
-                    color: '#fbbf24',
+                    color: '#E5A23A',
                     fontSize: '0.85rem',
                     fontFamily: 'var(--font-mono)',
                     fontWeight: 600

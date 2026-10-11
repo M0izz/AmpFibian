@@ -47,7 +47,7 @@ export const ScenarioBar: React.FC<ScenarioBarProps> = ({
                 fontSize: '0.78rem',
                 padding: '6px 12px',
                 background: rainfallYear === '2015_dry' ? 'rgba(245, 158, 11, 0.2)' : 'rgba(30, 41, 59, 0.5)',
-                color: rainfallYear === '2015_dry' ? '#fbbf24' : 'var(--text-muted)',
+                color: rainfallYear === '2015_dry' ? '#E5A23A' : 'var(--text-muted)',
                 borderColor: rainfallYear === '2015_dry' ? 'var(--accent-amber)' : 'var(--border-subtle)'
               }}
             >
@@ -61,7 +61,7 @@ export const ScenarioBar: React.FC<ScenarioBarProps> = ({
                 fontSize: '0.78rem',
                 padding: '6px 12px',
                 background: rainfallYear === '2020_median' ? 'rgba(6, 182, 212, 0.2)' : 'rgba(30, 41, 59, 0.5)',
-                color: rainfallYear === '2020_median' ? '#38bdf8' : 'var(--text-muted)',
+                color: rainfallYear === '2020_median' ? '#4FA3D9' : 'var(--text-muted)',
                 borderColor: rainfallYear === '2020_median' ? 'var(--accent-cyan)' : 'var(--border-subtle)'
               }}
             >
@@ -75,7 +75,7 @@ export const ScenarioBar: React.FC<ScenarioBarProps> = ({
                 fontSize: '0.78rem',
                 padding: '6px 12px',
                 background: rainfallYear === '2019_wet' ? 'rgba(16, 185, 129, 0.2)' : 'rgba(30, 41, 59, 0.5)',
-                color: rainfallYear === '2019_wet' ? '#34d399' : 'var(--text-muted)',
+                color: rainfallYear === '2019_wet' ? '#3ECF8E' : 'var(--text-muted)',
                 borderColor: rainfallYear === '2019_wet' ? 'var(--accent-emerald)' : 'var(--border-subtle)'
               }}
             >
@@ -103,7 +103,7 @@ export const ScenarioBar: React.FC<ScenarioBarProps> = ({
           </div>
 
           <div style={{ display: 'flex', alignItems: 'center', gap: '6px', fontSize: '0.81rem' }}>
-            <Droplet size={14} color="#60a5fa" />
+            <Droplet size={14} color="#4FA3D9" />
             <span style={{ color: 'var(--text-dim)' }}>Non-Potable Demand:</span>
             <span style={{ fontFamily: 'var(--font-mono)', fontWeight: 600, color: 'var(--text-main)' }}>
               {building.water_demand.total_non_potable_demand_liters_day.toLocaleString()} L/day
