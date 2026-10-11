@@ -438,3 +438,286 @@ html {
     size: auto;
   }
 }
+
+/* ══════════════════════════════════════════════════════════════════
+   BYOTONE DESIGN SYSTEM (Dark luxury editorial & scientific telemetry)
+   ══════════════════════════════════════════════════════════════════ */
+:root {
+  --byotone-bg: #111215;
+  --byotone-surface: #18191e;
+  --byotone-surface-hover: #22232a;
+  --byotone-mint: #a7f3d0;
+  --byotone-mint-bright: #6ee7b7;
+  --byotone-mint-glow: rgba(110, 231, 183, 0.18);
+  --byotone-cyan: #7dd3fc;
+  --byotone-amber: #fde047;
+  --byotone-text-primary: #ffffff;
+  --byotone-text-muted: rgba(255, 255, 255, 0.65);
+  --byotone-text-dim: rgba(255, 255, 255, 0.35);
+  --byotone-border-dashed: rgba(255, 255, 255, 0.16);
+  --byotone-border-mint: rgba(110, 231, 183, 0.4);
+}
+
+.byotone-page {
+  background-color: var(--byotone-bg);
+  color: var(--byotone-text-primary);
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  overflow-x: hidden;
+  position: relative;
+  min-height: 100vh;
+}
+
+/* Editorial Serif Titles */
+.byotone-title-huge {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: clamp(2.8rem, 7vw, 6.2rem);
+  font-weight: 400;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  line-height: 1.04;
+  color: #ffffff;
+}
+
+.byotone-title-big {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: clamp(2rem, 4vw, 3.8rem);
+  font-weight: 400;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  line-height: 1.1;
+  color: #ffffff;
+}
+
+.byotone-title-medium {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: clamp(1.5rem, 2.8vw, 2.4rem);
+  font-weight: 400;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  line-height: 1.2;
+}
+
+.byotone-mono {
+  font-family: 'Space Mono', monospace;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+/* Orbit Pill Button (Byotone signature) */
+.byotone-btn-orbit {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 24px 8px 12px;
+  background: rgba(255, 255, 255, 0.04);
+  color: var(--byotone-mint-bright);
+  font-family: 'Space Mono', monospace;
+  font-size: 0.82rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  text-decoration: none;
+  border-radius: 9999px;
+  border: 1px dashed var(--byotone-border-dashed);
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.4);
+}
+
+.byotone-btn-orbit:hover {
+  background: rgba(110, 231, 183, 0.08);
+  border-color: var(--byotone-mint-bright);
+  color: #ffffff;
+  box-shadow: 0 0 30px var(--byotone-mint-glow);
+  transform: translateY(-2px);
+}
+
+.byotone-btn-orbit:active {
+  transform: translateY(1px);
+}
+
+/* Orbit Dots inside button */
+.byotone-orbit-dot-ring {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.06);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.byotone-orbit-dot {
+  animation: byotone-orbit 3s linear infinite;
+  transform-origin: center;
+}
+
+@keyframes byotone-orbit {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Floating Telemetry Tags with Corner Crop Brackets */
+.byotone-telemetry-tag {
+  position: absolute;
+  padding: 6px 12px;
+  background: rgba(18, 19, 23, 0.75);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  font-family: 'Space Mono', monospace;
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  color: var(--byotone-text-muted);
+  text-transform: uppercase;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  pointer-events: none;
+  transition: all 0.3s ease;
+  user-select: none;
+}
+
+.byotone-telemetry-tag::before {
+  content: '■';
+  color: var(--byotone-mint-bright);
+  font-size: 0.6rem;
+}
+
+.byotone-telemetry-tag .bracket-tl {
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  width: 6px;
+  height: 6px;
+  border-top: 1.5px solid var(--byotone-mint-bright);
+  border-left: 1.5px solid var(--byotone-mint-bright);
+}
+
+.byotone-telemetry-tag .bracket-br {
+  position: absolute;
+  bottom: -2px;
+  right: -2px;
+  width: 6px;
+  height: 6px;
+  border-bottom: 1.5px solid var(--byotone-mint-bright);
+  border-right: 1.5px solid var(--byotone-mint-bright);
+}
+
+@keyframes byotone-float-slow {
+  0%, 100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-8px) rotate(0.5deg);
+  }
+}
+
+.byotone-floating {
+  animation: byotone-float-slow 7s ease-in-out infinite;
+}
+
+@media (max-width: 900px) {
+  .byotone-telemetry-tag {
+    display: none !important;
+  }
+}
+
+/* Fixed Chapter Wave Navigator */
+.byotone-chapter-nav {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  position: relative;
+}
+
+.byotone-chapter-node {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  background: #111215;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Space Mono', monospace;
+  font-size: 0.72rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
+  position: relative;
+  text-decoration: none;
+}
+
+.byotone-chapter-node:hover {
+  border-color: var(--byotone-mint-bright);
+  color: var(--byotone-mint-bright);
+  transform: scale(1.1);
+}
+
+.byotone-chapter-node.active {
+  background: var(--byotone-mint-bright);
+  color: #111215;
+  border-color: var(--byotone-mint-bright);
+  box-shadow: 0 0 16px rgba(110, 231, 183, 0.5);
+}
+
+.byotone-chapter-label {
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: 'Space Mono', monospace;
+  font-size: 0.65rem;
+  text-transform: uppercase;
+  color: var(--byotone-mint-bright);
+  white-space: nowrap;
+  letter-spacing: 0.08em;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+  pointer-events: none;
+}
+
+.byotone-chapter-node:hover .byotone-chapter-label,
+.byotone-chapter-node.active .byotone-chapter-label {
+  opacity: 1;
+}
+
+/* Dashed card containers */
+.byotone-card {
+  background: rgba(24, 25, 30, 0.7);
+  backdrop-filter: blur(16px);
+  border: 1px dashed rgba(255, 255, 255, 0.12);
+  border-radius: 20px;
+  padding: 32px;
+  transition: all 0.35s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.byotone-card:hover {
+  border-color: rgba(110, 231, 183, 0.4);
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4), 0 0 20px rgba(110, 231, 183, 0.08);
+  transform: translateY(-4px);
+}
+
+/* Animated Soundwave icon */
+@keyframes byotone-wave-bar {
+  0%, 100% {
+    height: 4px;
+  }
+  50% {
+    height: 18px;
+  }
+}
+
+.byotone-wave-bar-1 { animation: byotone-wave-bar 1.2s ease-in-out infinite; }
+.byotone-wave-bar-2 { animation: byotone-wave-bar 0.9s ease-in-out infinite 0.2s; }
+.byotone-wave-bar-3 { animation: byotone-wave-bar 1.4s ease-in-out infinite 0.4s; }
+.byotone-wave-bar-4 { animation: byotone-wave-bar 1.0s ease-in-out infinite 0.1s; }
+
